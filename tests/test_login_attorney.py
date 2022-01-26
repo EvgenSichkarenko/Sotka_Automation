@@ -17,7 +17,7 @@ class TestLogin:
 		self.login.open()
 		self.login.login_attorney(login, password)
 		self.login.submit_buttom_click()
-		time.sleep(1)
+		time.sleep(2)
 		assert self.login.text_name_attribute() == "Laura Ellen Malkofsky"
 		self.secretary.add_secret_icon_click()
 		self.secretary.contact_person(secr_email, secr_password)
