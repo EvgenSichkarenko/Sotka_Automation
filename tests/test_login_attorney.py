@@ -1,5 +1,5 @@
 from selenium import webdriver
-from pages.login import Login
+from pages.login_attorney import LoginAttroney
 from pages.add_seecretary import Secretary
 from webdriver_manager.chrome import ChromeDriverManager
 import time
@@ -9,7 +9,7 @@ class TestLogin:
 	def setup_method(self):
 		self.driver = webdriver.Chrome(ChromeDriverManager().install())
 		self.driver.maximize_window()
-		self.login = Login(self.driver)
+		self.login = LoginAttroney(self.driver)
 		self.secretary = Secretary(self.driver)
 
 	def test_login_attroney(self, login="a1@getnada.com", password="Attorney95",
