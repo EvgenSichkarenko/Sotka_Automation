@@ -1,4 +1,4 @@
 class ModelSecretary:
-	def __init__(self, secr_email=None, secr_password=None):
+	def __init__(self, secr_email=None, secr_fullname=None):
 		self.secr_email = secr_email
-		self.secr_password = secr_password
+		self.secr_fullname = secr_fullname
