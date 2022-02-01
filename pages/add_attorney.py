@@ -17,4 +17,5 @@ class Attorney:
 		WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='email']"))).send_keys(att_email)
 		wd.find_element(By.CSS_SELECTOR, "input[name='phone_number']").send_keys(att_phonenumber)
 		assert wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").get_attribute('value') == att_sbn
+		time.sleep(1)
 		wd.find_element(By.XPATH, "//button[text()='Invite']").click()

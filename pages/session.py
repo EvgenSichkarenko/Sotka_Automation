@@ -15,13 +15,17 @@ class Session:
 		wd.find_element(By.NAME, "password").send_keys(password)
 		wd.find_element(By.CSS_SELECTOR, "button.sc-kstrdz.sc-hBEYos.jlyKYH.ghVIMM").click()
 
+
 	def logout(self):
 		wd = self.app.wd
-		wd.find_element(By.CSS_SELECTOR, ".MuiButtonBase-root.MuiIconButton-root.sc-fbkhIv.jsBTxA.MuiIconButton-colorPrimary").click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+		".MuiButtonBase-root.MuiIconButton-root.sc-fbkhIv.jsBTxA.MuiIconButton-colorPrimary"))).click()
+
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
-		return wd.find_element(By.CSS_SELECTOR, "div.sc-lcujXC.bnKPcn").get_attribute("textContent")
+		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-lcujXC.bnKPcn"))).get_attribute("textContent")
+
 
 	def text_name_attribute_cr(self):
 		wd = self.app.wd
