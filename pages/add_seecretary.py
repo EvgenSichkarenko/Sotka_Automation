@@ -21,7 +21,6 @@ class Secretary:
 		'''-----DEV-----'''
 
 
-
 	def contact_person(self, secr_new_email, secr_old_email,  secr_fullname, secr_current_email):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".sc-fTNIDv.ieXpgb > svg"))).click()
@@ -30,18 +29,18 @@ class Secretary:
 		wd.find_element(By.CSS_SELECTOR, "input[name='full_name']").send_keys(secr_fullname)
 		self.add_input_data(secr_old_email)
 		time.sleep(1)
-		#accept validation
-		validation_exist = wd.find_element(By.XPATH, f"//span[text()='User with email: {secr_old_email} is exists']").get_attribute("textContent")
+		#check validation secretary with this email is registered
+		validation_exist = wd.find_element(By.XPATH, f"//span[text()='User with email: {secr_old_email} is exists']")\
+			.get_attribute("textContent")
 
 		if validation_exist:
 			self.add_input_data(secr_current_email)
 			time.sleep(1)
+			#check validation secretary was send email with letter
 			validation_sendbox = wd.find_element(By.XPATH,
 				f"//span[text()='Invite for email: {secr_current_email} is exists, please check your mail box']").get_attribute("textContent")
 			if validation_sendbox:
 				self.add_input_data(secr_new_email)
-
-
 
 
 

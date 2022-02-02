@@ -15,7 +15,6 @@ class Session:
 		wd.find_element(By.NAME, "password").send_keys(password)
 		wd.find_element(By.CSS_SELECTOR, "button.sc-kstrdz.sc-hBEYos.jlyKYH.ghVIMM").click()
 
-
 	def logout(self):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,

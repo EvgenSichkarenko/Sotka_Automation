@@ -5,6 +5,7 @@ from pages.registr_attorney_page import RegistrAttorney
 from pages.registr_cr import RegistrCR
 from pages.session import Session
 from pages.add_attorney import Attorney
+from pages.login import Login
 
 class Application:
 
@@ -16,6 +17,7 @@ class Application:
 		self.regAttorney = RegistrAttorney(self)
 		self.cr = RegistrCR(self)
 		self.add_art = Attorney(self)
+		self.login = Login(self)
 
 	def open_login(self, wd):
 		wd = self.wd
