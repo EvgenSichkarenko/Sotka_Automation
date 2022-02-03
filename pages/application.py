@@ -6,6 +6,7 @@ from pages.registr_cr import RegistrCR
 from pages.session import Session
 from pages.add_attorney import Attorney
 from pages.login import Login
+from pages.add_card_attorney import Creditcard
 
 class Application:
 
@@ -18,10 +19,12 @@ class Application:
 		self.cr = RegistrCR(self)
 		self.add_art = Attorney(self)
 		self.login = Login(self)
+		self.att_credit = Creditcard(self)
 
 	def open_login(self, wd):
 		wd = self.wd
 		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
+		#wd.get("http://sotka.io")
 
 	def destroy(self):
 		self.wd.quit()

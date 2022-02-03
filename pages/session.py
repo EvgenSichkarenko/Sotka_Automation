@@ -13,7 +13,7 @@ class Session:
 		wd.find_element(By.NAME, "login").send_keys(login)
 		wd.find_element(By.NAME, "password").clear()
 		wd.find_element(By.NAME, "password").send_keys(password)
-		wd.find_element(By.CSS_SELECTOR, "button.sc-kstrdz.sc-hBEYos.jlyKYH.ghVIMM").click()
+		wd.find_element(By.NAME, "registrationSignInBtn").click()
 
 	def logout(self):
 		wd = self.app.wd
