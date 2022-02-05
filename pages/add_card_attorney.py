@@ -12,12 +12,16 @@ class Creditcard:
 	def credit_card(self, card_number, expiry_date, cvv):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		".MuiButtonBase-root.MuiIconButton-root.sc-GqfZa.emfPRz.MuiIconButton-colorPrimary"))).click()
-		if len(wd.find_element(By.CSS_SELECTOR, ".sc-jQbIHB.gTZZqe")) > 0 :
-			wd.find_element(By.CSS_SELECTOR, ".MuiButton-startIcon.MuiButton-iconSizeMedium").click()
-			wd.find_element(By.XPATH, "//span[text()='Card number']").send_keys(card_number)
-			wd.find_element(By.XPATH, "//span[text()='Expiry date']").send_keys(expiry_date)
-			wd.find_element(By.XPATH, "//span[text()='Card number']").send_keys(cvv)
-			wd.find_element(By.XPATH, "//span[text()='save card']").click()
-		else:
-			print("Modal card isn't opened")
+		"div[data-name='headerCardIconDiv']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME,
+		"companyPaymentAddNewCardBtn"))).click()
+		title = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-name='ModalPaymentTitle']"))).text
+		if title == 'Modal Payment':
+			wd.find_element(By.NAME, "modalPaymentCardNumber").click()
+			wd.find_element(By.NAME, "modalPaymentCardNumber").send_keys(card_number)
+			wd.find_element(By.NAME, "modalPaymentExpDate").click()
+			wd.find_element(By.NAME, "modalPaymentExpDate").send_keys(expiry_date)
+			wd.find_element(By.NAME, "modalPaymentCvv").click()
+			wd.find_element(By.NAME, "modalPaymentCvv").send_keys(cvv)
+			wd.find_element(By.NAME, "modalPaymentSaveCardBtn").click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()

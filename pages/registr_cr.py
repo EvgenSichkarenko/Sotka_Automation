@@ -10,12 +10,12 @@ class RegistrCR:
 	def cr_registration_form(self, cr_bar_number):
 		wd = self.app.wd
 		self.app.open_login(wd)
-		wd.find_element(By.XPATH, "//a[text()='Sign Up']").click()
-		wd.find_element(By.XPATH, "//button[text()='CR']").click()
+		wd.find_element(By.NAME, "registrationSignInLink").click()
+		wd.find_element(By.NAME, "stepTwoCrBtn").click()
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").clear()
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").send_keys(cr_bar_number)
-		wd.find_element(By.CSS_SELECTOR, "div.sc-kfzAmx.cEaHKM").click()
-		wd.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+		wd.find_element(By.CSS_SELECTOR, "span[data-name='stepTwoCheckboxAgreeSpan']").click()
+		wd.find_element(By.NAME, "stepTwoContinueBtn").click()
 
 	# def email_input_enter(self, email):
 	# 	WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located(
@@ -43,11 +43,13 @@ class RegistrCR:
 		))).send_keys(cr_expiration_date)
 		wd.find_element(By.CSS_SELECTOR , "input[name='address_one']").send_keys(cr_address_one)
 		wd.find_element(By.CSS_SELECTOR , "input[name='address_two']").send_keys(cr_address_two)
-		wd.find_element(By.XPATH , "//button[text()='Continue']").click()
+		wd.find_element(By.NAME , "stepThreeContinueBtn").click()
 
 	def availability_button(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH , "//button[text()='Continue']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "stepFourAvailibleBtn5"))).click()
+		wd.find_element(By.NAME, "stepFourAvailibleBtn1").click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME , "stepFourContinueBtn"))).click()
 
 	def price_form(self):
 		wd = self.app.wd
@@ -61,4 +63,5 @@ class RegistrCR:
 		wd.find_element(By.CSS_SELECTOR, "input[name='turnAroundTime']").send_keys("5")
 		wd.find_element(By.CSS_SELECTOR, "input[name='copy']").send_keys("100%")
 		wd.find_element(By.CSS_SELECTOR, "input[name='cancellation']").send_keys("100")
-		wd.find_element(By.CSS_SELECTOR, ".sc-kstrdz.sc-hBEYos.jlyKYH.ghVIMM").click()
+		wd.find_element(By.NAME, "stepSixForCrSelect").send_keys("24 hours")
+		wd.find_element(By.NAME, "stepSixContinueBtn").click()

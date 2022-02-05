@@ -18,6 +18,8 @@ class Login:
 
 		if invalid_email and invalid_passwor:
 			self.check_valid_login(valid_login, valid_password)
+		else:
+			print("validation isn't works")
 
 	def check_valid_login(self, text1, text2):
 		wd = self.app.wd

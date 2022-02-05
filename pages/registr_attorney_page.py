@@ -1,5 +1,4 @@
 import os.path
-import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -26,7 +25,7 @@ class RegistrAttorney:
 		wd = self.app.wd
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").clear()
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").send_keys(bar_number)
-		wd.find_element(By.CSS_SELECTOR, "div.sc-fKFyDc.jFaure").click()
+		wd.find_element(By.CSS_SELECTOR, "span[data-name='stepTwoCheckboxAgreeSpan']").click()
 		wd.find_element(By.NAME, "stepTwoContinueBtn").click()
 
 	def fill_form(self, email, bar_number):
@@ -36,7 +35,7 @@ class RegistrAttorney:
 		))).send_keys(email)
 		value = wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").get_property("value")
 		if value == bar_number:
-			wd.find_element(By.XPATH, "//button[text()='Continue']").click()
+			wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
 
 	def assert_secreatry(self):
 		wd =self.app.wd
@@ -60,11 +59,11 @@ class RegistrAttorney:
 			wd.find_element(By.NAME, "uploadPhotoRef").send_keys(image)
 		else:
 			print("Photo account page not open")
-		wd.find_element(By.XPATH, "//button[text()='Continue']").click()
+		wd.find_element(By.NAME, "uploadPhotoContinueBtn").click()
 
-	def continue_account_button(self):
+	def bank_account_button(self):
 		wd = self.app.wd
-		wd.find_element(By.XPATH, "//button[text()='Continue']").click()
+		wd.find_element(By.NAME, "stepSixContinueBtn").click()
 
 	def password_input_enter(self, valid_password, invalid_password, password_match):
 		wd = self.app.wd
@@ -87,4 +86,4 @@ class RegistrAttorney:
 
 	def login_present(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.visibility_of(wd.find_element(By.CSS_SELECTOR, "div.sc-citwmv.sc-bZSQDF.kajamm.eUgDnc")))
+		return WebDriverWait(wd, 5).until(EC.visibility_of((By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
