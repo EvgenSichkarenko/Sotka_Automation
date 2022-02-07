@@ -33,6 +33,31 @@ class Session:
 		wd = self.app.wd
 		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH, "//div[text()='Евгений Сичкаренко']"))).get_attribute("textContent")
 
+	def ensure_logout(self):
+		wd = self.app.wd
+		if self.is_logged_in():
+			self.logout()
+
+	def is_logged_in(self):
+		wd = self.app.wd
+		#return len(wd.find_elements(By.LINK_TEXT, "Logout")) > 0
+		return len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='headerExitIconDiv']")) > 0
+
+
+	def is_logged_in_as(self):
+		wd = self.app.wd
+		return len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='headerCardIconDiv']")) > 0
+
+	def ensure_login(self, login, password):
+		wd = self.app.wd
+		if self.is_logged_in():
+			if self.is_logged_in_as():
+				return
+			else:
+				self.logout()
+		self.login(login, password)
+
+
 ''' ----DEV----
 	def text_name_attribute_cr(self):
 		wd = self.app.wd

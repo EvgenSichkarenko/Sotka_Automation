@@ -1,13 +1,6 @@
 import time
-import pytest
-from data.data_model.data_registr_attorney import regisrt_data
 
 
-def test_login_attorney(app):
-	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="a1@tafmail.com", valid_password="123Qwer")
-	assert "Mark John Decastro" == app.session.text_name_attribute_attroney()
-	app.session.logout()
 
 """add secretary"""
 def test_add_secreatry(app):
@@ -15,39 +8,34 @@ def test_add_secreatry(app):
 	app.secretary.contact_person( secr_old_email="secretary02@zetmail.com",
 		secr_current_email='secretary05@zetmail.com', secr_new_email="secretary09@zetmail.com", secr_fullname="Ella Nil")
 	assert app.session.text_name_attribute_attroney() == "Mark John Decastro"
-
-"""login secretary"""
-def test_login_secretary(app):
-	app.session.login(login="secretary02@zetmail.com", password="123Qwer")
-	assert "Ella Nila" == app.session.text_name_attribute_secretary()
 	app.session.logout()
+
 
 """same bar number"""
 def test_add_attorney_company(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.add_art.attorney_company(att_sbn='123456', att_email_old='sotka02@zetmail.com',
 		att_phonenumber='+380982542188', new_email='sotka0@zetmail.com')
+	app.session.logout()
+
 
 """different bar number"""
 def test_add_atr_dif_company(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.add_art.attorney_different_company(att_sbn='120001', att_email_old='sotka0@zetmail.com',
 		new_email="sotka05@zetmail.com")
+	app.session.logout()
+
 
 """add credit card"""
 def test_add_card_attorney(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.att_credit.credit_card(card_number='4111111111111111', expiry_date='08/23', cvv='123')
+	app.session.logout()
 
-
-# @pytest.mark.parametrize("regisrt_data", regisrt_data)
-# def test_registr_attorney(app,regisrt_data):
-# 	app.regAttorney.registration_page(regisrt_data.bar_number)
-# 	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number)
-# 	app.regAttorney.assert_secreatry()
-# 	app.regAttorney.add_secretary(regisrt_data.name_secretary, regisrt_data.email_secretary)
-# 	app.regAttorney.bank_account_button()
-# 	app.regAttorney.img_account_send()
-# 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
-# 	assert app.regAttorney.login_present() == 'Login'
-# 	time.sleep(2)
+"""add new photo attorney"""
+def test_add_photo_attorney(app):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
+	app.add_photo.add_photo()
+	assert app.session.text_name_attribute_attroney() == "Mark John Decastro"
+	app.session.logout()

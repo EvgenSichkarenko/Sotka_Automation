@@ -28,3 +28,8 @@ class Login:
 		wd.find_element(By.NAME, "password").clear()
 		wd.find_element(By.NAME, "password").send_keys(text2)
 		wd.find_element(By.NAME, "registrationSignInBtn").click()
+
+	def logout(self):
+		wd = self.app.wd
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+		"div[data-name='headerExitIconDiv']"))).click()

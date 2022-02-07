@@ -7,6 +7,7 @@ from pages.session import Session
 from pages.add_attorney import Attorney
 from pages.login import Login
 from pages.add_card_attorney import Creditcard
+from pages.add_photo import Photo
 
 class Application:
 
@@ -20,6 +21,14 @@ class Application:
 		self.add_art = Attorney(self)
 		self.login = Login(self)
 		self.att_credit = Creditcard(self)
+		self.add_photo = Photo(self)
+
+	def is_valid(self):
+		try:
+			self.wd.current_url
+			return True
+		except:
+			return False
 
 	def open_login(self, wd):
 		wd = self.wd
