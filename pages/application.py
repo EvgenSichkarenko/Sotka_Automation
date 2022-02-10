@@ -8,11 +8,13 @@ from pages.add_attorney import Attorney
 from pages.login import Login
 from pages.add_card_attorney import Creditcard
 from pages.add_photo import Photo
+from pages.past_depo_att_download import DepoDownload
 
 class Application:
 
 	def __init__(self):
 		self.wd = webdriver.Chrome(ChromeDriverManager().install())
+		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
 		self.session = Session(self)
@@ -22,6 +24,7 @@ class Application:
 		self.login = Login(self)
 		self.att_credit = Creditcard(self)
 		self.add_photo = Photo(self)
+		self.depo_info = DepoDownload(self)
 
 	def is_valid(self):
 		try:

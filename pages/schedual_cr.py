@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 class Schedual:
-	def __init(self, app):
+	def __init__(self, app):
 		self.app = app
 
 	def change_time(self):

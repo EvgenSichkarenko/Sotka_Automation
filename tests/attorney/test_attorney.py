@@ -1,5 +1,5 @@
-import time
-
+import pytest
+from data.data_model.data_deposition_case import deposition
 
 
 """add secretary"""
@@ -31,7 +31,6 @@ def test_add_atr_dif_company(app):
 def test_add_card_attorney(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.att_credit.credit_card(card_number='4111111111111111', expiry_date='08/23', cvv='123')
-	app.session.logout()
 
 """add new photo attorney"""
 def test_add_photo_attorney(app):
@@ -39,3 +38,11 @@ def test_add_photo_attorney(app):
 	app.add_photo.add_photo()
 	assert app.session.text_name_attribute_attroney() == "Mark John Decastro"
 	app.session.logout()
+
+"""test depo info attorney"""
+@pytest.mark.parametrize("deposition", deposition)
+def test_depo_info(app, deposition):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
+	app.depo_info.search_deposition(deposition.name)
+	app.depo_info.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
+

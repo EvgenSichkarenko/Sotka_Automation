@@ -25,3 +25,6 @@ class Creditcard:
 			wd.find_element(By.NAME, "modalPaymentCvv").send_keys(cvv)
 			wd.find_element(By.NAME, "modalPaymentSaveCardBtn").click()
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
+		#wd.find_element(By.CSS_SELECTOR, "div[data-name='ModalDeleteBtn']").click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+		"div[data-name='headerCardIconDiv']"))).click()

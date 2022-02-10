@@ -86,4 +86,5 @@ class RegistrAttorney:
 
 	def login_present(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.visibility_of((By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
+		#return WebDriverWait(wd, 5).until(EC.visibility_of((By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
+		return wd.find_element(By.CSS_SELECTOR, "a[data-name='endStepLinkLink']").get_attribute("textContent")
