@@ -9,6 +9,7 @@ from pages.login import Login
 from pages.add_card_attorney import Creditcard
 from pages.add_photo import Photo
 from pages.past_depo_att_download import DepoDownload
+from pages.edit_price_cr import EditPrice
 
 class Application:
 
@@ -25,6 +26,7 @@ class Application:
 		self.att_credit = Creditcard(self)
 		self.add_photo = Photo(self)
 		self.depo_info = DepoDownload(self)
+		self.edit_price = EditPrice(self)
 
 	def is_valid(self):
 		try:
