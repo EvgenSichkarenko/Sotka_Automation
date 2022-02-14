@@ -10,6 +10,9 @@ from pages.add_card_attorney import Creditcard
 from pages.add_photo import Photo
 from pages.past_depo_att_download import DepoDownload
 from pages.edit_price_cr import EditPrice
+from pages.past_depo_details import DepoDetails
+from pages.schedual_cr import Schedual
+from pages.past_depo_cr_download import DepoDownloadCR
 
 class Application:
 
@@ -27,6 +30,9 @@ class Application:
 		self.add_photo = Photo(self)
 		self.depo_info = DepoDownload(self)
 		self.edit_price = EditPrice(self)
+		self.depo_details = DepoDetails(self)
+		self.schedule = Schedual(self)
+		self.depo_info_cr = DepoDownloadCR(self)
 
 	def is_valid(self):
 		try:

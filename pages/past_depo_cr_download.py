@@ -4,19 +4,20 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
-class DepoDownload:
+class DepoDownloadCR:
 	def __init__(self, app):
 		self.app = app
 
-	def text_name_attroney(self):
+	def text_name_cr(self):
 		wd = self.app.wd
 		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH,
-		"//div[text()='Mark John Decastro']"))).get_attribute("textContent")
+		"//div[text()='Евгений Сичкаренко']"))).get_attribute("textContent")
 
 
-	def search_deposition(self, name):
+	def search_deposition_cr(self, name):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until((EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn")))).click()
+		WebDriverWait(wd, 5).until((EC.element_to_be_clickable((
+			By.CSS_SELECTOR, ".sc-hBEYos.sc-fFubgz.dWjUC.dFuytN")))).click()
 		#search input
 		wd.find_element(By.NAME, "searchInput").send_keys(name)
 
@@ -25,9 +26,9 @@ class DepoDownload:
 		else:
 			print("Search by name is not work")
 
-	def check_info_deposition(self, name, deponent, date):
+	def check_info_deposition_cr(self, name, deponent, date):
 		wd = self.app.wd
-		name_attorney = self.text_name_attroney()
+		name_attorney = self.text_name_cr()
 		#name of deposition case
 		name_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionTitle2']").get_attribute("textContent")
 		#data
@@ -66,7 +67,7 @@ class DepoDownload:
 		else:
 			print("Transcript not found")
 
-	def details_deposition(self):
+	def details_deposition_cr(self):
 		wd = self.app.wd
 		#opposing counsel
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "pastDepositionBtnDetails2"))).click()

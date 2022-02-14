@@ -1,3 +1,5 @@
+import time
+
 from data.data_model.data_edit_price import edit_price
 import pytest
 
@@ -26,4 +28,18 @@ def test_edit_price(app, edit_price):
 	assert app.edit_price.copy() in edit_price.copy
 	assert app.edit_price.cancellation_fees() in edit_price.cancellation_fee
 	assert app.edit_price.cancellation_terms() in edit_price.cancellation_terms
+	app.session.logout()
+
+"""test schedual cr"""
+def test_schedual_cr(app):
+	app.session.login(login="crdev@givmail.com", password="1234Qwer")
+	app.schedule.open()
+	app.schedule.change_time_monday()
+	app.schedule.change_time_tuesday()
+	app.schedule.change_time_wednesday()
+	app.schedule.change_time_thursday()
+	app.schedule.change_time_friday()
+	app.schedule.change_time_saturday()
+	app.schedule.change_time_sunday()
+	app.schedule.save_schedual()
 	app.session.logout()

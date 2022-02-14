@@ -10,7 +10,6 @@ def test_add_secreatry(app):
 	assert app.session.text_name_attribute_attroney() == "Mark John Decastro"
 	app.session.logout()
 
-
 """same bar number"""
 def test_add_attorney_company(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
@@ -46,3 +45,11 @@ def test_depo_info(app, deposition):
 	app.depo_info.search_deposition(deposition.name)
 	app.depo_info.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
 
+"""test depo details info attorney"""
+# @pytest.mark.parametrize("deposition", deposition)
+# def test_detail_depo(app, deposition):
+# 	app.session.login(login="a1@tafmail.com", password="123Qwer")
+# 	app.depo_details.details()
+# 	app.depo_details.check_data()
+
+""""""
