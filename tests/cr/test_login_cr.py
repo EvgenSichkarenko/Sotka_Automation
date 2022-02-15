@@ -1,5 +1,5 @@
 import time
-
+from data.data_model.data_deposition_case import deposition
 from data.data_model.data_edit_price import edit_price
 import pytest
 
@@ -43,3 +43,10 @@ def test_schedual_cr(app):
 	app.schedule.change_time_sunday()
 	app.schedule.save_schedual()
 	app.session.logout()
+
+"""test serch and download transcript cr"""
+@pytest.mark.parametrize("deposition", deposition)
+def test_search_download_transcript_test(app, deposition):
+	app.session.login(login="crdev@givmail.com", password="1234Qwer")
+	app.depo_info_cr.search_deposition_cr(deposition.name)
+	app.depo_info_cr.check_info_deposition_cr(deposition.name, deposition.deponent, deposition.date)

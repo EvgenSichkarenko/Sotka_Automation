@@ -8,9 +8,9 @@ from pages.add_attorney import Attorney
 from pages.login import Login
 from pages.add_card_attorney import Creditcard
 from pages.add_photo import Photo
-from pages.past_depo_att_download import DepoDownload
+from pages.past_depo_att_download import DepoDownloadAtt
 from pages.edit_price_cr import EditPrice
-from pages.past_depo_details import DepoDetails
+from pages.past_depo_att_details import DepoDetailsAtt
 from pages.schedual_cr import Schedual
 from pages.past_depo_cr_download import DepoDownloadCR
 
@@ -28,9 +28,9 @@ class Application:
 		self.login = Login(self)
 		self.att_credit = Creditcard(self)
 		self.add_photo = Photo(self)
-		self.depo_info = DepoDownload(self)
+		self.depo_info_att = DepoDownloadAtt(self)
 		self.edit_price = EditPrice(self)
-		self.depo_details = DepoDetails(self)
+		self.depo_details = DepoDetailsAtt(self)
 		self.schedule = Schedual(self)
 		self.depo_info_cr = DepoDownloadCR(self)
 

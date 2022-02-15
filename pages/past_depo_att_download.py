@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 
-class DepoDownload:
+class DepoDownloadAtt:
 	def __init__(self, app):
 		self.app = app
 
@@ -29,6 +29,7 @@ class DepoDownload:
 		wd = self.app.wd
 		name_attorney = self.text_name_attroney()
 		#name of deposition case
+		time.sleep(1)
 		name_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionTitle2']").get_attribute("textContent")
 		#data
 		data_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionDate2']").get_attribute("textContent")
@@ -41,11 +42,8 @@ class DepoDownload:
 		if (name_dep == name and data_dep == date):
 			time.sleep(1)
 			if (name_cr == name_attorney and name_deponent == deponent):
-
 				WebDriverWait(wd, 5).until(EC.element_to_be_clickable(((By.NAME, "pastDepositionBtnDownload2")))).click()
-				time.sleep(1)
 				self.download()
-
 		else:
 			print("Deposition info isn't same ")
 
@@ -62,27 +60,4 @@ class DepoDownload:
 			ActionChains(wd).move_to_element(
 				wd.find_element(By.CSS_SELECTOR, "div[data-name='fileTitle']")
 			).move_by_offset(-100, 0).click().release().perform()
-
-		else:
-			print("Transcript not found")
-
-	def details_deposition(self):
-		wd = self.app.wd
-		#opposing counsel
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "pastDepositionBtnDetails2"))).click()
-		#name
-		# wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoFullNameRow']").get_attribute('textContent')
-		# #email
-		# wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoEmailRow']").get_attribute('textContent')
-		# #phone
-		# wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoPhoneRow']").get_attribute('textContent')
-		#
-		# #about depo date, deponent, address
-
-		#download depo
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "InfoHeaderButton"))).click()
-		self.download()
-
-
-
-
+		time.sleep(1)

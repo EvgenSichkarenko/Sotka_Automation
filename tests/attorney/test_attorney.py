@@ -1,5 +1,6 @@
 import pytest
 from data.data_model.data_deposition_case import deposition
+import time
 
 
 """add secretary"""
@@ -42,14 +43,13 @@ def test_add_photo_attorney(app):
 @pytest.mark.parametrize("deposition", deposition)
 def test_depo_info(app, deposition):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
-	app.depo_info.search_deposition(deposition.name)
-	app.depo_info.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
+	app.depo_info_att.search_deposition(deposition.name)
+	app.depo_info_att.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
 
 """test depo details info attorney"""
-# @pytest.mark.parametrize("deposition", deposition)
-# def test_detail_depo(app, deposition):
-# 	app.session.login(login="a1@tafmail.com", password="123Qwer")
-# 	app.depo_details.details()
-# 	app.depo_details.check_data()
-
+@pytest.mark.parametrize("deposition", deposition)
+def test_detail_depo(app, deposition):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
+	app.depo_details.details()
+	app.depo_details.check_data()
 """"""
