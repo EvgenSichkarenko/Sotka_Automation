@@ -13,7 +13,6 @@ class DepoDownloadAtt:
 		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH,
 		"//div[text()='Mark John Decastro']"))).get_attribute("textContent")
 
-
 	def search_deposition(self, name):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until((EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn")))).click()
@@ -22,8 +21,6 @@ class DepoDownloadAtt:
 
 		if len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='pdBlockList']")) > 0:
 			pass
-		else:
-			print("Search by name is not work")
 
 	def check_info_deposition(self, name, deponent, date):
 		wd = self.app.wd
@@ -43,21 +40,9 @@ class DepoDownloadAtt:
 			time.sleep(1)
 			if (name_cr == name_attorney and name_deponent == deponent):
 				WebDriverWait(wd, 5).until(EC.element_to_be_clickable(((By.NAME, "pastDepositionBtnDownload2")))).click()
-				self.download()
-		else:
-			print("Deposition info isn't same ")
-
-		time.sleep(1)
-
-	#download transcript through details
-	def download(self):
-		wd = self.app.wd
-		title_documents = wd.find_element(By.CSS_SELECTOR, "div[data-name='downloadsTitle']").text
-		time.sleep(1)
-		if title_documents == 'Documents':
-			time.sleep(1)
-			wd.find_element(By.CSS_SELECTOR, "div[data-name='fileTitle']").click()
-			ActionChains(wd).move_to_element(
-				wd.find_element(By.CSS_SELECTOR, "div[data-name='fileTitle']")
-			).move_by_offset(-100, 0).click().release().perform()
+				WebDriverWait(wd, 10).until(
+					EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='fileTitle']"))).click()
+				ActionChains(wd).move_to_element(
+					wd.find_element(By.CSS_SELECTOR, "div[data-name='fileTitle']")
+				).move_by_offset(-100, 0).click().release().perform()
 		time.sleep(1)

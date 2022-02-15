@@ -37,5 +37,8 @@ class DepoDownloadCR:
 			if (name_att == name_attorney and name_deponent == deponent):
 				WebDriverWait(wd, 5).until(EC.element_to_be_clickable(((By.NAME, "pastDepositionBtnDownload2")))).click()
 				WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='fileTitle']"))).click()
+				ActionChains(wd).move_to_element(
+					wd.find_element(By.CSS_SELECTOR, "div[data-name='fileTitle']")
+				).move_by_offset(-100, 0).click().release().perform()
 		time.sleep(1)
 

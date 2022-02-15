@@ -13,6 +13,7 @@ from pages.edit_price_cr import EditPrice
 from pages.past_depo_att_details import DepoDetailsAtt
 from pages.schedual_cr import Schedual
 from pages.past_depo_cr_download import DepoDownloadCR
+from pages.past_depo_cr_details import DepoDetailsCr
 
 class Application:
 
@@ -30,9 +31,10 @@ class Application:
 		self.add_photo = Photo(self)
 		self.depo_info_att = DepoDownloadAtt(self)
 		self.edit_price = EditPrice(self)
-		self.depo_details = DepoDetailsAtt(self)
+		self.depo_details_att = DepoDetailsAtt(self)
 		self.schedule = Schedual(self)
 		self.depo_info_cr = DepoDownloadCR(self)
+		self.depo_details_cr = DepoDetailsCr(self)
 
 	def is_valid(self):
 		try:

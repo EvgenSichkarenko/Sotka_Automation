@@ -45,11 +45,15 @@ def test_depo_info(app, deposition):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.depo_info_att.search_deposition(deposition.name)
 	app.depo_info_att.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
+	app.session.logout()
 
 """test depo details info attorney"""
 @pytest.mark.parametrize("deposition", deposition)
 def test_detail_depo(app, deposition):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
-	app.depo_details.details()
-	app.depo_details.check_data()
-""""""
+	app.depo_details_att.open_details()
+	app.depo_details_att.check_deposition_data(deposition.name, deposition.deponent, deposition.attorney)
+	app.depo_details_att.check_op_data()
+	app.depo_details_att.details()
+	time.sleep(1)
+

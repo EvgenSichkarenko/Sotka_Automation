@@ -44,9 +44,21 @@ def test_schedual_cr(app):
 	app.schedule.save_schedual()
 	app.session.logout()
 
-"""test serch and download transcript cr"""
+"""test search and download transcript cr"""
 @pytest.mark.parametrize("deposition", deposition)
-def test_search_download_transcript_test(app, deposition):
+def test_search_download_transcript(app, deposition):
 	app.session.login(login="crdev@givmail.com", password="1234Qwer")
 	app.depo_info_cr.search_deposition_cr(deposition.name)
 	app.depo_info_cr.check_info_deposition_cr(deposition.name, deposition.deponent, deposition.date)
+	app.session.logout()
+
+"""test past deposition details cr"""
+@pytest.mark.parametrize("deposition", deposition)
+def test_past_depodetails(app, deposition):
+	app.session.login(login="crdev@givmail.com", password="1234Qwer")
+	app.depo_details_cr.open_details()
+	app.depo_details_cr.check_deposition_data(deposition.name, deposition.deponent, deposition.attorney)
+	app.depo_details_cr.check_op_data()
+	#нету атрибутов
+	app.depo_details_cr.check_invoice()
+	app.session.logout()
