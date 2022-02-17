@@ -57,3 +57,11 @@ def test_detail_depo(app, deposition):
 	app.depo_details_att.details()
 	time.sleep(1)
 
+"""test deposition create"""
+@pytest.mark.parametrize("deposition", deposition)
+def test_deposition_create(app, deposition):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
+	app.deposition.name_deposition(deposition.name)
+	app.deposition.deponent_deposition(deposition.deponent)
+	app.deposition.location_deposition(deposition.address)
+	time.sleep(2)
