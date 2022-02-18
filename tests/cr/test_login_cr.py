@@ -61,3 +61,12 @@ def test_past_depodetails(app, deposition, edit_price):
 	app.depo_details_cr.check_deposition_data(deposition.name, deposition.deponent, deposition.attorney)
 	app.depo_details_cr.check_op_data()
 	app.depo_details_cr.check_invoice(edit_price.appearance_fee, edit_price.page_cost, edit_price.expert_page_cost, edit_price.travel)
+
+
+"""test calendar cr"""
+def test_calendar_cr(app):
+	app.session.login(login="crdev@givmail.com", password="1234Qwer")
+	app.calendar_cr.day()
+	assert app.calendar_cr.text_no_deposition() == 'There are no meetings today'
+	app.calendar_cr.show_all_btn()
+	assert app.calendar_cr.count() == 1

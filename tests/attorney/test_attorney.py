@@ -74,4 +74,3 @@ def test_calendar_att(app):
 	assert app.calendar_att.text_no_deposition() == 'There are no meetings today'
 	app.calendar_att.show_all_btn()
 	assert app.calendar_att.count() == 1
-
