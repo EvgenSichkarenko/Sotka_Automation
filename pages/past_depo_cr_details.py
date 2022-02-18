@@ -45,23 +45,26 @@ class DepoDetailsCr:
 		assert email_cr
 		assert phone_cr
 
-	def check_invoice(self):
+	def check_invoice(self, appearance_fee, page_cost, expert_page_cost, travel, ):
 		wd = self.app.wd
 
-		appearance_fee = wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoFullNameRow']").get_attribute(
+		# 0.1$
+		appearan_fee = wd.find_element(By.CSS_SELECTOR, "div[data-name='invoiceAppearanceFeeValue']").get_attribute(
 			'textContent')
-		page_cost = wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoEmailRow']").get_attribute(
+		# 0.1$
+		pag_cost = wd.find_element(By.CSS_SELECTOR, "div[data-name='invoiceIsPageValue']").get_attribute(
 			'textContent')
-		pages = wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoPhoneRow']").get_attribute(
+		# 0.30000000000000004$
+		pages = wd.find_element(By.CSS_SELECTOR, "div[data-name='invoicePageCostValue']").get_attribute(
 			'textContent')
-		travel = wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoFullNameRow']").get_attribute(
+		# 0.1$
+		travell = wd.find_element(By.CSS_SELECTOR, "div[data-name='invoiceTravelValue']").get_attribute(
 			'textContent')
-		total = wd.find_element(By.CSS_SELECTOR, "div[data-name='PDInfoEmailRow']").get_attribute(
+		# 0.5$
+		total = wd.find_element(By.CSS_SELECTOR, "div[data-name='invoiceTotalValue']").get_attribute(
 			'textContent')
 
-
-
-
-
-
-
+		# assert appearan_fee == appearance_fee
+		# assert pag_cost == page_cost
+		# assert pages == expert_page_cost
+		# assert travell == travel

@@ -54,11 +54,10 @@ def test_search_download_transcript(app, deposition):
 
 """test past deposition details cr"""
 @pytest.mark.parametrize("deposition", deposition)
-def test_past_depodetails(app, deposition):
+@pytest.mark.parametrize("edit_price", edit_price)
+def test_past_depodetails(app, deposition, edit_price):
 	app.session.login(login="crdev@givmail.com", password="1234Qwer")
 	app.depo_details_cr.open_details()
 	app.depo_details_cr.check_deposition_data(deposition.name, deposition.deponent, deposition.attorney)
 	app.depo_details_cr.check_op_data()
-	#нету атрибутов
-	app.depo_details_cr.check_invoice()
-	app.session.logout()
+	app.depo_details_cr.check_invoice(edit_price.appearance_fee, edit_price.page_cost, edit_price.expert_page_cost, edit_price.travel)

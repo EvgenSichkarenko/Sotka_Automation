@@ -64,4 +64,14 @@ def test_deposition_create(app, deposition):
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)
 	app.deposition.location_deposition(deposition.address)
+
+
+"""test calendar attorney"""
+def test_calendar_att(app):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	time.sleep(2)
+	app.calendar_att.saturday()
+	assert app.calendar_att.text_no_deposition() == 'There are no meetings today'
+	app.calendar_att.show_all_btn()
+	assert app.calendar_att.count() == 1
+
