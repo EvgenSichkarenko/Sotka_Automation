@@ -17,6 +17,7 @@ from pages.past_depo_cr_details import DepoDetailsCr
 from pages.deposition_case import DepositionCase
 from pages.calendar_att import CalendarAtt
 from pages.calendar_cr import CalendarCr
+from pages.att_deposition_info import AttDepoInfo
 
 class Application:
 
@@ -41,6 +42,7 @@ class Application:
 		self.deposition = DepositionCase(self)
 		self.calendar_att = CalendarAtt(self)
 		self.calendar_cr = CalendarCr(self)
+		self.att_finish_depo = AttDepoInfo(self)
 
 	def is_valid(self):
 		try:
