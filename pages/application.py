@@ -18,6 +18,8 @@ from pages.deposition_case import DepositionCase
 from pages.calendar_att import CalendarAtt
 from pages.calendar_cr import CalendarCr
 from pages.att_deposition_info import AttDepoInfo
+from pages.cr_deposition_info import CrDepoInfo
+from pages.att_find_att import FindAtt
 
 class Application:
 
@@ -43,6 +45,8 @@ class Application:
 		self.calendar_att = CalendarAtt(self)
 		self.calendar_cr = CalendarCr(self)
 		self.att_finish_depo = AttDepoInfo(self)
+		self.cr_finish_depo = CrDepoInfo(self)
+		self.find_att = FindAtt(self)
 
 	def is_valid(self):
 		try:

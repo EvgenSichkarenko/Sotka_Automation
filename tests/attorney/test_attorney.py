@@ -78,7 +78,7 @@ def test_calendar_att(app):
 	app.calendar_att.show_all_btn()
 	assert app.calendar_att.count() == 1
 
-"""test deposition info"""
+"""test deposition info att"""
 @pytest.mark.parametrize("attorneys", attorneys)
 @pytest.mark.parametrize("deposition", deposition)
 @pytest.mark.parametrize("op", op)
@@ -89,3 +89,11 @@ def test_info_deposition_att(app, attorneys, op, cr, deposition):
 	assert app.att_finish_depo.op_info(op.name, op.email, op.phone)
 	assert app.att_finish_depo.cr_info(cr.name, cr.email, cr.phone, cr.address)
 	assert app.att_finish_depo.att_info(attorneys.name, attorneys.email, attorneys.phone)
+
+"""test searcj attorney"""
+def test_search_attorney(app):
+	app.session.login(login="a1@tafmail.com", password="123Qwer")
+	app.find_att.input(name="Decastro")
+	assert app.find_att.result() == "Mark John Decastro"
+	app.find_att.input(name="1234")
+	assert app.find_att.count() == 0

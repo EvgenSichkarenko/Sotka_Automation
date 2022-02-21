@@ -1,6 +1,8 @@
 import time
 from data.data_model.data_deposition_case import deposition
 from data.data_model.data_edit_price import edit_price
+from data.data_model.data_test_attorney import attorneys
+from data.data_model.data_test_op import op
 import pytest
 
 
@@ -70,3 +72,17 @@ def test_calendar_cr(app):
 	assert app.calendar_cr.text_no_deposition() == 'There are no meetings today'
 	app.calendar_cr.show_all_btn()
 	assert app.calendar_cr.count() == 1
+
+
+"""test deposition info cr"""
+@pytest.mark.parametrize("attorneys", attorneys)
+@pytest.mark.parametrize("deposition", deposition)
+@pytest.mark.parametrize("op", op)
+def test_info_deposition_att(app, attorneys, op, deposition):
+	app.session.login(login="crdev@givmail.com", password="1234Qwer")
+	assert app.cr_finish_depo.deposition_info(deposition.attorney, deposition.address)
+	assert app.cr_finish_depo.op_info(op.name, op.email, op.phone)
+	assert app.cr_finish_depo.att_info(attorneys.name, attorneys.email, attorneys.phone)
+	#assert app.cr_finish_depo.price_info()
+
+
