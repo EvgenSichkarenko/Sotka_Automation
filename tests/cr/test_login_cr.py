@@ -44,6 +44,10 @@ def test_schedual_cr(app):
 	app.schedule.change_time_saturday()
 	app.schedule.change_time_sunday()
 	app.schedule.save_schedual()
+	app.schedule.open()
+	assert app.schedule.check_data()
+	app.schedule.return_data()
+	app.schedule.save_schedual()
 	app.session.logout()
 
 """test search and download transcript cr"""

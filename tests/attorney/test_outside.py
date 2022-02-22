@@ -21,6 +21,7 @@ def test_registr_attorney(app,regisrt_data):
 	app.regAttorney.bank_account_button()
 	app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
+	time.sleep(1)
 	#assert app.regAttorney.login_present() == 'Login'
 
 

@@ -34,7 +34,6 @@ class AttDepoInfo:
 		else:
 			return False
 
-
 	def att_info(self, name, email, phone):
 		wd = self.app.wd
 		name_att = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyCompFullName1']").get_attribute(
@@ -48,7 +47,6 @@ class AttDepoInfo:
 			return True
 		else:
 			return False
-
 
 	def cr_info(self, name, email, phone, address):
 		wd = self.app.wd

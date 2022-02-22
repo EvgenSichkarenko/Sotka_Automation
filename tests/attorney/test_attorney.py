@@ -90,7 +90,7 @@ def test_info_deposition_att(app, attorneys, op, cr, deposition):
 	assert app.att_finish_depo.cr_info(cr.name, cr.email, cr.phone, cr.address)
 	assert app.att_finish_depo.att_info(attorneys.name, attorneys.email, attorneys.phone)
 
-"""test searcj attorney"""
+"""test search attorney"""
 def test_search_attorney(app):
 	app.session.login(login="a1@tafmail.com", password="123Qwer")
 	app.find_att.input(name="Decastro")

@@ -15,6 +15,7 @@ class DepositionCase:
 		wd = self.app.wd
 		WebDriverWait(wd,  10).until(EC.element_to_be_clickable((By.NAME, "attorneyHomeNewDepBtn"))).click()
 		input = wd.find_element(By.CSS_SELECTOR, "input[data-name='caseNameSearchInput']")
+		time.sleep(1)
 		input.send_keys(name)
 		#open deponent page
 		input.send_keys(Keys.ENTER)
@@ -42,8 +43,40 @@ class DepositionCase:
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationByZoomBtn"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
 
+	def finish_att(self, name, email, phone):
+		wd = self.app.wd
 
-		# WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
-		# WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
+		att_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompFullName']").get_attribute("textContent")
+		email_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompEmailValue']").get_attribute("textContent")
+		phone_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompPhoneValue']").get_attribute(
+			"textContent")
+		if (att_finish == name) and (email_finish == email) and (phone_finish == phone):
+			return True
+		else:
+			return False
 
+	"""need change"""
+	def finish_cr(self, name, email, phone):
+		wd = self.app.wd
 
+		att_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompFullName']").get_attribute("textContent")
+		email_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompEmailValue']").get_attribute("textContent")
+		phone_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompPhoneValue']").get_attribute(
+			"textContent")
+		if (att_finish == name) and (email_finish == email) and (phone_finish == phone):
+			return True
+		else:
+			return False
+
+	"""need change"""
+	def finish_op(self, name, email, phone):
+		wd = self.app.wd
+
+		att_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompFullName']").get_attribute("textContent")
+		email_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompEmailValue']").get_attribute("textContent")
+		phone_finish = wd.find_element(By.CSS_SELECTOR, "div [data-name='attorneyCompPhoneValue']").get_attribute(
+			"textContent")
+		if (att_finish == name) and (email_finish == email) and (phone_finish == phone):
+			return True
+		else:
+			return False
