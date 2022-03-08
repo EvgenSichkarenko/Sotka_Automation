@@ -3,11 +3,11 @@ import time
 from pages.application import Application
 from data.data_model.data_registr_cr import cr_data
 
-
+@pytest.mark.login
 def test_login_cr(app):
 	app.login.login(invalid_login="a13", invalid_password="13",
 		valid_login="crdev@givmail.com", valid_password="1234Qwer")
-	assert app.session.text_name_attribute_cr() == "Евгений Сичкаренко"
+	assert app.session.text_name_attribute_cr() == "Евгений Сичкаренко "
 	app.login.logout()
 
 @pytest.mark.parametrize("cr_data", cr_data)

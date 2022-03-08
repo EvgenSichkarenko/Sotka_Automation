@@ -17,17 +17,17 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		"div[data-name='headerExitIconDiv']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH, "//ul/li[text()='Log Out']"))).click()
 
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH, "//div[text()='Mark John Decastro']"))).get_attribute("textContent")
+		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_secretary(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH, "//div[text()='Ella Nila']"))).get_attribute("textContent")
+		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_cr(self):
 		wd = self.app.wd

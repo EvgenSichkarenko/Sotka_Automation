@@ -8,8 +8,7 @@ edit_price = [EditPrice(
     estimated="2",
     turn_around_page='5',
     copy='100',
-	cancellation_fee="2",
-	cancellation_terms="12",
+	cancellation_fee="2"
 
 ),
                    # ...

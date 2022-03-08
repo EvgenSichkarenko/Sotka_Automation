@@ -31,5 +31,5 @@ class Login:
 
 	def logout(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		"div[data-name='headerExitIconDiv']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH, "//ul/li[text()='Log Out']"))).click()

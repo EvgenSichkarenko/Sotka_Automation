@@ -3,13 +3,12 @@ import time
 from data.data_model.data_registr_attorney import regisrt_data
 
 
-
+@pytest.mark.login
 def test_login_attorney(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="a1@tafmail.com", valid_password="123Qwer")
-	assert "Mark John Decastro" == app.session.text_name_attribute_attroney()
+		valid_login="testatt1@inboxbear.com", valid_password="1234Qwer")
+	assert "Joel William Meskin " == app.session.text_name_attribute_attroney()
 	app.login.logout()
-
 
 
 @pytest.mark.parametrize("regisrt_data", regisrt_data)
@@ -26,8 +25,9 @@ def test_registr_attorney(app,regisrt_data):
 
 
 """login secretary"""
+@pytest.mark.login
 def test_login_secretary(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="secretary02@zetmail.com", valid_password="123Qwer" )
-	assert "Ella Nila" == app.session.text_name_attribute_secretary()
+		valid_login="testsecr@inboxbear.com", valid_password="1234Qwer" )
+	assert "Ella Test " == app.session.text_name_attribute_secretary()
 	app.login.logout()
