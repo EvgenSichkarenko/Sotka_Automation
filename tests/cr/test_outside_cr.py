@@ -10,6 +10,7 @@ def test_login_cr(app):
 	assert app.session.text_name_attribute_cr() == "Евгений Сичкаренко "
 	app.login.logout()
 
+
 @pytest.mark.parametrize("cr_data", cr_data)
 def test_reg_cr(app, cr_data):
 	app.cr.cr_registration_form(cr_data.bar_number)
