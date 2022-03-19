@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -16,22 +17,31 @@ class EditPrice:
 
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='priceButtonEdit']"))).click()
 
-		wd.find_element(By.NAME, "appearanceFee").clear()
-		wd.find_element(By.NAME, "appearanceFee").send_keys(appearance_fee)
-		wd.find_element(By.NAME, "pageCost").clear()
-		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "pageCost"))).send_keys(page_cost)
-		wd.find_element(By.NAME, "expertPageCost").clear()
-		wd.find_element(By.NAME, "expertPageCost").send_keys(expert_page_cost)
-		wd.find_element(By.NAME, "travel").clear()
-		wd.find_element(By.NAME, "travel").send_keys(travel)
-		wd.find_element(By.NAME, "estimated").clear()
-		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "estimated"))).send_keys(estimated)
-		wd.find_element(By.NAME, "turnAroundTime").clear()
-		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "turnAroundTime"))).send_keys(turn_around_page)
-		wd.find_element(By.NAME, "copy").clear()
-		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "copy"))).send_keys(copy_of_origin_transcript)
-		wd.find_element(By.NAME, "cancellation").clear()
-		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "cancellation"))).send_keys(cancellation_fee)
+		appearanceFee = wd.find_element(By.NAME, "appearanceFee")
+		pageCost = wd.find_element(By.NAME, "pageCost")
+		expertPageCost = wd.find_element(By.NAME, "expertPageCost")
+		travels = wd.find_element(By.NAME, "travel")
+		estimate = wd.find_element(By.NAME, "estimated")
+		turnAroundTime = wd.find_element(By.NAME, "turnAroundTime")
+		copy = wd.find_element(By.NAME, "copy")
+		cancellation = wd.find_element(By.NAME, "cancellation")
+
+		self.clear_attribute(appearanceFee,appearance_fee)
+		self.clear_attribute(pageCost, page_cost)
+		self.clear_attribute(expertPageCost, expert_page_cost)
+		self.clear_attribute(travels, travel)
+		self.clear_attribute(estimate, estimated)
+		self.clear_attribute(turnAroundTime, turn_around_page)
+		self.clear_attribute(copy, copy_of_origin_transcript)
+		self.clear_attribute(cancellation, cancellation_fee)
+
+
+	def clear_attribute(self, element, data):
+		wd = self.app.wd
+		element.click()
+		element.send_keys(Keys.CONTROL + "A")
+		element.send_keys(Keys.BACK_SPACE)
+		element.send_keys(data)
 
 	def appearance_fee(self):
 		wd = self.app.wd

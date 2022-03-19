@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+import time
 
 
 class Login:
@@ -13,21 +15,29 @@ class Login:
 		self.check_valid_login(invalid_login, invalid_password)
 		invalid_email = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
 		"//span[text()='login must be a valid email']")))
-		invalid_passwor = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
+		invalid_pasword = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
 		"//span[text()='Min 6']")))
 
-		if invalid_email and invalid_passwor:
+		if invalid_email and invalid_pasword:
 			self.check_valid_login(valid_login, valid_password)
+			print(123)
 		else:
 			print("validation isn't works")
 
 	def check_valid_login(self, text1, text2):
 		wd = self.app.wd
-		wd.find_element(By.NAME, "login").clear()
-		wd.find_element(By.NAME, "login").send_keys(text1)
-		wd.find_element(By.NAME, "password").clear()
-		wd.find_element(By.NAME, "password").send_keys(text2)
-		wd.find_element(By.NAME, "registrationSignInBtn").click()
+
+		login = WebDriverWait(wd, 10).until(
+			EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='login']")))
+		login.send_keys(Keys.CONTROL + "a")
+		login.send_keys(Keys.BACK_SPACE)
+		login.send_keys(text1)
+
+		password = wd.find_element(By.CSS_SELECTOR, "input[name='password']")
+		password.send_keys(Keys.CONTROL + "a")
+		password.send_keys(Keys.BACK_SPACE)
+		password.send_keys(text2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='registrationSignInBtn']").click()
 
 	def logout(self):
 		wd = self.app.wd

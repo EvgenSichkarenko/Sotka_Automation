@@ -11,12 +11,12 @@ class Creditcard:
 
 	def credit_card(self, card_number, expiry_date, cvv):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		"div[data-name='headerCardIconDiv']"))).click()
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME,
-		"companyPaymentAddNewCardBtn"))).click()
-		title = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-name='ModalPaymentTitle']"))).text
-		if title == 'Modal Payment':
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID,"basic-button"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH,
+		"//ul/li//div[text()=' Add new credit card']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME,"companyPaymentAddNewCardBtn"))).click()
+		title = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH, "//h1 [text()='Add your credit card']"))).text
+		if title == 'Add your credit card':
 			wd.find_element(By.NAME, "modalPaymentCardNumber").click()
 			wd.find_element(By.NAME, "modalPaymentCardNumber").send_keys(card_number)
 			wd.find_element(By.NAME, "modalPaymentExpDate").click()
@@ -24,7 +24,11 @@ class Creditcard:
 			wd.find_element(By.NAME, "modalPaymentCvv").click()
 			wd.find_element(By.NAME, "modalPaymentCvv").send_keys(cvv)
 			wd.find_element(By.NAME, "modalPaymentSaveCardBtn").click()
+
+		successfully_add_card = WebDriverWait(wd, 5).until(EC.presence_of_element_located((
+			By.XPATH, "//div [text()='Card has been successfully added']"))).text
+		assert successfully_add_card == 'Card has been successfully added'
+
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
-		#wd.find_element(By.CSS_SELECTOR, "div[data-name='ModalDeleteBtn']").click()
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		"div[data-name='headerCardIconDiv']"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()
+

@@ -1,0 +1,7 @@
+.idea
+.pytest_cache
+__pycache__\
+.test\.pytest_cache
+.test\.attorney\.pytest_cache
+.test\.cr\.pytest_cache
+.reports\*

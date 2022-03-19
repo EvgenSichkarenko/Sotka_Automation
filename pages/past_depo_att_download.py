@@ -11,13 +11,13 @@ class DepoDownloadAtt:
 	def text_name_attroney(self):
 		wd = self.app.wd
 		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH,
-		"//div[text()='Mark John Decastro']"))).get_attribute("textContent")
+		"//div[text()='Joel William Meskin']"))).get_attribute("textContent")
 
 	def search_deposition(self, name):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until((EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn")))).click()
 		#search input
-		wd.find_element(By.NAME, "searchInput").send_keys(name)
+		wd.find_element(By.CSS_SELECTOR, "div [data-name='searchInputBlock'] input").send_keys(name)
 
 		if len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='pdBlockList']")) > 0:
 			pass
@@ -27,13 +27,13 @@ class DepoDownloadAtt:
 		name_attorney = self.text_name_attroney()
 		#name of deposition case
 		time.sleep(1)
-		name_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionTitle2']").get_attribute("textContent")
+		name_dep = wd.find_element(By.CSS_SELECTOR, "div[data-name='pastDepositionTitle1186']").get_attribute("textContent")
 		#data
-		data_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionDate2']").get_attribute("textContent")
+		data_dep = wd.find_element(By.CSS_SELECTOR, "div[data-name='pastDepositionDateBlock1186']").get_attribute("textContent")
 		#name creator
-		name_cr = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionCreatedBy2']").get_attribute("textContent")
+		name_cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='pastDepositionCreatedBy1186']").get_attribute("textContent")
 		#name deponent
-		name_deponent = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionPrice2']").get_attribute("textContent")
+		name_deponent = wd.find_element(By.CSS_SELECTOR, "div[data-name='pastDepositionPrice1186']").get_attribute("textContent")
 		#print(name_dep, name, data_dep, date,name_cr, name_attorney,  name_deponent, deponent)
 		time.sleep(1)
 		if (name_dep == name and data_dep == date):

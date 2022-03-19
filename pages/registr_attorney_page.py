@@ -28,11 +28,16 @@ class RegistrAttorney:
 		wd.find_element(By.CSS_SELECTOR, "span[data-name='stepTwoCheckboxAgreeSpan']").click()
 		wd.find_element(By.NAME, "stepTwoContinueBtn").click()
 
-	def fill_form(self, email, bar_number):
+	def fill_form(self, email, bar_number,phone_number):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
 			(By.CSS_SELECTOR, "input[name='email']"
 		))).send_keys(email)
+		phone = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "phone_number")))
+		phone_value = phone.get_property("value")
+		if phone_value == "":
+			phone.send_keys(phone_number)
+
 		value = wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").get_property("value")
 		if value == bar_number:
 			wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
@@ -45,8 +50,8 @@ class RegistrAttorney:
 
 	def add_secretary(self, name_secretary, email_secretary):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.NAME, "full_name"))).send_keys(name_secretary)
-		wd.find_element(By.NAME, "email").send_keys(email_secretary)
+		# WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.NAME, "full_name"))).send_keys(name_secretary)
+		# wd.find_element(By.NAME, "email").send_keys(email_secretary)
 		wd.find_element(By.NAME, "addSecretaryContinueBtn").click()
 		# WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
 		# 	(By.NAME, "addSecretarySkipBtn"))).click()
@@ -87,4 +92,6 @@ class RegistrAttorney:
 	def login_present(self):
 		wd = self.app.wd
 		#return WebDriverWait(wd, 5).until(EC.visibility_of((By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
-		return wd.find_element(By.CSS_SELECTOR, "a[data-name='endStepLinkLink']").get_attribute("textContent")
+		#return wd.find_element(By.CSS_SELECTOR, "a[data-name='endStepLinkLink']").get_attribute("textContent")
+		return WebDriverWait(wd, 10).until(EC.visibility_of_element_located((
+			By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")

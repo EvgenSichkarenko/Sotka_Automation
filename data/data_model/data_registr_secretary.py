@@ -1,9 +1,11 @@
 from model.model_registr_secretary import ModelSecretary
+import datetime
 
-regisrt_data = [ModelSecretary(
-    secr_email="secretary01zetmail.com",
-    secr_fullname="Ella Nicka",
+email = "secreatry" + datetime.datetime.now().strftime("%Y_%H_%M_%S") + "@zetmail.com"
 
+regisrt_secr = [ModelSecretary(
+    secr_email=email,
+    secr_fullname="Ella",
 ),
                    # ...
                    ]

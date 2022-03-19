@@ -1,6 +1,6 @@
 class ModelRegisrtAttorney:
 	def __init__(self, bar_number=None, email=None, password=None, valid_password=None, invalid_password=None,
-			password_match=None, name_secretary= None, email_secretary=None ):
+			password_match=None, name_secretary= None, email_secretary=None, phone_number=None ):
 		self.bar_number = bar_number
 		self.email = email
 		self.password = password
@@ -9,3 +9,4 @@ class ModelRegisrtAttorney:
 		self.password_match = password_match
 		self.name_secretary = name_secretary
 		self.email_secretary = email_secretary
+		self.phone_number = phone_number

@@ -38,7 +38,7 @@ class Attorney:
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='homeAddNewAttorneyIcon']"))).click()
 
 		#search company using bar number
-		wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").send_keys(att_sbn)
+		wd.find_element(By.CSS_SELECTOR, "div [data-name='searchAutocomplete'] input").send_keys(att_sbn)
 		wd.find_element(By.NAME, "addNewSearchBtnModal").click()
 
 		#send new email and phone number
