@@ -61,7 +61,6 @@ def test_deposition_create(app, deposition):
 	app.deposition.confirm()
 	time.sleep(1)
 
-
 """test depo info attorney"""
 @pytest.mark.parametrize("deposition", deposition)
 def test_depo_info(app, deposition):
