@@ -1,3 +1,4 @@
+import allure
 import pytest
 from data.data_model.data_registr_secretary import regisrt_secr
 from data.data_model.data_deposition_case import deposition
@@ -8,6 +9,8 @@ import time
 
 
 """add secretary"""
+@allure.description("Test add new secretary for attorney company")
+@pytest.mark.login
 @pytest.mark.parametrize("secretary", regisrt_secr)
 def test_add_secreatry(app, secretary):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")

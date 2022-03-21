@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 import time
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
@@ -34,8 +35,9 @@ class Secretary:
 		validation_exist = wd.find_element(By.XPATH, f"//div[text()='User with email: {secr_old_email} is exists']")\
 			.get_attribute("textContent")
 		if validation_exist:
-			self.add_input_data(secr_new_email)
-			time.sleep(2)
+			with allure.step(f"New email for secretary is '{secr_new_email}''"):
+				self.add_input_data(secr_new_email)
+				time.sleep(2)
 #User with email: testSecattr@inboxbear.com is exists
 
 	def add_input_data(self, text):

@@ -1,8 +1,8 @@
 from model.model_registr_cr import ModelRegistrCR
 
 cr_data = [ModelRegistrCR(
-    cr_bar_numbe='120023',
-	cr_email='crtestcr@getnada.com',
+    cr_bar_numbe='120024',
+	cr_email='testcr11@getnada.com',
 	cr_phone_number='+380964512360',
 	cr_full_name='CR Test',
 	cr_issuance_date='2010',
