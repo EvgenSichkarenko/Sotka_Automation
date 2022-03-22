@@ -9,6 +9,7 @@ class Session:
 	def login(self, login, password):
 		wd = self.app.wd
 		self.app.open_login(wd)
+		#wd.execute_script("document.body.style.zoom='75%'")
 		wd.find_element(By.NAME, "login").clear()
 		wd.find_element(By.NAME, "login").send_keys(login)
 		wd.find_element(By.NAME, "password").clear()

@@ -2,6 +2,7 @@ import pytest
 import allure
 from data.data_model.data_registr_cr import cr_data
 from data.data_model.data_registr_attorney import regisrt_data
+from data.data_model.data_registr_secretary import regisrt_secr
 
 
 @allure.description("This test registratio new attorney")
@@ -29,3 +30,29 @@ def test_reg_cr(app, cr_data):
 	app.cr.upload_photo()
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
+
+"""add secretary"""
+@allure.description("Test add new secretary for attorney company")
+@pytest.mark.login
+@pytest.mark.parametrize("secretary", regisrt_secr)
+def test_add_secreatry(app, secretary):
+	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+	app.secretary.contact_person( secr_old_email="testSecattr@inboxbear.com",
+		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
+	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
+	app.session.logout()
+
+
+# """different bar number"""
+# def test_add_attr_dif_company(app):
+# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+# 	app.add_art.attorney_different_company(att_sbn='120001', att_email_old='sotka0@zetmail.com',
+# 		new_email="sotka05@zetmail.com")
+# 	app.session.logout()
+
+# """same bar number"""
+# def test_add_attorney_company(app):
+# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+# 	app.add_art.attorney_company(att_sbn='123456', att_email_old='sotka02@zetmail.com',
+# 		att_phonenumber='+380982542188', new_email='sotka0@zetmail.com')
+# 	app.session.logout()

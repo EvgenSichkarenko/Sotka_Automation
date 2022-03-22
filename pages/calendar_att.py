@@ -9,7 +9,6 @@ class CalendarAtt:
 	def __init__(self, app):
 		self.app = app
 
-
 	def saturday(self):
 		wd = self.app.wd
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='26']"))).click()
@@ -21,8 +20,9 @@ class CalendarAtt:
 
 	def show_all_btn(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "homePageCalendarShowAllBtn"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='calendarShowAllBtn']"))).click()
 
 	def count(self):
 		wd = self.app.wd
-		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] main"))
+		time.sleep(2)
+		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] > div > div"))

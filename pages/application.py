@@ -17,9 +17,8 @@ from pages.past_depo_cr_details import DepoDetailsCr
 from pages.deposition_case import DepositionCase
 from pages.calendar_att import CalendarAtt
 from pages.calendar_cr import CalendarCr
-from pages.att_deposition_info import AttDepoInfo
 from pages.cr_deposition_info import CrDepoInfo
-from pages.att_find_att import FindAtt
+from pages.att_search_att import FindAtt
 
 class Application:
 
@@ -44,7 +43,6 @@ class Application:
 		self.deposition = DepositionCase(self)
 		self.calendar_att = CalendarAtt(self)
 		self.calendar_cr = CalendarCr(self)
-		self.att_finish_depo = AttDepoInfo(self)
 		self.cr_finish_depo = CrDepoInfo(self)
 		self.find_att = FindAtt(self)
 
@@ -57,6 +55,7 @@ class Application:
 
 	def open_login(self, wd):
 		wd = self.wd
+
 		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 		#wd.get("http://sotka.io")
 

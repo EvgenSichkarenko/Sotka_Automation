@@ -19,7 +19,7 @@ class CalendarCr:
 
 	def show_all_btn(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "homePageCalendarShowAllBtn"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='calendarShowAllBtn']"))).click()
 
 	def count(self):
 		wd = self.app.wd

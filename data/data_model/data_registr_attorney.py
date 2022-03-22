@@ -1,7 +1,7 @@
 from model.model_registr_attorney import ModelRegisrtAttorney
 
 regisrt_data = [ModelRegisrtAttorney(
-    bar_number='120031',
+    bar_number='1200',
     email="test111111@getnada.com",
     valid_password="1234Qwer",
     invalid_password="123",

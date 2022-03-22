@@ -8,8 +8,7 @@ class FindAtt:
 
 	def input(self, name):
 		wd = self.app.wd
-		input = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "companyAttorneySearch")))
-		input.clear()
+		input = wd.find_element(By.CSS_SELECTOR, "div[data-name='companyAttorneySearchWrapper'] input")
 		input.send_keys(name)
 
 	def result(self):

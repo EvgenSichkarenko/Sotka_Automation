@@ -1,9 +1,8 @@
 import pytest
 import allure
 
-
 #@allure.epic("Authorization cases")
-
+"""login attorney"""
 @allure.description("This test login attorney with invalid and valid data")
 @pytest.mark.login
 def test_login_attorney(app):
@@ -22,6 +21,9 @@ def test_login_secretary(app):
 	assert "Polina " == app.session.text_name_attribute_secretary()
 	app.login.logout()
 
+
+"""login cr"""
+#@pytest.mark.skip(reason="Check skip this test")
 @allure.description("This test login cour reporter with invalid and valid data")
 @pytest.mark.login
 def test_login_cr(app):

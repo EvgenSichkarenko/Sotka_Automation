@@ -72,10 +72,10 @@ def test_past_depodetails(app, deposition, edit_price):
 """test calendar cr"""
 def test_calendar_cr(app):
 	app.session.login(login="crtestcr@getnada.com", password="1234Qwer")
-	app.calendar_cr.day()
-	assert app.calendar_cr.text_no_deposition() == 'There are no meetings today'
-	app.calendar_cr.show_all_btn()
-	assert app.calendar_cr.count() == 1
+	count_depo = app.calendar_att.count()
+	app.calendar_att.show_all_btn()
+	assert app.calendar_att.count() > count_depo
+	app.session.logout()
 
 
 """test deposition info cr"""
