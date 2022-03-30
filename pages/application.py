@@ -8,9 +8,7 @@ from pages.add_attorney import Attorney
 from pages.login import Login
 from pages.add_card_attorney import Creditcard
 from pages.add_photo import Photo
-from pages.past_depo_att_download import DepoDownloadAtt
 from pages.edit_price_cr import EditPrice
-from pages.past_depo_att_details import DepoDetailsAtt
 from pages.schedual_cr import Schedual
 from pages.past_depo_cr_download import DepoDownloadCR
 from pages.past_depo_cr_details import DepoDetailsCr
@@ -19,6 +17,7 @@ from pages.calendar_att import CalendarAtt
 from pages.calendar_cr import CalendarCr
 from pages.cr_deposition_info import CrDepoInfo
 from pages.att_search_att import FindAtt
+from pages.cr_appearances import CrAppearance
 
 class Application:
 
@@ -34,9 +33,7 @@ class Application:
 		self.login = Login(self)
 		self.att_credit = Creditcard(self)
 		self.add_photo = Photo(self)
-		self.depo_info_att = DepoDownloadAtt(self)
 		self.edit_price = EditPrice(self)
-		self.depo_details_att = DepoDetailsAtt(self)
 		self.schedule = Schedual(self)
 		self.depo_info_cr = DepoDownloadCR(self)
 		self.depo_details_cr = DepoDetailsCr(self)
@@ -45,6 +42,7 @@ class Application:
 		self.calendar_cr = CalendarCr(self)
 		self.cr_finish_depo = CrDepoInfo(self)
 		self.find_att = FindAtt(self)
+		self.cr_appear = CrAppearance(self)
 
 	def is_valid(self):
 		try:
@@ -55,7 +53,7 @@ class Application:
 
 	def open_login(self, wd):
 		wd = self.wd
-
+		wd.delete_all_cookies()
 		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 		#wd.get("http://sotka.io")
 

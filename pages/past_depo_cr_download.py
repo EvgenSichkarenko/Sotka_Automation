@@ -10,19 +10,19 @@ class DepoDownloadCR:
 
 	def search_deposition_cr(self, name):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((
-			By.XPATH, "/html/body/div/section/div[1]/div[1]/button[2]"))).click()
+		WebDriverWait(wd, 5).until(EC.element_to_be_clickable(wd.find_element(By.NAME, "crHomePastDepositionsBtn"))).click()
 		#search input
-		wd.find_element(By.NAME, "searchInput").send_keys(name)
-		if len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='pdBlockList']")) == 1:
-			pass
+		wd.find_element(By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input").send_keys(name)
+		if len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='pdBlockList'] > div")) == 1:
+			return
+
 
 
 	def check_info_deposition_cr(self, name, deponent, date):
 		wd = self.app.wd
 		name_attorney = "Mark John Decastro"
+		block = wd.find_elements(By.CSS_SELECTOR, "div[data-name='pdBlockList']")
 		#name of deposition case
-		time.sleep(1)
 		name_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionTitle2']").get_attribute("textContent")
 		#data
 		data_dep = wd.find_element(By.CSS_SELECTOR, "h3[data-name='pastDepositionDate2']").get_attribute("textContent")

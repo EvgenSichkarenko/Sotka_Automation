@@ -1,7 +1,10 @@
 from model.model_test_op import OpposingCouncel
 
 op = [OpposingCouncel(
-	name = "Andrea Elaine Tavenier",
-	email = "peter@getnada.com",
-	phone = "925-957-8601"
+	name = "Gregg Michael Missbach",
+	email = "testop@getnada.com",
+	phone = "+38984521236",
+	name_voting="Susan Calabrese Miller",
+	email_voting="evgen20@yahoo.com",
+	phone_voting="+380984521236"
 )]

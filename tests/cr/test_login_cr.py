@@ -33,22 +33,22 @@ def test_edit_price(app, edit_price):
 	app.session.logout()
 
 """test schedual cr"""
-# def test_schedual_cr(app):
-# 	app.session.login(login="crtestcr@getnada.com", password="1234Qwer")
-# 	app.schedule.open()
-# 	app.schedule.change_time_monday()
-# 	app.schedule.change_time_tuesday()
-# 	app.schedule.change_time_wednesday()
-# 	app.schedule.change_time_thursday()
-# 	app.schedule.change_time_friday()
-# 	app.schedule.change_time_saturday()
-# 	app.schedule.change_time_sunday()
-# 	app.schedule.save_schedual()
-# 	app.schedule.open()
-# 	assert app.schedule.check_data()
-# 	app.schedule.return_data()
-# 	app.schedule.save_schedual()
-# 	app.session.logout()
+def test_schedual_cr(app):
+	app.session.login(login="crtestcr@getnada.com", password="1234Qwer")
+	app.schedule.open()
+	app.schedule.change_time_monday()
+	app.schedule.change_time_tuesday()
+	app.schedule.change_time_wednesday()
+	app.schedule.change_time_thursday()
+	app.schedule.change_time_friday()
+	app.schedule.change_time_saturday()
+	app.schedule.change_time_sunday()
+	app.schedule.save_schedual()
+	app.schedule.open()
+	assert app.schedule.check_data()
+	app.schedule.return_data()
+	app.schedule.save_schedual()
+	app.session.logout()
 
 """test search and download transcript cr"""
 @pytest.mark.parametrize("deposition", deposition)

@@ -1,8 +1,9 @@
 import os.path
-
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 class RegistrAttorney:
 	def __init__(self, app):
@@ -73,7 +74,7 @@ class RegistrAttorney:
 	def password_input_enter(self, valid_password, invalid_password, password_match):
 		wd = self.app.wd
 		self.confirm_password(invalid_password, password_match)
-		valid_pasw = wd.find_element(By.XPATH, "//span[text()='Must Contain 6 Characters']").get_attribute('textContent')
+		valid_pasw = wd.find_element(By.XPATH, "//span[text()='This field should contain at least 6 characters']").get_attribute('textContent')
 		valid_conf_pasw = wd.find_element(By.XPATH, "//span[text()='Passwords must match']").get_attribute('textContent')
 		if valid_pasw and valid_conf_pasw:
 			self.confirm_password(valid_password,valid_password)
@@ -82,10 +83,15 @@ class RegistrAttorney:
 
 	def confirm_password(self, text1, text2):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
-			(By.CSS_SELECTOR, "input[name='password']"))).clear()
+		input = WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
+			(By.CSS_SELECTOR, "input[name='password']")))
+		input.send_keys(Keys.CONTROL + "a")
+		input.send_keys(Keys.BACK_SPACE)
 		wd.find_element(By.CSS_SELECTOR,"input[name='password']" ).send_keys(text1)
-		wd.find_element(By.CSS_SELECTOR, "input[name='confirmPassword']").clear()
+		second_input = wd.find_element(By.CSS_SELECTOR, "input[name='confirmPassword']")
+		second_input.send_keys(Keys.CONTROL + "a")
+		time.sleep(1)
+		second_input.send_keys(Keys.BACK_SPACE)
 		wd.find_element(By.CSS_SELECTOR, "input[name='confirmPassword']").send_keys(text2)
 		wd.find_element(By.NAME, "stepSevenContinueBtn").click()
 

@@ -1,10 +1,4 @@
 import allure
-import pytest
-from data.data_model.data_deposition_case import deposition
-from data.data_model.data_test_op import op
-from data.data_model.data_test_attorney import attorneys
-from data.data_model.data_test_cr import cr
-import time
 
 
 """add credit card"""
@@ -39,39 +33,3 @@ def test_search_attorney(app):
 	assert app.find_att.count() == 1
 	app.session.logout()
 
-#
-# """test deposition case create"""
-# @allure.description("Create deposition case with time manually")
-# @pytest.mark.parametrize("deposition", deposition)
-# def test_deposition_create(app, deposition):
-# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-# 	app.deposition.name_deposition(deposition.name)
-# 	app.deposition.deponent_deposition(deposition.deponent)
-# 	app.deposition.location_deposition(deposition.address)
-# 	app.deposition.attorneys(deposition.sbn_op1)
-# 	app.deposition.set_time_manually()
-# 	app.deposition.upload_doc()
-# 	app.deposition.delivery()
-# 	app.deposition.finish_depo()
-# 	app.deposition.confirm()
-# 	time.sleep(1)
-
-
-"""test depo info attorney"""
-@pytest.mark.parametrize("deposition", deposition)
-def test_depo_info(app, deposition):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.depo_info_att.search_deposition(deposition.name)
-	app.depo_info_att.check_info_deposition(deposition.name, deposition.deponent, deposition.date)
-	app.session.logout()
-
-
-"""test depo details info attorney"""
-@pytest.mark.parametrize("deposition", deposition)
-def test_detail_depo(app, deposition):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.depo_details_att.open_details()
-	app.depo_details_att.check_deposition_data(deposition.name, deposition.deponent, deposition.attorney)
-	app.depo_details_att.check_op_data()
-	app.depo_details_att.details()
-	time.sleep(1)

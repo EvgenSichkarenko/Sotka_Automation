@@ -1,7 +1,7 @@
 from model.model_test_attorney import Attorneys
 
 attorneys = [Attorneys(
-	name = "Mark John Decastro",
-	email = "a1@tafmail.com",
-	phone = "+380982542177"
+	name = "Joel William Meskin",
+	email = "testatt@inboxbear.com",
+	phone = "440-333-6300"
 )]

@@ -13,7 +13,7 @@ class Creditcard:
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID,"basic-button"))).click()
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH,
-		"//ul/li//div[text()=' Add new credit card']"))).click()
+		"//ul/li//div[text()='Add new credit card']"))).click()
 		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME,"companyPaymentAddNewCardBtn"))).click()
 		title = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH, "//h1 [text()='Add your credit card']"))).text
 		if title == 'Add your credit card':

@@ -1,5 +1,5 @@
 selenium
 pytest
 pytest-html
-webdriver-manager
 allure-pytest
+webdriver-manager

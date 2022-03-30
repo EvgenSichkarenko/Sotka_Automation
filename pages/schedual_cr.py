@@ -25,10 +25,12 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl0")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		#wrapper_slider = wd.find_element(By.CSS_SELECTOR, "span[data-name='editTimeSlider']")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_tuesday(self):
@@ -38,10 +40,11 @@ class Schedual:
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper1']").is_displayed()
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl1")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper1']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_wednesday(self):
@@ -52,10 +55,11 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper2']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl2")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper2']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_thursday(self):
@@ -66,10 +70,11 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper3']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl3")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper3']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_friday(self):
@@ -80,10 +85,11 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper4']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl4")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper4']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_saturday(self):
@@ -93,10 +99,11 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl5")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def change_time_sunday(self):
@@ -106,10 +113,11 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']").is_displayed()
 
 		self.check_day(slider,element)
-		wrapper_slider = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl6")
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		time.sleep(1)
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
 	def save_schedual(self):
@@ -134,58 +142,58 @@ class Schedual:
 			"textContent")
 
 		if True:
-			assert monday == "Monday9:00 AM - 5:00 PM"
-			assert tuesday == "Tuesday9:00 AM - 5:00 PM"
-			assert wednesday == "Wednesday9:00 AM - 5:00 PM"
-			assert thursday == "Thursday9:00 AM - 5:00 PM"
-			assert friday == "Friday9:00 AM - 5:00 PM"
-			assert saturday == "Saturday9:00 AM - 5:00 PM"
-			assert sunday == "Sunday9:00 AM - 5:00 PM"
+			assert monday == "Monday8:30 AM - 5:00 PM"
+			assert tuesday == "Tuesday8:30 AM - 5:00 PM"
+			assert wednesday == "Wednesday8:30 AM - 5:00 PM"
+			assert thursday == "Thursday8:30 AM - 5:00 PM"
+			assert friday == "Friday8:30 AM - 5:00 PM"
+			assert saturday == "Saturday8:30 AM - 5:00 PM"
+			assert sunday == "Sunday8:30 AM - 5:00 PM"
 			return True
 
 	def return_data(self):
 		wd = self.app.wd
 		#Monday
-		wrapper_slider1 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl0")
-		ActionChains(wd).move_to_element(wrapper_slider1.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider1.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Tuesday
-		wrapper_slider2 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl1")
-		ActionChains(wd).move_to_element(wrapper_slider2.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider2 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper1']")
+		ActionChains(wd).move_to_element(slider2.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider2.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider2.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Wednesday
-		wrapper_slider3 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl2")
-		ActionChains(wd).move_to_element(wrapper_slider3.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider3 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper2']")
+		ActionChains(wd).move_to_element(slider3.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider3.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider3.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Thursday
-		wrapper_slider4 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl3")
-		ActionChains(wd).move_to_element(wrapper_slider4.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider4 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper3']")
+		ActionChains(wd).move_to_element(slider4.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider4.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider4.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Friday
-		wrapper_slider5 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl4")
-		ActionChains(wd).move_to_element(wrapper_slider5.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider5 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper4']")
+		ActionChains(wd).move_to_element(slider5.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider5.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider5.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Saturday
-		wrapper_slider6 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl5")
-		ActionChains(wd).move_to_element(wrapper_slider6.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider6 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']")
+		ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider6.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		wd.find_element(By.NAME, "editTimeBtn5").click()
 		#Sunday
-		wrapper_slider7 = wd.find_element(By.CSS_SELECTOR, ".ant-slider.editTimeSliderCl6")
-		ActionChains(wd).move_to_element(wrapper_slider7.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-1")
+		slider7 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']")
+		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
-		ActionChains(wd).move_to_element(wrapper_slider7.find_element(By.CSS_SELECTOR, ".ant-slider-handle.ant-slider-handle-2")
+		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		wd.find_element(By.NAME, "editTimeBtn6").click()

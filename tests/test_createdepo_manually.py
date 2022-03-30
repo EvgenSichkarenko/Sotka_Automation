@@ -1,24 +1,62 @@
 import allure
 import pytest
 from data.data_model.data_deposition_case import deposition
+from data.data_model.data_test_op import op
+from data.data_model.data_test_attorney import attorneys
+from data.data_model.data_test_cr import cr
 import time
-
-
 
 """test deposition case manually create"""
 @allure.description("Create deposition case with time manually")
 @pytest.mark.parametrize("deposition", deposition)
-def test_deposition_create(app, deposition):
-	app.session.login(login="test111111@getnada.com", password="1234Qwer")
+@pytest.mark.parametrize("cr", cr)
+@pytest.mark.parametrize("op", op)
+@pytest.mark.parametrize("att", attorneys)
+def test_deposition_create_manually(app, deposition, cr, op, att):
+	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)
-	app.deposition.location_deposition(deposition.address)
-	app.deposition.attorneys(deposition.sbn_op1)
+	app.deposition.location_deposition()
+	app.deposition.attorneys(deposition.sbn_voting, op.name_voting)
 	app.deposition.set_time_manually()
 	app.deposition.upload_doc()
-	app.deposition.delivery(name_cr="CR Test")
-	app.deposition.finish_depo_attorney(deposition.name)
+	app.deposition.delivery(cr.name)
+	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name_voting,op.email_voting
+		,op.phone_voting,
+	cr.name,cr.email,cr.phone)
 	app.deposition.confirm()
-	app.deposition.depo_dashboard(deposition.name)
-	app.deposition.finish_depo_attorney(deposition.name)
+	app.session.logout()
+
+	# app.deposition.depo_dashboard_manualy(deposition.name)
+	# app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email,op.phone,
+	# cr.name,cr.email,cr.phone)
+
+
+# @pytest.mark.parametrize("deposition", deposition)
+# @pytest.mark.parametrize("cr", cr)
+# @pytest.mark.parametrize("op", op)
+# @pytest.mark.parametrize("att", attorneys)
+# def test_chekc_dashboard(app, cr, op, att, deposition):
+# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+# 	app.deposition.depo_dashboard_manualy(deposition.name)
+# 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email,op.phone,
+# 	cr.name,cr.email,cr.phone)
+
+"""test confirm cr appearence"""
+@pytest.mark.parametrize("deposition", deposition)
+@pytest.mark.parametrize("cr", cr)
+@pytest.mark.parametrize("op", op)
+@pytest.mark.parametrize("att", attorneys)
+def test_cr_appearances(app, deposition, cr, op, att):
+	app.session.login(login="testcr16@getnada.com", password="1234Qwer")
+	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.past_deposition(deposition.deponent, att.name)
+	app.cr_appear.upload_transcript(op.name, op.email, op.phone)
+
+
+"""test download any depo from past deposition attorney"""
+def test_att_pastdepo_download(app):
+	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+	app.deposition.download_any_transcript()
 	app.session.logout()

@@ -18,7 +18,6 @@ class CrDepoInfo:
 		else:
 			return False
 
-
 	def op_info(self, name, email, phone):
 		wd = self.app.wd
 		name_op = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorOpposingName']").get_attribute(
@@ -31,7 +30,6 @@ class CrDepoInfo:
 			return True
 		else:
 			return False
-
 
 	def att_info(self, name, email, phone):
 		wd = self.app.wd

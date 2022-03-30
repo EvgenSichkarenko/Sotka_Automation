@@ -1,9 +1,9 @@
 from model.model_test_cr import CourtReporter
 
 cr = [CourtReporter(
-	name = "Евгений Сичкаренко",
-	email = "crdev@givmail.com",
-	phone = "+380982542188",
+	name = "CR Test",
+	email = "testcr16@getnada.com",
+	phone = "+380964512360",
 	address = "Odessa POlina"
 
 )]
