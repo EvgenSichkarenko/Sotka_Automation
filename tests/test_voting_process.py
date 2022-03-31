@@ -18,4 +18,7 @@ def test_deposition_create(app, deposition, op):
 	app.session.logout()
 
 
+def test_email_voting_as_op(app):
+	app.deposition.get_link_from_email()
+	time.sleep(4)
 

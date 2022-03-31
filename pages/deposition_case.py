@@ -6,6 +6,10 @@ from selenium.common.exceptions import NoSuchElementException
 from datetime import datetime, timedelta
 import time
 import os
+import imaplib
+import email
+import sys
+import re
 
 
 class DepositionCase:
@@ -309,7 +313,7 @@ class DepositionCase:
 
 	def email_op_voting(self):
 		wd = self.app.wd
-		wd.get("https://getnada.com/")
+		wd.get("https://login.yahoo.com/")
 
 		login = wd.find_element(By.CSS_SELECTOR, "div#username-country-code-field input")
 		login.send_keys("evgen20@yahoo.com")
@@ -317,9 +321,11 @@ class DepositionCase:
 		password = wd.find_element(By.CSS_SELECTOR, "div#password-container input")
 		password.send_keys("pDLm7$_Wsw+L2P?")
 		password.send_keys(Keys.RETURN)
+
 		#Find Mail box
 		wd.find_element(By.XPATH, "//*[@id='ybar-navigation']//a[text()=' Mail ']").send_keys(Keys.RETURN)
 
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-test-id='virtual-list']")))
 		block_email = wd.find_element(By.CSS_SELECTOR, "div[data-test-id='virtual-list']")
 		item = block_email.find_elements(By.CSS_SELECTOR, "ul > li")[1]
 		item.click()
@@ -328,18 +334,91 @@ class DepositionCase:
 		wd.find_element(By.XPATH, "//a[text()='>>Meet and Confirm<<']").click()
 		time.sleep(1)
 		wd.switch_to.window(wd.window_handles[1])
-		#Select date
+
+		#Select date opposing counsel
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
 		for i in days:
 			time.sleep(2)
 			if i.text == "Select":
 				i.click()
-				wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
-				if count == 4:
-					time.sleep(2)
-					wd.find_element(By.CSS_SELECTOR, "button[name='calendarConfirmBtn']").click()
+				if self.check_el_present == True:
+					wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
 					break
+				else:
+					wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
 
+		wd.find_element(By.CSS_SELECTOR, "button[name='calendarConfirmBtn']")
+		time.sleep(1)
 
+	def check_el_present(self):
+		wd = self.app.wd
+		try:
+			wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']")
+			return True
+		except NoSuchElementException:
+			return False
 
+	#Email
+	def get_link_from_email(self):
+		wd = self.app.wd
+		server = "imap.mail.yahoo.com"
+		port = 993
+		login = "evgen20@yahoo.com"
+		password = "udxyliiyxemzfjww"
 
+		mail = imaplib.IMAP4_SSL(server, port)
+		mail.login(login, password)
+		mail.select()
+		type, data = mail.search(None, "(FROM 'sotka.io')")
+		data = data[0].split()
+		latest_id = data[-1]
+		result, data = mail.fetch(latest_id, "(RFC822)")
+		raw_email = data[0][1]
+
+		message = email.message_from_bytes(raw_email)
+		text, encoding, mime = self.get_message_info(message)
+		print(text)
+		text = str(text)
+		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
+		link = link[0:-1]
+		wd.get(link)
+		time.sleep(1)
+
+	def get_message_info(self,message):
+		"""Получить текст сообщения в правильной кодировке.
+
+		Параметры:
+	        - message: сообщение email.Message.
+
+		Результат:
+	      - message (str): сообщение или строка "Нет тела сообщения";
+	      - encoding (str): кодировка сообщения или "-";
+	      - mime (str): MIME-тип или "-"."""
+
+		# Алгоритм получения текста письма:
+		# - если письмо состоит из нескольких частей
+		# (message.is_multipart()) - необходимо пройти по составным
+		# частям письма: "text/plain" или "text/html"
+		# - если нет - текст можно получить напрямую
+
+		message_text, encoding, mime = "Нет тела сообщения", "-", "-"
+		if message.is_multipart():
+			for part in message.walk():
+				if part.get_content_type() in ("text/html", "text/plain"):
+					message_text, encoding, mime = self.get_part_info(part)
+					break  # Только первое вхождение
+		else:
+			message_text, encoding, mime = self.get_part_info(message)
+
+		return message_text, encoding, mime
+
+	def get_part_info(self,part):
+
+		encoding = part.get_content_charset()
+		if not encoding:
+			encoding = sys.stdout.encoding
+
+		mime = part.get_content_type()
+		message = part.get_payload(decode=True).decode(encoding, errors="ignore").strip()
+
+		return message, encoding, mime
