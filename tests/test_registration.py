@@ -3,7 +3,7 @@ import allure
 from data.data_model.data_registr_cr import cr_data
 from data.data_model.data_registr_attorney import regisrt_data
 from data.data_model.data_registr_secretary import regisrt_secr
-
+import time
 
 @allure.description("This test registratio new attorney")
 @pytest.mark.parametrize("regisrt_data", regisrt_data)
@@ -40,6 +40,7 @@ def test_add_secreatry(app, secretary):
 	app.secretary.contact_person( secr_old_email="testSecattr@inboxbear.com",
 		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
 	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
+	time.sleep(4)
 	app.session.logout()
 
 

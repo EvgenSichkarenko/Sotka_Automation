@@ -311,45 +311,6 @@ class DepositionCase:
 
 		wd.find_element(By.CSS_SELECTOR, "button[name='voteModalApply']").click()
 
-	def email_op_voting(self):
-		wd = self.app.wd
-		wd.get("https://login.yahoo.com/")
-
-		login = wd.find_element(By.CSS_SELECTOR, "div#username-country-code-field input")
-		login.send_keys("evgen20@yahoo.com")
-		login.send_keys(Keys.RETURN)
-		password = wd.find_element(By.CSS_SELECTOR, "div#password-container input")
-		password.send_keys("pDLm7$_Wsw+L2P?")
-		password.send_keys(Keys.RETURN)
-
-		#Find Mail box
-		wd.find_element(By.XPATH, "//*[@id='ybar-navigation']//a[text()=' Mail ']").send_keys(Keys.RETURN)
-
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-test-id='virtual-list']")))
-		block_email = wd.find_element(By.CSS_SELECTOR, "div[data-test-id='virtual-list']")
-		item = block_email.find_elements(By.CSS_SELECTOR, "ul > li")[1]
-		item.click()
-
-		time.sleep(1)
-		wd.find_element(By.XPATH, "//a[text()='>>Meet and Confirm<<']").click()
-		time.sleep(1)
-		wd.switch_to.window(wd.window_handles[1])
-
-		#Select date opposing counsel
-		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
-		for i in days:
-			time.sleep(2)
-			if i.text == "Select":
-				i.click()
-				if self.check_el_present == True:
-					wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
-					break
-				else:
-					wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
-
-		wd.find_element(By.CSS_SELECTOR, "button[name='calendarConfirmBtn']")
-		time.sleep(1)
-
 	def check_el_present(self):
 		wd = self.app.wd
 		try:
@@ -359,7 +320,7 @@ class DepositionCase:
 			return False
 
 	#Email
-	def get_link_from_email(self):
+	def get_link_from_email_op(self):
 		wd = self.app.wd
 		server = "imap.mail.yahoo.com"
 		port = 993
@@ -369,7 +330,7 @@ class DepositionCase:
 		mail = imaplib.IMAP4_SSL(server, port)
 		mail.login(login, password)
 		mail.select()
-		type, data = mail.search(None, "(FROM 'sotka.io')")
+		type, data = mail.search(None, "(FROM 'Trialbase')")
 		data = data[0].split()
 		latest_id = data[-1]
 		result, data = mail.fetch(latest_id, "(RFC822)")
@@ -377,29 +338,58 @@ class DepositionCase:
 
 		message = email.message_from_bytes(raw_email)
 		text, encoding, mime = self.get_message_info(message)
-		print(text)
-		text = str(text)
+		#link = re.search('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', text)
 		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
 		link = link[0:-1]
+		print(link)
 		wd.get(link)
 		time.sleep(1)
 
+		#Select date opposing counsel
+		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
+		for i in days:
+			time.sleep(2)
+			if i.text == "10:00 AM":
+				i.click()
+				wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
+				break
+		time.sleep(1)
+
+	def get_link_from_email_attorney(self, login_att, password_att):
+		wd = self.app.wd
+
+		server = "imap.mail.yahoo.com"
+		port = 993
+		login = "attorney0@yahoo.com"
+		password = "iqdollxuiqxwxozf"
+
+		mail = imaplib.IMAP4_SSL(server, port)
+		mail.login(login, password)
+		mail.select()
+		type, data = mail.search(None, "(FROM 'Trialbase')")
+		data = data[0].split()
+		latest_id = data[-1]
+		result, data = mail.fetch(latest_id, "(RFC822)")
+
+		raw_email = data[0][1]
+		message = email.message_from_bytes(raw_email)
+		text, encoding, mime = self.get_message_info(message)
+		#link = re.search('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', text)
+		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
+		link = link[0:-1]
+		print(link)
+		wd.get(link)
+		time.sleep(2)
+
+		#Login
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='loginHeaderBtn']"))).send_keys(Keys.RETURN)
+
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='email']"))).send_keys(login_att)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password_att)
+		wd.find_element(By.CSS_SELECTOR, "button[name='loginModalBtn']").send_keys(Keys.RETURN)
+		time.sleep(2)
+
 	def get_message_info(self,message):
-		"""Получить текст сообщения в правильной кодировке.
-
-		Параметры:
-	        - message: сообщение email.Message.
-
-		Результат:
-	      - message (str): сообщение или строка "Нет тела сообщения";
-	      - encoding (str): кодировка сообщения или "-";
-	      - mime (str): MIME-тип или "-"."""
-
-		# Алгоритм получения текста письма:
-		# - если письмо состоит из нескольких частей
-		# (message.is_multipart()) - необходимо пройти по составным
-		# частям письма: "text/plain" или "text/html"
-		# - если нет - текст можно получить напрямую
 
 		message_text, encoding, mime = "Нет тела сообщения", "-", "-"
 		if message.is_multipart():
@@ -422,3 +412,37 @@ class DepositionCase:
 		message = part.get_payload(decode=True).decode(encoding, errors="ignore").strip()
 
 		return message, encoding, mime
+
+	def finish_depo_attorney_voting(self, at_name, at_email,at_phone,op_name, op_email, op_phone,
+	cr_name,cr_email,cr_phone):
+		wd = self.app.wd
+		time.sleep(1)
+		#Attorney info
+		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
+		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
+		phone_finish = wd.find_element(By.XPATH, f"//span[text()='{at_phone}']").text
+
+		assert name_attorney == f"{at_name}"
+		assert email_finish == f"{at_email}"
+		assert phone_finish == f"{at_phone}"
+
+		#Op info
+		time.sleep(1)
+		op = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishOpposingCounselBloc']")
+		name_op = op.find_element(By.XPATH, f"//h2[text()='{op_name}']").get_attribute("textContent")
+		email_op = op.find_element(By.XPATH, f"//span[text()='{op_email}']").text
+		phone_op = op.find_element(By.XPATH, f"//span[text()='{op_phone}']").text
+
+		assert name_op == f"{op_name}"
+		assert email_op == f"{op_email}"
+		assert phone_op == f"{op_phone}"
+
+		#Cr info
+		time.sleep(1)
+		name_cr =  WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{cr_name}']"))).text
+		email_cr = wd.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
+		phone_cr = wd.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
+
+		assert name_cr == f"{cr_name}"
+		assert email_cr == f"{cr_email}"
+		assert phone_cr == f"{cr_phone}"

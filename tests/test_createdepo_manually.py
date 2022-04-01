@@ -22,8 +22,7 @@ def test_deposition_create_manually(app, deposition, cr, op, att):
 	app.deposition.upload_doc()
 	app.deposition.delivery(cr.name)
 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name_voting,op.email_voting
-		,op.phone_voting,
-	cr.name,cr.email,cr.phone)
+		,op.phone_voting,cr.name,cr.email,cr.phone)
 	app.deposition.confirm()
 	app.session.logout()
 
