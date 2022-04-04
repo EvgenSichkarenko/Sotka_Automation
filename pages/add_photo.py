@@ -11,7 +11,7 @@ class Photo:
 		wd = self.app.wd
 		image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
 
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
 		wd.find_element(By.XPATH, "//div[text()=' Change photo']").click()
 
 		title = wd.find_element(By.XPATH, "//h1[text()='Your photo account']").text

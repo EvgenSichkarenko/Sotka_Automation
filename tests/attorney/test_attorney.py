@@ -20,9 +20,11 @@ def test_add_photo_attorney(app):
 @allure.description("Test, check deposition cases current day and shows all deposition")
 def test_calendar_att(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	count_depo = app.calendar_att.count()
+	count_all = app.calendar_att.count()
+	app.calendar_att.calendar_day()
+	today_all = app.calendar_att.count()
 	app.calendar_att.show_all_btn()
-	assert app.calendar_att.count() > count_depo
+	assert today_all < count_all
 	app.session.logout()
 
 """test search attorney"""

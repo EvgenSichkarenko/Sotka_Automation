@@ -2,6 +2,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 
@@ -41,26 +43,12 @@ class CrAppearance:
 		wd = self.app.wd
 
 		time.sleep(1.5)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "calendarShowAllBtn"))).click()
-		time.sleep(1.5)
+		wd.refresh()
+		time.sleep(2)
 		#search deposition in dashboard cr
-		# block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		# block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
-		# block_depo_cases.click()
-
 		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		tags_p = block.find_elements(By.CSS_SELECTOR, "p")
-		for p in tags_p:
-			print(p.text)
-			# if p.text == "Test_7AM_new":
-			# 	element = p
-			# 	element.click()
-			# 	element.send_keys(Keys.RETURN)
-			# 	break
-
-		time.sleep(1)
-		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Test_7AM_new']"))).click()
-
+		block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
+		block_depo_cases.click()
 
 		time.sleep(2)
 		#Check executor
@@ -83,49 +71,41 @@ class CrAppearance:
 		assert email_finish == f"{op_email}"
 		assert phone_finish == f"{op_phone}"
 
-	def past_deposition(self, depo_deponent, att_name):
+	def past_deposition(self):
 		wd = self.app.wd
-
 		#click button past deposition
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "crHomePastDepositionsBtn"))).click()
-		#search input
-		input_cr_search = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input")))
-		#input_cr_search.send_keys("Test_7AM_new")
-		input_cr_search.send_keys(f"{self.name_deposition}")
-
 		#Found deposition and check data
-		cr_depo = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='pdBlockList'] > div")))
+		depo = wd.find_elements(By.XPATH, "//div[text()='Details']")
+		time.sleep(2)
+		for dep in depo:
+			dep.click()
+			time.sleep(1)
+			if self.element_present() == True:
+				self.upload_transcript()
+				break
+			else:
+				wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
 
-		check_name_depo = cr_depo.find_element(By.XPATH, f"//div[text()='{self.name_deposition}").text
-		check_name_att = cr_depo.find_element(By.XPATH, f"//div[text()='{att_name}']").text
-		check_name_deponent = cr_depo.find_element(By.XPATH, f"//div[text()='{depo_deponent}']").text
+		time.sleep(1)
+		wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
 
-		assert check_name_depo == {self.name_deposition}
-		assert check_name_att == att_name
-		assert check_name_deponent == depo_deponent
+	def element_present(self):
+		wd = self.app.wd
+		try:
+			wd.find_element(By.CSS_SELECTOR, "button[name='InfoHeaderButton']")
+			return True
+		except NoSuchElementException:
+			return False
 
-		#click "Details" button
-		cr_depo.find_element(By.CSS_SELECTOR, "button").click()
-
-	def upload_transcript(self, op_name, op_email, op_phone):
+	def upload_transcript(self):
 		wd = self.app.wd
 		time.sleep(2)
-		#check op data
-		block_op = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
-		"div[data-name='opposingCounselBlock']")))
-
-		name = block_op.find_element(By.XPATH, f"//h2[text()='{op_name}']").text
-		email = block_op.find_element(By.XPATH, f"//span[text()='{op_email}']").text
-		phone = block_op.find_element(By.XPATH, f"//span[text()='{op_phone}']").text
-
-		assert name == op_name
-		assert email == op_email
-		assert phone == op_phone
-
 		#upload transcript
-		image_path = "C:\Python\Sotka_auto\data\doc\transcript.pdf"
+		image_path = r"C:\Python\Sotka_auto\data\doc\transcript.pdf"
 		wd.find_element(By.NAME, "InfoHeaderButton").click()
-		wd.find_element(By.NAME, "downloadExpertPageUploadBtn").send_keys(image_path)
+		wd.find_element(By.NAME, "pages_count").send_keys("2")
+		time.sleep(1)
+		wd.find_element(By.CSS_SELECTOR, "input[name='file']").send_keys(image_path)
+		time.sleep(1)
 		wd.find_element(By.NAME, "downloadExpertConfirmBtn").click()
-		#wd.find_element(By.XPATH, "//input[@name='inputFileHidden']")

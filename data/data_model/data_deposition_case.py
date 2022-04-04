@@ -13,7 +13,7 @@ deposition = [DepositonCase(
 	address="848 N Rainbow Blvd, # 4544, Las Vegas, NV 89107-1103",
 	email="a1@tafmail.com",
 	sbn="SBN#123456",
-	sbn_op1="120035",
+	sbn_op1="120037",
 	sbn_voting="120038"
 ),
 ]

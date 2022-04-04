@@ -59,6 +59,12 @@ class DepositionCase:
 		row = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyRow']")
 		row.find_element(By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']").send_keys(Keys.RETURN)
 
+		#Choose current day in calendar
+		today = datetime.now()
+		day = today.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
+		time.sleep(1)
 		#Enter time manually
 		hour = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyTime']")
 		hour.find_element(By.NAME, "selectTimeBtn").send_keys(Keys.RETURN)
@@ -276,9 +282,10 @@ class DepositionCase:
 		#search input and click "Details" button
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test_date_1")
-
+		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable(
 			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock1863'] button"))).send_keys(Keys.RETURN)
+		time.sleep(1)
 		wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer'] button").click()
 		time.sleep(1)
 		wd.find_element(By.NAME, "closeBtnModal").click()
@@ -286,6 +293,7 @@ class DepositionCase:
 		# Download transcript
 		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails1863']").send_keys(Keys.RETURN)
 		file_transcript = wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer']")
+		time.sleep(1)
 		file_transcript.find_element(By.CSS_SELECTOR, "button").click()
 		time.sleep(2)
 		wd.find_element(By.NAME, "closeBtnModal").click()

@@ -11,7 +11,7 @@ class Login:
 
 	def login(self, invalid_login, invalid_password, valid_login, valid_password):
 		wd = self.app.wd
-		self.app.open_login(wd)
+		self.app.open_login()
 		self.check_valid_login(invalid_login, invalid_password)
 		invalid_email = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
 		"//span[text()='login must be a valid email']")))

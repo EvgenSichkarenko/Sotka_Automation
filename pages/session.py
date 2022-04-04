@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from selenium.webdriver.common.keys import Keys
 
 class Session:
 	def __init__(self, app):
@@ -9,13 +10,13 @@ class Session:
 
 	def login(self, login, password):
 		wd = self.app.wd
-		self.app.open_login(wd)
-		#wd.execute_script("document.body.style.zoom='75%'")
+		self.app.open_login()
 		wd.find_element(By.NAME, "login").clear()
 		wd.find_element(By.NAME, "login").send_keys(login)
 		wd.find_element(By.NAME, "password").clear()
 		wd.find_element(By.NAME, "password").send_keys(password)
-		wd.find_element(By.NAME, "registrationSignInBtn").click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
 
 	def logout(self):
 		wd = self.app.wd
