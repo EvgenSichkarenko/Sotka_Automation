@@ -5,11 +5,12 @@ from data.data_model.data_registr_attorney import regisrt_data
 from data.data_model.data_registr_secretary import regisrt_secr
 import time
 
-@allure.description("This test registratio new attorney")
-@pytest.mark.parametrize("regisrt_data", regisrt_data)
+@pytest.mark.skip(reason="For test should change input date every time")
+@allure.description("Registration new attorney")
+@pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 def test_registr_attorney(app,regisrt_data):
 	app.regAttorney.registration_page(regisrt_data.bar_number)
-	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number, regisrt_data.phone_number)
+	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number, regisrt_data.phone_number, regisrt_data.address_two)
 	app.regAttorney.assert_secreatry()
 	app.regAttorney.add_secretary(regisrt_data.name_secretary, regisrt_data.email_secretary)
 	app.regAttorney.bank_account_button()
@@ -18,8 +19,9 @@ def test_registr_attorney(app,regisrt_data):
 	assert app.regAttorney.login_present() == 'Login'
 
 
-@allure.description("This test registration new cour reporter")
-@pytest.mark.parametrize("cr_data", cr_data)
+@pytest.mark.skip(reason="For test should change input date every time")
+@allure.description("Registration new cour reporter")
+@pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
 def test_reg_cr(app, cr_data):
 	app.cr.cr_registration_form(cr_data.bar_number)
 	assert cr_data.bar_number == app.cr.license_num_input_attribute()
@@ -31,15 +33,15 @@ def test_reg_cr(app, cr_data):
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
 
+
 """add secretary"""
-@allure.description("Test add new secretary for attorney company")
-@pytest.mark.login
-@pytest.mark.parametrize("secretary", regisrt_secr)
+@allure.description("Add new secretary for attorney company")
+@pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
 def test_add_secreatry(app, secretary):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.secretary.contact_person( secr_old_email="testSecattr@inboxbear.com",
 		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
-	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
+	assert app.session.text_name_attribute_attroney() == "Nicholas Peter Burke "
 	time.sleep(4)
 	app.session.logout()
 

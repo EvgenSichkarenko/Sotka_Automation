@@ -11,7 +11,7 @@ class RegistrAttorney:
 
 	def registration_page(self, bar_number):
 		wd = self.app.wd
-		self.app.open_login(wd)
+		self.app.open_login()
 		wd.find_element(By.NAME, "registrationSignInLink").click()
 		text_attribute = wd.find_element(By.NAME, "barNumber").get_attribute("placeholder")
 
@@ -29,19 +29,29 @@ class RegistrAttorney:
 		wd.find_element(By.CSS_SELECTOR, "span[data-name='stepTwoCheckboxAgreeSpan']").click()
 		wd.find_element(By.NAME, "stepTwoContinueBtn").click()
 
-	def fill_form(self, email, bar_number,phone_number):
+	def fill_form(self, email, bar_number,phone_number, address_two):
 		wd = self.app.wd
 		WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
 			(By.CSS_SELECTOR, "input[name='email']"
 		))).send_keys(email)
+
+		#Check phone number field
 		phone = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "phone_number")))
 		phone_value = phone.get_property("value")
 		if phone_value == "":
 			phone.send_keys(phone_number)
 
+		#Check address two field
+		address = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "address_two")))
+		address_value = address.get_property("value")
+		if address_value == "":
+			address.send_keys(address_two)
+
+		#Check bar number
 		value = wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").get_property("value")
 		if value == bar_number:
 			wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
+
 
 	def assert_secreatry(self):
 		wd =self.app.wd

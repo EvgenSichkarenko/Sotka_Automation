@@ -6,3 +6,7 @@ class Attorneys:
 		self.name_voting = name_voting
 		self.email_voting = email_voting
 		self.phone_voting = phone_voting
+
+	def __repr__(self):
+		return "%s : %s;%s;%s;%s;%s" % (self.name, self.email, self.phone,
+		self.name_voting, self.email_voting, self.phone_voting)

@@ -50,9 +50,20 @@ class Application:
 	def open_login(self):
 		wd = self.wd
 		wd.delete_all_cookies()
-		# wd.get('chrome://settings/')
-		# wd.execute_script('chrome.settingsPrivate.setDefaultZoom(0.75);')
-		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
+		#wd.get('chrome://settings/')
+		#wd.execute_script('chrome.settingsPrivate.setDefaultZoom(0.90)')
+
+		#PROD
+		wd.get("https://trialbase.com/login")
+
+		#wd.delete_all_cookies()
+		#wd.execute_script("document.body.style.transform = 'scale(1, 1)'")
+		# wd.execute_script("document.body.style.zoom='80%'")
+		# wd.refresh()
+
+		#STAGE
+		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
+
 		# time.sleep(5)
 		# WebDriverWait(wd, 10).until(
 		# 	lambda wd: wd.execute_script('return document.readyState') == 'complete')

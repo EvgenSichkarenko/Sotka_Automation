@@ -9,3 +9,7 @@ class EditPrice:
 		self.turn_around_page = turn_around_page
 		self.copy = copy
 		self.cancellation_fee = cancellation_fee
+
+	def __repr__(self):
+		return "%s : %s;%s;%s;%s;%s;%s;%s" % (self.appearance_fee, self.page_cost, self.expert_page_cost,
+		self.travel, self.estimated, self.turn_around_page, self.copy, self.cancellation_fee)

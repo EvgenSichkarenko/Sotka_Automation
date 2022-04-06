@@ -12,3 +12,5 @@ class ModelRegistrCR:
 		self.addres_two = cr_address_two
 		self.valid_password = cr_valid_password
 
+
+

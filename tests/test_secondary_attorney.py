@@ -4,8 +4,8 @@ import allure
 """add credit card"""
 @allure.description("Add credit card to attorney company")
 def test_add_card_attorney(app):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.att_credit.credit_card(card_number='4111111111111111', expiry_date='08/23', cvv='123')
+	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
+	app.att_credit.credit_card(card_number='4508750015741019', expiry_date='12/25', cvv='321')
 	app.session.logout()
 
 """add new photo attorney"""
@@ -13,7 +13,7 @@ def test_add_card_attorney(app):
 def test_add_photo_attorney(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	assert app.add_photo.add_photo()
-	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
+	assert app.session.text_name_attribute_attroney() == "Nicholas Peter Burke "
 	app.session.logout()
 
 """test calendar attorney"""
@@ -24,14 +24,14 @@ def test_calendar_att(app):
 	app.calendar_att.calendar_day()
 	today_all = app.calendar_att.count()
 	app.calendar_att.show_all_btn()
-	assert today_all < count_all
+	assert today_all <= count_all
 	app.session.logout()
 
 """test search attorney"""
 @allure.description("Test search attorney in a company")
 def test_search_attorney(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.find_att.input(name="Lindsay")
+	app.find_att.input(name="Steve")
 	assert app.find_att.count() == 1
 	app.session.logout()
 

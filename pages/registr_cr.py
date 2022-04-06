@@ -11,7 +11,7 @@ class RegistrCR:
 
 	def cr_registration_form(self, cr_bar_number):
 		wd = self.app.wd
-		self.app.open_login(wd)
+		self.app.open_login()
 		wd.find_element(By.NAME, "registrationSignInLink").click()
 		wd.find_element(By.NAME, "stepTwoCrBtn").click()
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").clear()

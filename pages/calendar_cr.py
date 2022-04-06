@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from selenium.webdriver.common.keys import Keys
+import time
 
 class CalendarCr:
 
@@ -32,4 +33,5 @@ class CalendarCr:
 
 	def count(self):
 		wd = self.app.wd
-		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] main"))
+		time.sleep(2)
+		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] > div > div"))

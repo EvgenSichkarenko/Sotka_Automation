@@ -22,4 +22,3 @@ class Photo:
 			return True
 		else:
 			return False
-

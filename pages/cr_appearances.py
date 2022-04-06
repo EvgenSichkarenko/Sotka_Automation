@@ -15,8 +15,10 @@ class CrAppearance:
 		wd = self.app.wd
 
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='appearancesList'] div"))).click()
-
+			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
+		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
+		time.sleep(1)
+		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 		# Attorney info
 		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{att_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{att_email}']").text
@@ -43,7 +45,6 @@ class CrAppearance:
 		wd = self.app.wd
 
 		time.sleep(1.5)
-		wd.refresh()
 		time.sleep(2)
 		#search deposition in dashboard cr
 		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
@@ -107,5 +108,5 @@ class CrAppearance:
 		wd.find_element(By.NAME, "pages_count").send_keys("2")
 		time.sleep(1)
 		wd.find_element(By.CSS_SELECTOR, "input[name='file']").send_keys(image_path)
-		time.sleep(1)
-		wd.find_element(By.NAME, "downloadExpertConfirmBtn").click()
+		time.sleep(2)
+		wd.find_element(By.NAME, "downloadExpertConfirmBtn").send_keys(Keys.RETURN)

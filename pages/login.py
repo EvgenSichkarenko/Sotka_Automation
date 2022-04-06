@@ -19,7 +19,6 @@ class Login:
 		"//span[text()='This field should contain at least 6 characters']")))
 		if invalid_email and invalid_pasword:
 			self.check_valid_login(valid_login, valid_password)
-			print(123)
 		else:
 			print("validation isn't works")
 
