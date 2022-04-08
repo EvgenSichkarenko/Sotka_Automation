@@ -114,13 +114,19 @@ class DepositionCase:
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoBackbtn"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "manualPickedChangeBtn"))).click()
 
+		#Choose current day in calendar
+		today = datetime.now()
+		day = today.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
+		time.sleep(1)
 		#Choose two hours
 		row = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyRow']")
 		row.find_element(By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']").send_keys(Keys.RETURN)
 
 		hour = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyTime']")
 		time_def = wd.find_element(By.CSS_SELECTOR, "button[name='selectTimeBtn'] > div").text
-		print(time_def)
+
 		hour.find_element(By.NAME, "selectTimeBtn").send_keys(Keys.RETURN)
 
 		#Input for date

@@ -2,7 +2,6 @@ from data.data_model.data_edit_price import edit_price
 import pytest
 import allure
 
-
 """add new photo cr"""
 @allure.description("Add new photo cr")
 def test_add_photo_cr(app):
@@ -59,5 +58,3 @@ def test_calendar_cr(app):
 	day_count = app.calendar_att.count()
 	assert day_count <= count_all
 	app.session.logout()
-
-
