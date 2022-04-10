@@ -1,5 +1,5 @@
 .idea
-.pytest_cache
+.pytest_cache\*
 __pycache__\
 .test\.pytest_cache
 .test\.attorney\.pytest_cache
