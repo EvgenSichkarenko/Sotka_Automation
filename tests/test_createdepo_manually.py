@@ -49,9 +49,16 @@ def test_cr_add_transcript(app, att, deposition):
 	app.cr_appear.past_deposition()
 	app.session.logout()
 
-"""test download any depo from past deposition attorney"""
+"""test download transcript from past deposition attorney"""
 @allure.description("Download transcript, attorney")
-def test_att_pastdepo_download(app):
+def test_att_pastdepo_download_transcript(app):
 	app.session.login(login="a1@getnada.com", password="Attorney95")
 	app.deposition.download_any_transcript()
+	#app.session.logout()
+
+"""test download deposition pdf file from past deposition attorney"""
+@allure.description("Download transcript, attorney")
+def test_att_past_depo_download_depo(app):
+	app.session.login(login="a1@getnada.com", password="Attorney95")
+	app.deposition.download_depo_document()
 	#app.session.logout()

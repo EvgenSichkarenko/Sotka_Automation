@@ -79,9 +79,10 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		file = os.path.abspath("C:\Python\Sotka_auto\data\doc\DEPO.pdf")
-		image_path = "C:\Python\Sotka_auto\data\doc\DEPO.pdf"
+		file = os.path.abspath("C:\Python_project\Sotka_auto\data\doc\DEPO.pdf")
+		image_path = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoUploadBtn"))).click()
+		time.sleep(2)
 		wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image_path)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
@@ -305,6 +306,29 @@ class DepositionCase:
 		file_transcript = wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer']")
 		time.sleep(1)
 		file_transcript.find_element(By.CSS_SELECTOR, "button").click()
+		time.sleep(2)
+		# wd.find_element(By.NAME, "closeBtnModal").click()
+		# time.sleep(1)
+
+	def download_depo_document(self):
+		wd = self.app.wd
+		#Open past deposition
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
+
+		#search input and click "Details" button
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test+Tets+test")
+		time.sleep(1)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable(
+			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock33'] button"))).send_keys(Keys.RETURN)
+		time.sleep(1)
+		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
+		time.sleep(1)
+		wd.find_element(By.NAME, "closeBtnModal").click()
+		time.sleep(1)
+		# Download transcript
+		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails33']").send_keys(Keys.RETURN)
+		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
 		time.sleep(2)
 		# wd.find_element(By.NAME, "closeBtnModal").click()
 		# time.sleep(1)

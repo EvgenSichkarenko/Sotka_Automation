@@ -103,7 +103,7 @@ class CrAppearance:
 		wd = self.app.wd
 		time.sleep(2)
 		#upload transcript
-		image_path = r"C:\Python\Sotka_auto\data\doc\transcript.pdf"
+		image_path = r"C:\Python_project\Sotka_auto\data\doc\transcript.pdf"
 		wd.find_element(By.NAME, "InfoHeaderButton").click()
 		wd.find_element(By.NAME, "pages_count").send_keys("2")
 		time.sleep(1)
