@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from datetime import datetime, timedelta
 import time
 import os
@@ -62,6 +63,13 @@ class DepositionCase:
 
 		#Choose current day in calendar
 		today = datetime.now()
+		month_in_calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyDateBlock']").text
+		month = today.strftime("%B")
+		time.sleep(1)
+		if month_in_calendar.find(month) == -1:
+			calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+			calendar.find_element(By.CSS_SELECTOR, "svg[data-name='calendarArrowLeft']").click()
+
 		day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
 		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
@@ -159,8 +167,18 @@ class DepositionCase:
 	cr_name,cr_email,cr_phone):
 		wd = self.app.wd
 		time.sleep(1)
+
 		name_depo = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//div[text()='{depo_name}']"))).text
 		assert name_depo == depo_name
+
+		#DAY
+		try:
+			if wd.find_element(By.CSS_SELECTOR, "div[data-name='caseFinishTab']"):
+				block = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishDeponentBlock']")
+				self.day_deposition = block.find_element(By.CSS_SELECTOR, "div[data-name='contactPersonItem']").get_attribute("textContent")
+		except NoSuchElementException:
+			pass
+
 		#Attorney info
 		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
@@ -171,11 +189,10 @@ class DepositionCase:
 		assert phone_finish == f"{at_phone}"
 
 		#Op info
-		print(op_name)
-		op = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishOpposingCounselBloc']")
-		name_op = op.find_element(By.XPATH, f"//h2[text()='{op_name}']").get_attribute("textContent")
-		email_op = op.find_element(By.XPATH, f"//span[text()='{op_email}']").text
-		phone_op = op.find_element(By.XPATH, f"//span[text()='{op_phone}']").text
+		#op = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishOpposingCounselBloc']")
+		name_op = wd.find_element(By.XPATH, f"//h2[text()='{op_name}']").get_attribute("textContent")
+		email_op = wd.find_element(By.XPATH, f"//span[text()='{op_email}']").text
+		phone_op = wd.find_element(By.XPATH, f"//span[text()='{op_phone}']").text
 
 		assert name_op == f"{op_name}"
 		assert email_op == f"{op_email}"
@@ -191,7 +208,12 @@ class DepositionCase:
 		assert phone_cr == f"{cr_phone}"
 
 		#Confirm
-		wd.find_element(By.NAME, "finishConfirmBtn").click()
+		try:
+			if wd.find_element(By.CSS_SELECTOR, "div[data-name='caseFinishTab']"):
+				wd.find_element(By.NAME, "finishConfirmBtn").click()
+		except NoSuchElementException:
+			pass
+
 
 	def name_deposition_case(self, depo_name):
 		wd = self.app.wd
@@ -237,9 +259,17 @@ class DepositionCase:
 
 	def depo_dashboard_manualy(self,depo_name):
 		wd = self.app.wd
-		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
-		block_depo_cases.click()
+		try:
+			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
+			block_depo_cases.click()
+		except TimeoutException:
+			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").click()
+			time.sleep(2)
+			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
+			block_depo_cases.click()
+
 
 	def confirm(self):
 		wd = self.app.wd
@@ -307,8 +337,8 @@ class DepositionCase:
 		time.sleep(1)
 		file_transcript.find_element(By.CSS_SELECTOR, "button").click()
 		time.sleep(2)
-		# wd.find_element(By.NAME, "closeBtnModal").click()
-		# time.sleep(1)
+		wd.find_element(By.NAME, "closeBtnModal").click()
+		time.sleep(1)
 
 	def download_depo_document(self):
 		wd = self.app.wd
@@ -330,8 +360,8 @@ class DepositionCase:
 		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails33']").send_keys(Keys.RETURN)
 		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
 		time.sleep(2)
-		# wd.find_element(By.NAME, "closeBtnModal").click()
-		# time.sleep(1)
+		wd.find_element(By.NAME, "closeBtnModal").click()
+		time.sleep(1)
 
 	#Test voting attorney calendar
 	def date_and_time_voting(self):
@@ -491,3 +521,115 @@ class DepositionCase:
 
 		#Confirm
 		wd.find_element(By.NAME, "finishConfirmBtn").click()
+
+	def edit_date_in_depo(self):
+		wd = self.app.wd
+
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoBackbtn']"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='manualPickedChangeBtn']"))).click()
+
+		#Choose two hours
+		row = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyRow']")
+		row.find_element(By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']").send_keys(Keys.RETURN)
+		#Change day
+		time.sleep(1)
+		today = datetime.now()
+		tomorrow  = today + timedelta(1)
+		tomorrow = tomorrow.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+		calendar.find_element(By.XPATH, f"//button[text()='{tomorrow}']").send_keys(Keys.RETURN)
+		time.sleep(1)
+
+		day_new = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyDateBlock']").text
+
+		#Enter time manually
+		hour = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyTime']")
+		hour.find_element(By.NAME, "selectTimeBtn").send_keys(Keys.RETURN)
+		hour.find_element(By.CSS_SELECTOR, "input").send_keys(Keys.CONTROL + "a")
+		hour.find_element(By.CSS_SELECTOR, "input").send_keys(Keys.BACK_SPACE)
+		time.sleep(1)
+		hour.find_element(By.CSS_SELECTOR, "input").send_keys("7:00 AM")
+		wd.find_element(By.XPATH, "//div[text()='Confirm']").click()
+
+		#Confirm btn
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoContinueBtn']"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='finishConfirmBtn']"))).click()
+
+		assert self.day_deposition != day_new
+
+		print(self.day_deposition)
+		print(day_new)
+
+	def cansel_deposition(self, depo_name):
+		wd = self.app.wd
+
+		time.sleep(2)
+		today = datetime.now()
+		day = today.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
+		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
+		btn_day.send_keys(Keys.RETURN)
+		time.sleep(1)
+
+		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
+		assert self.chech_status_approve(parents) == True
+
+		#Find depo on dahsboard
+		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+		block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
+		block_depo_cases.click()
+
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
+		time.sleep(1)
+		wd.find_element(By.XPATH, "//div[text()='Yes, cancel']").click()
+		time.sleep(3)
+		wd.refresh()
+		time.sleep(2)
+		#parents = btn_day.parent
+		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
+
+		assert self.chech_status_approve(parents) == False
+
+	def chech_status_approve(self, parents):
+		try:
+			return parents.find_element(By.CSS_SELECTOR, "div[data-name='CircleApproved']").is_enabled()
+		except NoSuchElementException:
+			return False
+
+	def decline_appearence_cr(self, att_email):
+		wd = self.app.wd
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
+		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
+		time.sleep(1)
+		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
+
+		#Decline button
+		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsDecline']").click()
+		time.sleep(4)
+		server = "imap.mail.yahoo.com"
+		port = 993
+		login = "attorney0@yahoo.com"
+		password = "iqdollxuiqxwxozf"
+
+		mail = imaplib.IMAP4_SSL(server, port)
+		mail.login(login, password)
+		mail.select()
+		type, data = mail.search(None, "(FROM 'Trialbase')")
+		data = data[0].split()
+		latest_id = data[-1]
+		result, data = mail.fetch(latest_id, "(RFC822)")
+
+		raw_email = data[0][1]
+		message = email.message_from_bytes(raw_email)
+		text, encoding, mime = self.get_message_info(message)
+
+		new_email = re.sub(r"\r\n", " ", text)
+		str_email = "You are all set for this deposition, but you can always make" \
+				  " an alternative selection by visiting your Trialbase account:"
+
+		assert new_email.count(str_email) == 1
+
+
