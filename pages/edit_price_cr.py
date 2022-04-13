@@ -82,3 +82,4 @@ class EditPrice:
 	def save(self):
 		wd = self.app.wd
 		wd.find_element(By.NAME, "editPriceSave").click()
+		time.sleep(2)

@@ -123,8 +123,16 @@ class DepositionCase:
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoBackbtn"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "manualPickedChangeBtn"))).click()
 
-		#Choose current day in calendar
+
 		today = datetime.now()
+		#Choose month
+		month_in_calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyDateBlock']").text
+		month = today.strftime("%B")
+		time.sleep(1)
+		if month_in_calendar.find(month) == -1:
+			calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+			calendar.find_element(By.CSS_SELECTOR, "svg[data-name='calendarArrowLeft']").click()
+		# Choose current day in calendar
 		day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
 		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
@@ -214,7 +222,6 @@ class DepositionCase:
 		except NoSuchElementException:
 			pass
 
-
 	def name_deposition_case(self, depo_name):
 		wd = self.app.wd
 		name = depo_name
@@ -269,7 +276,6 @@ class DepositionCase:
 			time.sleep(2)
 			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
 			block_depo_cases.click()
-
 
 	def confirm(self):
 		wd = self.app.wd
@@ -577,10 +583,17 @@ class DepositionCase:
 		assert self.chech_status_approve(parents) == True
 
 		#Find depo on dahsboard
-		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
-		block_depo_cases.click()
 
+		try:
+			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+		except NoSuchElementException:
+			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			time.sleep(1)
+			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
+			WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+
+		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
 		time.sleep(1)
 		wd.find_element(By.XPATH, "//div[text()='Yes, cancel']").click()
@@ -631,5 +644,3 @@ class DepositionCase:
 				  " an alternative selection by visiting your Trialbase account:"
 
 		assert new_email.count(str_email) == 1
-
-

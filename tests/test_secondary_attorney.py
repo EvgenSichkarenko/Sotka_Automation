@@ -5,7 +5,7 @@ import allure
 @allure.description("Add credit card to attorney company")
 def test_add_card_attorney(app):
 	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
-	app.att_credit.credit_card(card_number='4508750015741019', expiry_date='12/25', cvv='321')
+	app.att_credit.credit_card(card_number='4147 3420 4469 1642', expiry_date='06/22', cvv='897')
 	app.session.logout()
 
 """add new photo attorney"""
