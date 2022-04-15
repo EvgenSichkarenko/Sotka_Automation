@@ -114,6 +114,16 @@ class DepositionCase:
 		WebDriverWait(wd, 10).until(
 			EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
 
+	# def delivery_for_voting(self):
+	# 	wd = self.app.wd
+	# 	WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+	# 		By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
+	#
+	#
+	# 	WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
+	# 	WebDriverWait(wd, 10).until(
+	# 		EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
+
 	def change_time_manually(self, name_cr):
 		wd = self.app.wd
 

@@ -20,7 +20,8 @@ from pages.cr_appearances import CrAppearance
 class Application:
 
 	def __init__(self):
-		self.wd = webdriver.Chrome(ChromeDriverManager().install())
+		#self.wd = webdriver.Chrome(ChromeDriverManager().install())
+		self.wd = webdriver.Chrome(executable_path=ChromeDriverManager().install())
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
@@ -39,6 +40,7 @@ class Application:
 		self.cr_finish_depo = CrDepoInfo(self)
 		self.find_att = FindAtt(self)
 		self.cr_appear = CrAppearance(self)
+
 
 	def is_valid(self):
 		try:
