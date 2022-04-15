@@ -20,8 +20,8 @@ from pages.cr_appearances import CrAppearance
 class Application:
 
 	def __init__(self):
-		#self.wd = webdriver.Chrome(ChromeDriverManager().install())
-		self.wd = webdriver.Chrome("/usr/bin/google-chrome")
+		self.wd = webdriver.Chrome(ChromeDriverManager().install())
+		#self.wd = webdriver.Chrome("/usr/bin/google-chrome")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
