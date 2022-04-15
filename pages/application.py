@@ -1,5 +1,6 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from pages.add_seecretary import Secretary
 from pages.registr_attorney_page import RegistrAttorney
 from pages.registr_cr import RegistrCR
@@ -20,7 +21,7 @@ from pages.cr_appearances import CrAppearance
 class Application:
 
 	def __init__(self):
-		self.wd = webdriver.Chrome(ChromeDriverManager().install())
+		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 		#self.wd = webdriver.Chrome("/usr/bin/google-chrome")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()

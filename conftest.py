@@ -2,7 +2,6 @@ import pytest
 from pages.application import Application
 
 
-
 @pytest.fixture()
 def app(request):
 	fixture = Application()
