@@ -22,8 +22,13 @@ class Application:
 
 	def __init__(self):
 
-		#self.wd = webdriver.Chrome("\drivers\chromedriver.exe")
-		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
+		self.chrome_options = webdriver.ChromeOptions()
+		self.chrome_options.add_argument('--no-sandbox')
+		self.chrome_options.add_argument('--window-size=1420,1080')
+		self.chrome_options.add_argument('--headless')
+		self.chrome_options.add_argument('--disable-gpu')
+		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=self.chrome_options)
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
