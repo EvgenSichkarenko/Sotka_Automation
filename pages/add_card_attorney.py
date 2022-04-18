@@ -35,3 +35,4 @@ class Creditcard:
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
 		time.sleep(2)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()
+		time.sleep(2)
