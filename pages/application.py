@@ -29,7 +29,7 @@ class Application:
 		self.options.add_argument('--headless')
 		#self.chrome_options.add_argument('--make-default-browse')
 		#self.chrome_options.add_argument('--disable-gpu')
-		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+		#self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
