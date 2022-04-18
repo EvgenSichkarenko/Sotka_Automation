@@ -12,7 +12,7 @@ def test_add_card_attorney(app):
 @allure.description("Change a photo in the attorney account" )
 def test_add_photo_attorney(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	assert app.add_photo.add_photo()
+	app.add_photo.add_photo()
 	assert app.session.text_name_attribute_attroney() == "Nicholas Peter Burke "
 	app.session.logout()
 
