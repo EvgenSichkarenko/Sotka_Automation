@@ -87,11 +87,11 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		file = os.path.abspath("C:\Python_project\Sotka_auto\data\doc\DEPO.pdf")
-		image_path = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
+		file = os.path.abspath("data/doc/DEPO.pdf")
+		#image_path = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoUploadBtn"))).click()
 		time.sleep(2)
-		wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image_path)
+		wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(file)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
 	def check_exists_el(self,name_cr):
