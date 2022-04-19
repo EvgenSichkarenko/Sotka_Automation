@@ -27,12 +27,12 @@ class Creditcard:
 			wd.find_element(By.NAME, "modalPaymentCvv").send_keys(cvv)
 			wd.find_element(By.NAME, "modalPaymentSaveCardBtn").click()
 
+
+		time.sleep(1)
 		successfully_add_card = WebDriverWait(wd, 10).until(EC.presence_of_element_located((
 			By.XPATH, "//div [text()='Card has been successfully added']"))).text
-		time.sleep(3)
 		assert successfully_add_card == 'Card has been successfully added'
-		time.sleep(3)
+
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
-		time.sleep(2)
+
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()
-		time.sleep(2)

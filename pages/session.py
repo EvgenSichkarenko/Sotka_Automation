@@ -11,6 +11,7 @@ class Session:
 	def login(self, login, password):
 		wd = self.app.wd
 		self.app.open_login()
+		time.sleep(1)
 		wd.find_element(By.NAME, "login").clear()
 		wd.find_element(By.NAME, "login").send_keys(login)
 		wd.find_element(By.NAME, "password").clear()
