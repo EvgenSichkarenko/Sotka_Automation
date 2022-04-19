@@ -72,7 +72,7 @@ class RegistrAttorney:
 		image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
 		check_name = WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='Your photo account']"))).text
 		if check_name == 'Your photo account':
-			wd.find_element(By.NAME, "uploadPhotoRef").send_keys(image)
+			wd.find_element(By.NAME, "uploadPhotoRefReg").send_keys(image)
 		else:
 			print("Photo account page not open")
 		wd.find_element(By.NAME, "uploadPhotoContinueBtn").click()

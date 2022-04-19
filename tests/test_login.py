@@ -8,7 +8,7 @@ import allure
 def test_login_attorney(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
 		valid_login="testatt@inboxbear.com", valid_password="1234Qwer")
-	assert "Nicholas Peter Burke " == app.session.text_name_attribute_attroney()
+	assert "Joel William Meskin " == app.session.text_name_attribute_attroney()
 	app.login.logout()
 
 
@@ -29,5 +29,5 @@ def test_login_secretary(app):
 def test_login_cr(app):
 	app.login.login(invalid_login="a123", invalid_password="13",
 		valid_login="testcr@inboxbear.com", valid_password="1234Qwer")
-	assert app.session.text_name_attribute_cr() == "Evgen CR "
+	assert app.session.text_name_attribute_cr() == "Nelli Polsky "
 	app.login.logout()

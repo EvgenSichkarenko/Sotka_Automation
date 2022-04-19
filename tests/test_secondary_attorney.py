@@ -5,7 +5,7 @@ import allure
 @allure.description("Add credit card to attorney company")
 def test_add_card_attorney(app):
 	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
-	app.att_credit.credit_card(card_number='4147 3420 4469 1642', expiry_date='06/22', cvv='897')
+	app.att_credit.credit_card(card_number='4242424242424242', expiry_date='06/23', cvv='123')
 	app.session.logout()
 
 """add new photo attorney"""
@@ -13,7 +13,7 @@ def test_add_card_attorney(app):
 def test_add_photo_attorney(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.add_photo.add_photo()
-	assert app.session.text_name_attribute_attroney() == "Nicholas Peter Burke "
+	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
 	app.session.logout()
 
 """test calendar attorney"""
@@ -31,7 +31,7 @@ def test_calendar_att(app):
 @allure.description("Test search attorney in a company")
 def test_search_attorney(app):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.find_att.input(name="Steve")
+	app.find_att.input(name="Paul")
 	assert app.find_att.count() == 1
 	app.session.logout()
 

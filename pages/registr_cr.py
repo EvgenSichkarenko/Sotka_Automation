@@ -60,12 +60,12 @@ class RegistrCR:
 		form_price.find_element(By.CSS_SELECTOR, "div[data-name='pageCost'] input[name='pageCost']").send_keys("2")
 		form_price.find_element(By.CSS_SELECTOR, "div[data-name='expertPageCost'] input[name='expertPageCost']").send_keys("3")
 		form_price.find_element(By.CSS_SELECTOR, "div[data-name='travel'] input[name='travel']").send_keys("3")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='estimated'] input[name='estimated']").send_keys("10")
+		#form_price.find_element(By.CSS_SELECTOR, "div[data-name='estimated'] input[name='estimated']").send_keys("10")
 		form_price.find_element(By.CSS_SELECTOR, "div[data-name='turnAroundTime'] input[name='turnAroundTime']").send_keys("5")
 		form_price.find_element(By.CSS_SELECTOR, "div[data-name='copy'] input[name='copy']").send_keys("100%")
-		cancellation = wd.find_element(By.CSS_SELECTOR, "div[data-name='cancellation'] input[name='cancellation']")
-		cancellation.click()
-		cancellation.send_keys("$10")
+		# cancellation = wd.find_element(By.CSS_SELECTOR, "div[data-name='cancellation'] input[name='cancellation']")
+		# cancellation.click()
+		# cancellation.send_keys("$10")
 		wd.find_element(By.NAME, "stepSixContinueBtn").click()
 
 	def upload_photo(self):

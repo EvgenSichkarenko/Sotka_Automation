@@ -2,9 +2,9 @@ from model.model_registr_cr import ModelRegistrCR
 
 cr_data = [ModelRegistrCR(
     cr_bar_numbe='256630',
-	cr_email='crauto1@getnada.com',
+	cr_email='crauto11111@getnada.com',
 	cr_phone_number='+380964512360',
-	cr_full_name='AutomationCR',
+	cr_full_name='AutomationCRqqqqq',
 	cr_issuance_date='2010',
 	cr_expiration_date='10/10/2025',
 	cr_address_one='Polzyn 1',
