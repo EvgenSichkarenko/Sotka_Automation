@@ -20,22 +20,21 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).send_keys(Keys.RETURN)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).send_keys(Keys.RETURN)
 
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_secretary(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_cr(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def ensure_logout(self):
 		wd = self.app.wd
