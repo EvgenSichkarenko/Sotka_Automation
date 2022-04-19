@@ -20,7 +20,7 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-		basic_btn = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button")))
+		basic_btn = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
 		basic_btn.click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).click()
 
