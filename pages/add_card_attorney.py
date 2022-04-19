@@ -30,7 +30,7 @@ class Creditcard:
 
 		time.sleep(1)
 		successfully_add_card = WebDriverWait(wd, 10).until(EC.presence_of_element_located((
-			By.XPATH, "//div [text()='Card has been successfully added']"))).text
+			By.XPATH, "//div [text()='Card has been successfully added']"))).get_attribute("textContent")
 		assert successfully_add_card == 'Card has been successfully added'
 
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
