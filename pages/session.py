@@ -20,8 +20,8 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).send_keys(Keys.RETURN)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).send_keys(Keys.RETURN)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).click()
 
 
 	def text_name_attribute_attroney(self):
