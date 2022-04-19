@@ -1,13 +1,16 @@
 from data.data_model.data_edit_price import edit_price
 import pytest
 import allure
+import time
 
 """add new photo cr"""
 @allure.description("Add new photo cr")
 def test_add_photo_cr(app):
 	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
 	app.add_photo.add_photo()
+	time.sleep(2)
 	assert app.session.text_name_attribute_cr() == "CR Automation "
+	time.sleep(2)
 	app.session.logout()
 
 """edit price cr"""
