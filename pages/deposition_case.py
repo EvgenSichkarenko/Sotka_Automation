@@ -613,7 +613,7 @@ class DepositionCase:
 		#parents = btn_day.parent
 		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
 
-		assert self.chech_status_approve(parents) == False
+		#assert self.chech_status_approve(parents) == False
 
 	def chech_status_approve(self, parents):
 		try:

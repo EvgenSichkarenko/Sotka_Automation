@@ -6,7 +6,6 @@ from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_test_cr import cr
 import time
 
-
 """test deposition case manually create and change day in deposition"""
 @allure.description("Create deposition case and cansel depo with check dots in calendar on home page")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])

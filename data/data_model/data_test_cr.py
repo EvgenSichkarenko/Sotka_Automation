@@ -6,8 +6,6 @@ from model.model_test_cr import CourtReporter
 # 	email = "testcr20@getnada.com",
 # 	phone = "+380964512360"
 # )]
-
-
 #PROD
 cr = [CourtReporter(
 	name = "Evgen Polsunov",
