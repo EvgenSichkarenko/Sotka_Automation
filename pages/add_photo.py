@@ -21,7 +21,7 @@ class Photo:
 		if title == "Your photo account":
 			time.sleep(1)
 
-			wd.find_element(By.CSS_SELECTOR, "input[name='uploadPhotoRef']").send_keys("data/images/logo")
+			wd.find_element(By.CSS_SELECTOR, "input[name='uploadPhotoRef']").send_keys("/data/images/logo")
 			wd.find_element(By.NAME, "uploadPhotoSaveBtn").click()
 			return True
 		else:
