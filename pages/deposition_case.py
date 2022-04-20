@@ -92,7 +92,7 @@ class DepositionCase:
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
 		time.sleep(1)
 		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']")
-		input.send_keys(os.path.abspath("data/doc/DEPO.pdf"))
+		input.send_keys(os.path.abspath("/data/doc/DEPO.pdf"))
 		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
