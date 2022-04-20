@@ -87,12 +87,11 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		file = os.path.abspath("data/doc/DEPO.pdf")
 		#image_path = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
+		image = os.path.abspath("/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/DEPO.pdf")
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
 		time.sleep(1)
-		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']")
-		input.send_keys(os.path.abspath("/data/doc/DEPO"))
+		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
 		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
