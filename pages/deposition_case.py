@@ -597,12 +597,12 @@ class DepositionCase:
 
 		try:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 		except NoSuchElementException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			time.sleep(1)
 			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
-			WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 
 		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
