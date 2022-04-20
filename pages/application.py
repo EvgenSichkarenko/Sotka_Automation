@@ -1,5 +1,4 @@
 from selenium import webdriver
-from pyvirtualdisplay import Display
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from pages.add_seecretary import Secretary
@@ -24,16 +23,15 @@ class Application:
 	def __init__(self):
 
 		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
-
 		self.options = webdriver.ChromeOptions()
+		self.options.binary_location = '/opt/google/chrome/google-chrome'
 		self.options.add_argument("start-maximized")
 		self.options.add_argument("disable-infobars")
 		self.options.add_argument("--disable-extensions")
 		self.options.add_argument("--disable-dev-shm-usage")
 		self.options.add_argument('--disable-gpu')
 		self.options.add_argument("--no-sandbox")
-		display = Display(visible=0, size=(800, 800))
-		display.start()
+
 		"""
 		# self.options.add_argument('--no-sandbox')
 		# self.options.add_argument('--window-size=1420,1080')
