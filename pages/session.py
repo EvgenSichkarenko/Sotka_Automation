@@ -23,9 +23,9 @@ class Session:
 		wd = self.app.wd
 
 		basic_btn = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
-		wd.execute_script("arguments[0].click();", basic_btn)
-		log_out = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']")))
-		wd.execute_script("arguments[0].click();", log_out)
+		wd.execute_script("arguments[0].click()", basic_btn)
+		log_out = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "li[data-name='dropdownLogout']")))
+		wd.execute_script("arguments[0].click()", log_out)
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
