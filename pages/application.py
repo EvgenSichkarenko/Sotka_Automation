@@ -24,21 +24,20 @@ class Application:
 
 		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
 		self.options = webdriver.ChromeOptions()
-		self.options.binary_location = '/opt/google/chrome/google-chrome'
-		self.options.add_argument("start-maximized")
-		self.options.add_argument("disable-infobars")
-		self.options.add_argument("--disable-extensions")
-		self.options.add_argument("--disable-dev-shm-usage")
-		self.options.add_argument('--disable-gpu')
-		self.options.add_argument("--no-sandbox")
-
-		"""
-		# self.options.add_argument('--no-sandbox')
-		# self.options.add_argument('--window-size=1420,1080')
-		# self.options.add_argument('--headless')
-		# self.options.add_argument('--make-default-browse')
+		# self.options.binary_location = '/opt/google/chrome/google-chrome'
+		# self.options.add_argument("start-maximized")
+		# self.options.add_argument("disable-infobars")
+		# self.options.add_argument("--disable-extensions")
+		# self.options.add_argument("--disable-dev-shm-usage")
 		# self.options.add_argument('--disable-gpu')
-		"""
+		# self.options.add_argument("--no-sandbox")
+
+		self.options.add_argument('--no-sandbox')
+		self.options.add_argument('--window-size=1420,1080')
+		self.options.add_argument('--headless')
+		self.options.add_argument('--make-default-browse')
+		self.options.add_argument('--disable-gpu')
+
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 		self.wd.implicitly_wait(5)
