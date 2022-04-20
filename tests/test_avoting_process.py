@@ -6,27 +6,27 @@ from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_test_cr_voting import cr_voting
 import time
 
-# """create depo and decline cr deposition, check email owner"""
-# @allure.description("create depo and decline cr deposition, check email owner")
-# @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-# @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
-# @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
-# @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-# def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, att):
-# 	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
-# 	app.deposition.name_deposition(deposition.name)
-# 	app.deposition.deponent_deposition(deposition.deponent)
-# 	app.deposition.location_deposition()
-# 	app.deposition.attorneys(deposition.sbn_voting,op.name_voting)
-# 	app.deposition.set_time_manually()
-# 	app.deposition.upload_doc()
-# 	app.deposition.delivery(cr_voting.name)
-# 	app.deposition.finish_depo_attorney(deposition.name,att.name_voting,att.email_voting,att.phone_voting,
-# 		op.name_voting,op.email_voting, op.phone_voting,cr_voting.name,cr_voting.email,cr_voting.phone)
-# 	app.session.logout()
-# 	time.sleep(2)
-# 	app.session.login(login="cr1auto@getnada.com", password="1234Qwer")
-# 	app.deposition.decline_appearence_cr(att.email_voting)
+"""create depo and decline cr deposition, check email owner"""
+@allure.description("create depo and decline cr deposition, check email owner")
+@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+@pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
+@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
+@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, att):
+	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
+	app.deposition.name_deposition(deposition.name)
+	app.deposition.deponent_deposition(deposition.deponent)
+	app.deposition.location_deposition()
+	app.deposition.attorneys(deposition.sbn_voting,op.name_voting)
+	app.deposition.set_time_manually()
+	app.deposition.upload_doc()
+	app.deposition.delivery(cr_voting.name)
+	app.deposition.finish_depo_attorney(deposition.name,att.name_voting,att.email_voting,att.phone_voting,
+		op.name_voting,op.email_voting, op.phone_voting,cr_voting.name,cr_voting.email,cr_voting.phone)
+	app.session.logout()
+	time.sleep(2)
+	app.session.login(login="cr1auto@getnada.com", password="1234Qwer")
+	app.deposition.decline_appearence_cr(att.email_voting)
 
 
 """test deposition case voting create"""
