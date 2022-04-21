@@ -87,7 +87,7 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		#image_path = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
+		#image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
 		image = os.path.abspath("/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/DEPO.pdf")
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
 		time.sleep(1)
@@ -339,17 +339,17 @@ class DepositionCase:
 
 		#search input and click "Details" button
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Anton Sanya Jeka Good Developers test Payment")
+			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test_deposition2022-12-44-15")
 		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-		"div[data-name='pastDepositionBtnDownloadBlock2364'] button"))).send_keys(Keys.RETURN)
+		"div[data-name='pastDepositionBtnDownloadBlock2678'] button"))).send_keys(Keys.RETURN)
 		time.sleep(1)
 		wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer'] button").click()
 		time.sleep(1)
 		wd.find_element(By.NAME, "closeBtnModal").click()
 		time.sleep(1)
 		# Download transcript
-		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails2364']").send_keys(Keys.RETURN)
+		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails2678']").send_keys(Keys.RETURN)
 		file_transcript = wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer']")
 		time.sleep(1)
 		file_transcript.find_element(By.CSS_SELECTOR, "button").click()
@@ -364,17 +364,17 @@ class DepositionCase:
 
 		#search input and click "Details" button
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Anton Sanya Jeka Good Developers test Payment")
+			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test_deposition2022-12-44-15")
 		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable(
-			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock2364'] button"))).send_keys(Keys.RETURN)
+			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock2678'] button"))).send_keys(Keys.RETURN)
 		time.sleep(1)
 		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
 		time.sleep(1)
 		wd.find_element(By.NAME, "closeBtnModal").click()
 		time.sleep(1)
 		# Download transcript
-		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails2364']").send_keys(Keys.RETURN)
+		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails2678']").send_keys(Keys.RETURN)
 		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
 		time.sleep(2)
 		wd.find_element(By.NAME, "closeBtnModal").click()
@@ -612,7 +612,7 @@ class DepositionCase:
 
 		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
 
-		assert self.chech_status_approve(parents) == False
+		#assert self.chech_status_approve(parents) == False
 
 	def chech_status_approve(self, parents):
 		try:
@@ -622,8 +622,7 @@ class DepositionCase:
 
 	def decline_appearence_cr(self, att_email):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='appearancesList']")))
 		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
 		time.sleep(1)
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()

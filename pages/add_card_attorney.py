@@ -34,5 +34,5 @@ class Creditcard:
 		assert successfully_add_card == 'Card has been successfully added'
 
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
-
+		time.sleep(1)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()

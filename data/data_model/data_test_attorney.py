@@ -1,13 +1,13 @@
 from model.model_test_attorney import Attorneys
 
-#DEV
+#DEV 120025
 attorneys = [Attorneys(
-	name="Joel William Meskin",
+	name="Danielle Theresa Kennedy",
 	email="testatt@inboxbear.com",
-	phone="440-333-6300",
-	name_voting = "Carla Noelle Romero Senh",
+	phone="916-345-8432",
+	name_voting = "Daniel Vlad Tabakh",
 	email_voting = "attorney0@yahoo.com",
-	phone_voting = "925-408-8546"
+	phone_voting = "510-288-8737"
 )]
 
 #PROD

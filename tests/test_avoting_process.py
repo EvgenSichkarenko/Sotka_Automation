@@ -28,7 +28,6 @@ def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, at
 	app.session.login(login="cr1auto@getnada.com", password="1234Qwer")
 	app.deposition.decline_appearence_cr(att.email_voting)
 
-
 """test deposition case voting create"""
 @allure.description("Add op and voting")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(i) for i in deposition])

@@ -8,8 +8,8 @@ full_name = f"Test_deposition" + datetime.datetime.now().strftime("%Y-%H-%M-%S")
 deposition = [DepositonCase(
     name= full_name,
     deponent="deponent",
-	sbn_op1="120037",
-	sbn_voting="120038"
+	sbn_op1="256698",
+	sbn_voting="256697"
 ),
 ]
 

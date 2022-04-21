@@ -27,11 +27,11 @@ def test_edit_price(app, edit_price):
 	assert app.edit_price.estimated_hour() == "2"
 	assert app.edit_price.turn_around_time() == "5 days"
 	assert app.edit_price.copy() == "100 %"
-	assert app.edit_price.cancellation_fees() == "$2"
+	#assert app.edit_price.cancellation_fees() == "$2"
 	app.session.logout()
 
 """test schedual cr"""
-@pytest.mark.skip(reason="Test don't work, block front-end")
+#@pytest.mark.skip(reason="Test don't work, block front-end")
 @allure.description("Change schedual cr")
 def test_schedual_cr(app):
 	app.session.login(login="testcr20@getnada.com", password="1234Qwer")

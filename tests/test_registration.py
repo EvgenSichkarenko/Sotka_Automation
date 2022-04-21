@@ -41,7 +41,7 @@ def test_add_secreatry(app, secretary):
 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.secretary.contact_person( secr_old_email="testSecattr@inboxbear.com",
 		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
-	assert app.session.text_name_attribute_attroney() == "Joel William Meskin "
+	assert app.session.text_name_attribute_attroney() == "Danielle Theresa Kennedy "
 	time.sleep(3)
 	app.session.logout()
 

@@ -21,11 +21,15 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-
-		basic_btn = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
-		wd.execute_script("arguments[0].click()", basic_btn)
-		log_out = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "li[data-name='dropdownLogout']")))
-		wd.execute_script("arguments[0].click()", log_out)
+		time.sleep(1)
+		wd.refresh()
+		basic = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
+		time.sleep(1)
+		wd.execute_script("arguments[0].click()", basic)
+		time.sleep(1)
+		log = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "li[data-name='dropdownLogout']")))
+		time.sleep(1)
+		wd.execute_script("arguments[0].click()", log)
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
