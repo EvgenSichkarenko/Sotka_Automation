@@ -87,8 +87,8 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		#image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
-		image = os.path.abspath("/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/DEPO.pdf")
+		image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
+		#image = os.path.abspath("/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/DEPO.pdf")
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
 		time.sleep(1)
 		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
@@ -541,7 +541,7 @@ class DepositionCase:
 
 	def edit_date_in_depo(self):
 		wd = self.app.wd
-
+		time.sleep(3)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoBackbtn']"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='manualPickedChangeBtn']"))).click()
@@ -554,8 +554,10 @@ class DepositionCase:
 		today = datetime.now()
 		tomorrow  = today + timedelta(1)
 		tomorrow = tomorrow.day
+		time.sleep(1)
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
-		calendar.find_element(By.XPATH, f"//button[text()='{tomorrow}']").send_keys(Keys.RETURN)
+		#calendar.find_element(By.XPATH, f"//button[text()='{tomorrow}']")
+		WebDriverWait(calendar, 15).until(EC.element_to_be_clickable((By.XPATH, f"//button[text()='{tomorrow}']"))).send_keys(Keys.RETURN)
 		time.sleep(1)
 
 		day_new = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyDateBlock']").text

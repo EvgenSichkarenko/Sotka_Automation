@@ -25,7 +25,7 @@ class Application:
 		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
 		self.options = webdriver.ChromeOptions()
 		#self.options.add_argument('--no-sandbox')
-		#self.options.add_argument('--window-size=1420,1080')
+		self.options.add_argument('--window-size=1366,768')
 		self.options.add_argument('--headless')
 		#self.options.add_argument('--make-default-browse')
 		#self.options.add_argument('--disable-gpu')
@@ -62,6 +62,8 @@ class Application:
 		#STAGE
 		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 
+		#STAGE2
+		#wd.get("http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/")
 
 	def destroy(self):
 		self.wd.quit()
