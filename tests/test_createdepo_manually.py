@@ -75,7 +75,7 @@ def test_deposition_create_manually(app, deposition, cr, op, att):
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 def test_cr_appearances(app, deposition, cr, op, att):
-	app.session.login(login="report@inboxbear.com", password="1234Qwer")
+	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
 	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
 	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
 	app.session.logout()
@@ -84,20 +84,20 @@ def test_cr_appearances(app, deposition, cr, op, att):
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 def test_cr_add_transcript(app, att, deposition):
-	app.session.login(login="cr@givmail.com", password="Counsel10")
+	app.session.login(login="cr1auto@getnada.com", password="1234Qwer")
 	app.cr_appear.past_deposition()
 	app.session.logout()
 
 """test download transcript from past deposition attorney"""
 @allure.description("Download transcript, attorney")
 def test_att_pastdepo_download_transcript(app):
-	app.session.login(login="a1@getnada.com", password="Attorney95")
+	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.deposition.download_any_transcript()
 	app.session.logout()
 
 """test download deposition pdf file from past deposition attorney"""
 @allure.description("Download transcript, attorney")
 def test_att_past_depo_download_depo(app):
-	app.session.login(login="a1@getnada.com", password="Attorney95")
+	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
 	app.deposition.download_depo_document()
 	app.session.logout()

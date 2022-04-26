@@ -24,7 +24,7 @@ class EditPrice:
 		estimate = wd.find_element(By.NAME, "estimated")
 		turnAroundTime = wd.find_element(By.NAME, "turnAroundTime")
 		copy = wd.find_element(By.NAME, "copy")
-		cancellation = wd.find_element(By.NAME, "cancellation")
+		#cancellation = wd.find_element(By.NAME, "cancellation")
 
 		self.clear_attribute(appearanceFee,appearance_fee)
 		self.clear_attribute(pageCost, page_cost)
@@ -33,7 +33,7 @@ class EditPrice:
 		self.clear_attribute(estimate, estimated)
 		self.clear_attribute(turnAroundTime, turn_around_page)
 		self.clear_attribute(copy, copy_of_origin_transcript)
-		self.clear_attribute(cancellation, cancellation_fee)
+		#self.clear_attribute(cancellation, cancellation_fee)
 
 
 	def clear_attribute(self, element, data):

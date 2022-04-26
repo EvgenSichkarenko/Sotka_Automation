@@ -25,7 +25,7 @@ def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, at
 		op.name_voting,op.email_voting, op.phone_voting,cr_voting.name,cr_voting.email,cr_voting.phone)
 	app.session.logout()
 	time.sleep(2)
-	app.session.login(login="cr@givmail.com", password="Counsel10")
+	app.session.login(login="cr1auto@getnada.com", password="1234Qwer")
 	app.deposition.decline_appearence_cr(att.email_voting)
 
 

@@ -1,21 +1,11 @@
 from model.model_test_op import OpposingCouncel
 
-#DEV
-# op = [OpposingCouncel(
-# 	name="Marilyn Ann Monahan",
-# 	email="opcounsel@online.ua",
-# 	phone="310-989-0993",
-# 	name_voting="Susan Calabrese Miller",
-# 	email_voting="evgen20@yahoo.com",
-# 	phone_voting="+380984521236"
-# )]
-
-#PROD
+#PREPROD
 op = [OpposingCouncel(
-	name="William C Lynn",
-	email="opcounsel@online.ua",
-	phone="925-408-8546",
-	name_voting="Alyson N Beck",
+	name="Natalie M King",
+	email="opcounsel@getnada.com",
+	phone="831-582-3389",
+	name_voting="Cristoforo Andrea Giovannotto",
 	email_voting="evgen20@yahoo.com",
-	phone_voting="925-408-8546"
+	phone_voting="650-328-7480"
 )]
