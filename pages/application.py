@@ -24,11 +24,11 @@ class Application:
 
 		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
 		self.options = webdriver.ChromeOptions()
-		#self.chrome_options.add_argument('--no-sandbox')
-		##self.chrome_options.add_argument('--window-size=1420,1080')
+		self.options.add_argument('--no-sandbox')
+		self.options.add_argument('--window-size=1420,1080')
 		#self.options.add_argument('--headless')
-		#self.chrome_options.add_argument('--make-default-browse')
-		#self.chrome_options.add_argument('--disable-gpu')
+		self.options.add_argument('--make-default-browse')
+		self.options.add_argument('--disable-gpu')
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 		self.wd.implicitly_wait(5)
@@ -65,13 +65,10 @@ class Application:
 		#wd.execute_script('chrome.settingsPrivate.setDefaultZoom(0.90)')
 
 		#PROD
-		wd.get("https://trialbase.com/login")
+		#wd.get("https://trialbase.com/login")
 
-		#wd.delete_all_cookies()
-		#wd.execute_script("document.body.style.transform = 'scale(1, 1)'")
-		# wd.execute_script("document.body.style.zoom='80%'")
-		# wd.refresh()
-
+		#PREPROD
+		wd.get("https://demo.trialbase.com/login")
 		#STAGE
 		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 

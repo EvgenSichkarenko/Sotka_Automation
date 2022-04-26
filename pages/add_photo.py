@@ -24,5 +24,3 @@ class Photo:
 			return True
 		else:
 			return False
-
-		time.sleep(2)
