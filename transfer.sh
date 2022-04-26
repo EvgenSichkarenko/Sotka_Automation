@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo cp -R allure-results/* /var/www/html/
+sudo cp -R ./allure-results/* /var/www/html/
