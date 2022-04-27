@@ -35,7 +35,7 @@ class Application:
 		self.options.add_experimental_option('useAutomationExtension', False)
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options, executable_path="/var/lib/jenkins/workspace/Stage_sotka/drivers/chromedriver.exe")
+		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
