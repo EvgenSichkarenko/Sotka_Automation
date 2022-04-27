@@ -22,16 +22,20 @@ class Application:
 
 	def __init__(self):
 
-		#self.wd = webdriver.Chrome("\\drivers\\chromedriver.exe")
 		self.options = webdriver.ChromeOptions()
+		# self.options.add_argument('--no-sandbox')
+		# self.options.add_argument('--window-size=1366,768')
+		# self.options.add_argument('--headless')
+		# self.options.add_argument('--make-default-browse')
+		# self.options.add_argument('--disable-gpu')
+		# self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+		self.options.add_argument('--disable-dev-shm-usage')
 		self.options.add_argument('--no-sandbox')
-		self.options.add_argument('--window-size=1366,768')
-		#self.options.add_argument('--headless')
-		self.options.add_argument('--make-default-browse')
-		self.options.add_argument('--disable-gpu')
-
+		self.options.add_argument('start-maximized')
+		self.options.add_experimental_option('useAutomationExtension', False)
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
-		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
+
+		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options, executable_path="/var/lib/jenkins/workspace/Stage_sotka/drivers/chromedriver")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
