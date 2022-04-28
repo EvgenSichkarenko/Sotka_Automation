@@ -530,8 +530,8 @@ class DepositionCase:
 		assert phone_op == f"{op_phone}"
 
 		#Cr info
-		time.sleep(2)
-		name_cr =  wd.find_element(By.XPATH, f"//h2[text()='{cr_name}']").text
+		time.sleep(3)
+		name_cr =  wd.find_element(By.XPATH, f"//*[text()='{cr_name}']").text
 		email_cr = wd.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
 		phone_cr = wd.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
 
