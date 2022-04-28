@@ -34,8 +34,8 @@ class Application:
 
 		if platform.system() == "Linux" :
 			# if raspi
-			options.BinaryLocation = ("/usr/bin/chromium-browser")
-			service = Service("/usr/bin/chromedriver")
+			options.BinaryLocation = ("/usr/bin/google-chrome")
+			service = Service("/home/ubuntu/drivers/chromedriver")
 		else:  # if not raspi and considering you're using Chrome
 			service = Service(ChromeDriverManager().install())
 
