@@ -17,7 +17,7 @@ def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, at
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)
 	app.deposition.location_deposition()
-	app.deposition.attorneys(deposition.sbn_voting,op.name_voting)
+	app.deposition.attorneys(deposition.sbn_voting,op.email_voting)
 	app.deposition.set_time_manually()
 	app.deposition.upload_doc()
 	app.deposition.delivery(cr_voting.name)
@@ -37,7 +37,7 @@ def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, at
 # 	app.deposition.name_deposition(deposition.name)
 # 	app.deposition.deponent_deposition(deposition.deponent)
 # 	app.deposition.location_deposition()
-# 	app.deposition.attorneys(deposition.sbn_voting,op.name_voting)
+# 	app.deposition.attorneys(deposition.sbn_voting,op.email_voting)
 # 	app.deposition.date_and_time_voting()
 # 	app.session.logout()
 #

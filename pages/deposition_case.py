@@ -40,15 +40,17 @@ class DepositionCase:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "caseLocationByZoomBtn"))).click()
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
 
-	def attorneys(self,op_sbn, name_voting):
+	def attorneys(self,op_sbn, email_voting):
 		wd = self.app.wd
 		#check data attorney
 		#add opposing counsel
 		input_sbn_op = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
 		input_sbn_op.click()
 		input_sbn_op.send_keys(op_sbn)
-		op = wd.find_element(By.XPATH, f"//span[text()='{name_voting}']")
-		op.click()
+		time.sleep(2)
+		op_email = wd.find_element(By.XPATH, f"//span[text()='{email_voting}']")
+		time.sleep(2)
+		op_email.click()
 
 		add_op = len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='rightBlockExistedOC'] > div"))
 
