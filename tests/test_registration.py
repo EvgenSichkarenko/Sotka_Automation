@@ -5,7 +5,7 @@ from data.data_model.data_registr_attorney import regisrt_data
 from data.data_model.data_registr_secretary import regisrt_secr
 import time
 
-@pytest.mark.skip(reason="For test should change input date every time")
+#@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new attorney")
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 def test_registr_attorney(app,regisrt_data):
@@ -13,7 +13,7 @@ def test_registr_attorney(app,regisrt_data):
 	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number, regisrt_data.phone_number, regisrt_data.address_two)
 	app.regAttorney.assert_secreatry()
 	app.regAttorney.add_secretary(regisrt_data.name_secretary, regisrt_data.email_secretary)
-	app.regAttorney.bank_account_button()
+	#app.regAttorney.bank_account_button()
 	app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
 	assert app.regAttorney.login_present() == 'Login'

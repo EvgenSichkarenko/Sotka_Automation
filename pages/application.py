@@ -25,36 +25,35 @@ class Application:
 
 	def __init__(self):
 
-		options = Options()
-		# a few usefull options
-		options.add_argument("--disable-infobars")
-		options.add_argument("start-maximized")
-		options.add_argument("--disable-extensions")
-		options.add_argument("--headless")  # if you want it headless
-
-		if platform.system() == "Linux" :
-			# if raspi
-			options.BinaryLocation = ("/usr/bin/google-chrome")
-			service = Service("/home/ubuntu/drivers/chromedriver")
-		else:  # if not raspi and considering you're using Chrome
-			service = Service(ChromeDriverManager().install())
-
-		self.wd = webdriver.Chrome(
-			service=service,
-			options=options
-		)
-		# self.options = webdriver.ChromeOptions()
-		# self.options.add_argument('--no-sandbox')
-		# self.options.add_argument('--window-size=1366,768')
-		# self.options.add_argument('--headless')
-		# self.options.add_argument('--make-default-browse')
-		# self.options.add_argument('--disable-gpu')
-		# self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
-		# self.options.binary_location = "/usr/bin/google-chrome"
-		# self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
-		# self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), chrome_options=self.options)
-
-		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
+		# options = Options()
+		# # a few usefull options
+		# options.add_argument("--disable-infobars")
+		# options.add_argument("start-maximized")
+		# options.add_argument("--disable-extensions")
+		# options.add_argument("--headless")  # if you want it headless
+		#
+		# if platform.system() == "Linux" :
+		# 	# if raspi
+		# 	options.BinaryLocation = ("/usr/bin/google-chrome")
+		# 	service = Service("/home/ubuntu/drivers/chromedriver")
+		# else:  # if not raspi and considering you're using Chrome
+		# 	service = Service(ChromeDriverManager().install())
+		#
+		# self.wd = webdriver.Chrome(
+		# 	service=service,
+		# 	options=options
+		# )
+		self.options = webdriver.ChromeOptions()
+		self.options.add_argument('--no-sandbox')
+		self.options.add_argument('--window-size=1366,768')
+		#self.options.add_argument('--headless')
+		self.options.add_argument('--make-default-browse')
+		self.options.add_argument('--disable-gpu')
+		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+		self.options.binary_location = "/usr/bin/google-chrome"
+		self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
+		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
+		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
