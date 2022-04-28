@@ -1,5 +1,6 @@
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from pages.add_seecretary import Secretary
 from pages.registr_attorney_page import RegistrAttorney
@@ -18,11 +19,20 @@ from pages.cr_deposition_info import CrDepoInfo
 from pages.att_search_att import FindAtt
 from pages.cr_appearances import CrAppearance
 
+
 class Application:
 
 	def __init__(self):
 
-		self.options = webdriver.ChromeOptions()
+
+		chrome_options = Options()
+		chrome_options.add_argument("--disable-extensions")
+		chrome_options.add_argument("--disable-gpu")
+		chrome_options.add_argument("--no-sandbox")
+
+		#1
+		#self.options = webdriver.ChromeOptions()
+		"""
 		# self.options.add_argument('--no-sandbox')
 		# self.options.add_argument('--window-size=1366,768')
 		#self.options.add_argument('--headless')
@@ -30,14 +40,16 @@ class Application:
 		# self.options.add_argument('--disable-gpu')
 		# self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		#self.options.binary_location = "/usr/bin/google-chrome"
-		self.options.binary_location = "/usr/bin/chromium-browser"
+		"""
+		# self.options.binary_location = "/usr/bin/chromium-browser"
 		self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
-		self.options.add_argument('--disable-dev-shm-usage')
-		self.options.add_argument('--no-sandbox')
-		self.options.add_argument('start-maximized')
-		self.options.add_experimental_option('useAutomationExtension', False)
-		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
-		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), chrome_options=self.options)
+		# self.options.add_argument('--disable-dev-shm-usage')
+		# self.options.add_argument('--no-sandbox')
+		# self.options.add_argument('start-maximized')
+		# self.options.add_experimental_option('useAutomationExtension', False)
+		# self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary),options=chrome_options)
+		#self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), chrome_options=self.options)
 
 		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
 		self.wd.implicitly_wait(5)
