@@ -6,29 +6,28 @@ from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_test_cr import cr
 import time
 
-"""test deposition case manually create and change day in deposition"""
-@allure.description("Create deposition case and cansel depo with check dots in calendar on home page")
-@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-@pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
-@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
-@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-def test_deposition_create_manually_cansel(app, deposition, cr, op, att):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.deposition.name_deposition(deposition.name)
-	app.deposition.deponent_deposition(deposition.deponent)
-	app.deposition.location_deposition()
-	app.deposition.attorneys(deposition.sbn_op1, op.email)
-	app.deposition.set_time_manually()
-	app.deposition.upload_doc()
-	app.deposition.delivery(cr.name)
-	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email
-		,op.phone,cr.name,cr.email,cr.phone)
-	app.deposition.cansel_deposition(deposition.name)
-	app.session.logout()
+# """test deposition case manually create and change day in deposition"""
+# @allure.description("Create deposition case and cansel depo with check dots in calendar on home page")
+# @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+# @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
+# @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
+# @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+# def test_deposition_create_manually_cansel(app, deposition, cr, op, att):
+# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
+# 	app.deposition.name_deposition(deposition.name)
+# 	app.deposition.deponent_deposition(deposition.deponent)
+# 	app.deposition.location_deposition()
+# 	app.deposition.attorneys(deposition.sbn_op1, op.email)
+# 	app.deposition.set_time_manually()
+# 	app.deposition.upload_doc()
+# 	app.deposition.delivery(cr.name)
+# 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email
+# 		,op.phone,cr.name,cr.email,cr.phone)
+# 	app.deposition.cansel_deposition(deposition.name)
+# 	app.session.logout()
 
 """test deposition case manually create and change day in deposition"""
 @allure.description("Edit deposition with change date")
-@pytest.mark.skip(reason="Just for test")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
