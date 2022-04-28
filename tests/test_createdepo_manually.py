@@ -28,6 +28,7 @@ def test_deposition_create_manually_cansel(app, deposition, cr, op, att):
 
 """test deposition case manually create and change day in deposition"""
 @allure.description("Edit deposition with change date")
+@pytest.mark.skip(reason="Just for test")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
@@ -49,6 +50,7 @@ def test_deposition_create_manually_edit(app, deposition, cr, op, att):
 
 """test deposition case manually create"""
 @allure.description("Create deposition case with time manually")
+@pytest.mark.skip(reason="Just for test")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
@@ -70,6 +72,7 @@ def test_deposition_create_manually(app, deposition, cr, op, att):
 
 """test confirm cr appearence"""
 @allure.description("Confirm appearance from cr and check data")
+@pytest.mark.skip(reason="Just for test")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
