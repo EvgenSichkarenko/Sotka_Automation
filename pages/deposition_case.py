@@ -280,9 +280,10 @@ class DepositionCase:
 	def depo_dashboard_manualy(self,depo_name):
 		wd = self.app.wd
 		try:
+			wd.refresh()
+			time.sleep(4)
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
-			block_depo_cases.click()
+			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).send_keys(Keys.RETURN)
 		except TimeoutException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").click()
