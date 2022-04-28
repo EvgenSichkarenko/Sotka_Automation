@@ -84,6 +84,7 @@ def test_cr_appearances(app, deposition, cr, op, att):
 	app.session.logout()
 
 @allure.description("Upload transcript, cr")
+@pytest.mark.skip(reason="Just for test")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 def test_cr_add_transcript(app, att, deposition):
