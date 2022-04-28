@@ -36,8 +36,9 @@ class Application:
 		self.options.add_argument('start-maximized')
 		self.options.add_experimental_option('useAutomationExtension', False)
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), chrome_options=self.options)
 
-		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
+		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
 		self.wd.implicitly_wait(5)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
