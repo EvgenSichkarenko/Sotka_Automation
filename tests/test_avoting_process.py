@@ -56,6 +56,6 @@ def test_email_voting_as_attorney(app, cr_voting, op, att):
 	app.deposition.get_link_from_email_attorney(password_att="1234Qwer", login_att="attorney0@yahoo.com")
 	app.deposition.upload_doc()
 	app.deposition.delivery(cr_voting.name)
-	app.deposition.finish_depo_attorney_voting(att.name_voting,att.email_voting,att.phone_voting,op.name_voting,op.email_voting
-		,op.phone_voting, cr_voting.name,cr_voting.email,cr_voting.phone)
+	app.deposition.finish_depo_attorney_voting(att.name_voting,att.email_voting,att.phone_voting,
+		op.name_voting,op.email_voting,op.phone_voting, cr_voting.name,cr_voting.email,cr_voting.phone)
 	app.session.logout()

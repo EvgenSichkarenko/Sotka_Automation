@@ -529,11 +529,12 @@ class DepositionCase:
 		assert phone_op == f"{op_phone}"
 
 		#Cr info
-		cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
+		#cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
+		name_cr =  WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{cr_name}']"))).text
 		#name_cr = WebDriverWait(cr, 15).until(EC.presence_of_element_located((By.XPATH, f"//h2[text()='{cr_name}']"))).text
-		name_cr =  cr.find_element(By.XPATH, f"//h2[text()='{cr_name}']").get_attribute("textContent")
-		email_cr = cr.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
-		phone_cr = cr.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
+		#name_cr =  cr.find_element(By.XPATH, f"//h2[text()='{cr_name}']").get_attribute("textContent")
+		email_cr = wd.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
+		phone_cr = wd.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
 
 		assert name_cr == f"{cr_name}"
 		assert email_cr == f"{cr_email}"
