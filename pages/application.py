@@ -31,8 +31,7 @@ class Application:
 		# self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		#self.options.binary_location = "/usr/bin/google-chrome"
 		self.options.binary_location = "/usr/bin/chromium-browser"
-		#self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
-		self.chrome_driver_binary = "/usr/bin/chromedriver"
+		self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
 		self.options.add_argument('--disable-dev-shm-usage')
 		self.options.add_argument('--no-sandbox')
 		self.options.add_argument('start-maximized')
