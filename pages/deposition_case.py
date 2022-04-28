@@ -279,17 +279,22 @@ class DepositionCase:
 
 	def depo_dashboard_manualy(self,depo_name):
 		wd = self.app.wd
+
+		today = datetime.now()
+		day = today.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
+		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
+		btn_day.send_keys(Keys.RETURN)
+		time.sleep(1)
+
 		try:
-			wd.refresh()
-			time.sleep(4)
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).send_keys(Keys.RETURN)
-		except TimeoutException:
+			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+		except NoSuchElementException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").click()
-			time.sleep(2)
-			block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
-			block_depo_cases.click()
+			time.sleep(1)
+			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
+			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 
 	def confirm(self):
 		wd = self.app.wd
