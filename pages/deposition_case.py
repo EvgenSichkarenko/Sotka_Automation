@@ -533,7 +533,7 @@ class DepositionCase:
 		time.sleep(3)
 		cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
 		time.sleep(1)
-		name_cr = cr.find_element(By.CSS_SELECTOR, "div[data-name='executorAttorneyNameContainer']").text
+		name_cr = cr.find_element(By.CSS_SELECTOR, "h2[data-name='executorAttorneyName']").get_attribute("textContent")
 		#name_cr =  cr.find_element(By.XPATH, f"//*[text()='{cr_name}']").text
 		email_cr = cr.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
 		phone_cr = cr.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
