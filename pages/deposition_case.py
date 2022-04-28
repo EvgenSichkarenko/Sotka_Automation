@@ -92,8 +92,9 @@ class DepositionCase:
 		#image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
 		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/doc/DEPO.pdf")
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
-		time.sleep(1)
-		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
+		time.sleep(2)
+		#wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
+		wd.find_element(By.CSS_SELECTOR, "input[name='inputFileHidden']").send_keys(image)
 		time.sleep(1)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
