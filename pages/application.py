@@ -30,7 +30,7 @@ class Application:
 		options.add_argument("--disable-infobars")
 		options.add_argument("start-maximized")
 		options.add_argument("--disable-extensions")
-		#options.add_argument("--headless")  # if you want it headless
+		options.add_argument("--headless")  # if you want it headless
 
 		if platform.system() == "Linux" :
 			# if raspi
