@@ -5,7 +5,7 @@ from data.data_model.data_registr_attorney import regisrt_data
 from data.data_model.data_registr_secretary import regisrt_secr
 import time
 
-#@pytest.mark.skip(reason="For test should change input date every time")
+@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new attorney")
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 def test_registr_attorney(app,regisrt_data):
