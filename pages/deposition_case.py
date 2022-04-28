@@ -508,7 +508,7 @@ class DepositionCase:
 	def finish_depo_attorney_voting(self, at_name, at_email,at_phone,op_name, op_email, op_phone,
 	cr_name,cr_email,cr_phone):
 		wd = self.app.wd
-		time.sleep(2)
+
 		#Attorney info
 		name_attorney = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
@@ -519,7 +519,6 @@ class DepositionCase:
 		assert phone_finish == f"{at_phone}"
 
 		#Op info
-		time.sleep(2)
 		op = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishOpposingCounselBloc']")
 		name_op = op.find_element(By.XPATH, f"//h2[text()='{op_name}']").get_attribute("textContent")
 		email_op = op.find_element(By.XPATH, f"//span[text()='{op_email}']").text
@@ -530,8 +529,6 @@ class DepositionCase:
 		assert phone_op == f"{op_phone}"
 
 		#Cr info
-		#wd.refresh()
-		time.sleep(3)
 		cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
 		name_cr = WebDriverWait(cr, 15).until(EC.visibility_of_element_located((By.XPATH, f"//h2[text()='{cr_name}']"))).text
 		#name_cr =  cr.find_element(By.XPATH, f"//h2[text()='{cr_name}']").get_attribute("textContent")
