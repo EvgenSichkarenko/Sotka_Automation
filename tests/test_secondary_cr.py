@@ -31,7 +31,6 @@ def test_edit_price(app, edit_price):
 	app.session.logout()
 
 """test schedual cr"""
-#@pytest.mark.skip(reason="Test don't work, block front-end")
 @allure.description("Change schedual cr")
 def test_schedual_cr(app):
 	app.session.login(login="testcr20@getnada.com", password="1234Qwer")

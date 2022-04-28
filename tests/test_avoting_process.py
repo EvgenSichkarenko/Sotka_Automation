@@ -7,7 +7,6 @@ from data.data_model.data_test_cr_voting import cr_voting
 import time
 
 """create depo and decline cr deposition, check email owner"""
-#@pytest.mark.skip(reason="Temporary skip this tests")
 @allure.description("create depo and decline cr deposition, check email owner")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
@@ -30,7 +29,6 @@ def test_deposition_create_decline_appearence(app, deposition, cr_voting, op, at
 	app.deposition.decline_appearence_cr(att.email_voting)
 
 """test deposition case voting create"""
-#@pytest.mark.skip(reason="Temporary skip this tests")
 @allure.description("Add op and voting")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(i) for i in deposition])
 @pytest.mark.parametrize("op", op, ids=[repr(i) for i in op])
@@ -44,7 +42,6 @@ def test_deposition_create(app, deposition, op):
 	app.session.logout()
 
 @allure.description("Get email link from op email and voting")
-#@pytest.mark.skip(reason="Temporary skip this tests")
 def test_email_voting_as_op(app):
 	app.deposition.get_link_from_email_op()
 
