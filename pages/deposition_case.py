@@ -531,9 +531,10 @@ class DepositionCase:
 
 		#Cr info
 		time.sleep(3)
-		name_cr =  wd.find_element(By.XPATH, f"//*[text()='{cr_name}']").text
-		email_cr = wd.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
-		phone_cr = wd.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
+		cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
+		name_cr =  cr.find_element(By.XPATH, f"//*[text()='{cr_name}']").text
+		email_cr = cr.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
+		phone_cr = cr.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
 
 		assert name_cr == f"{cr_name}"
 		assert email_cr == f"{cr_email}"
