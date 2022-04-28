@@ -47,10 +47,9 @@ class DepositionCase:
 		input_sbn_op = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
 		input_sbn_op.click()
 		input_sbn_op.send_keys(op_sbn)
-		time.sleep(2)
-		op_email = wd.find_element(By.XPATH, f"//span[text()='{email_voting}']")
-		time.sleep(2)
-		op_email.click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{email_voting}']"))).click()
+		#op_email = wd.find_element(By.XPATH, f"//span[text()='{email_voting}']")
+		#op_email.click()
 
 		add_op = len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='rightBlockExistedOC'] > div"))
 
