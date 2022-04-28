@@ -31,18 +31,18 @@ class RegistrAttorney:
 
 	def fill_form(self, email, bar_number,phone_number, address_two):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
+		WebDriverWait(wd, 15).until(EC.visibility_of_element_located(
 			(By.CSS_SELECTOR, "input[name='email']"
 		))).send_keys(email)
 
 		#Check phone number field
-		phone = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "phone_number")))
+		phone = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.NAME, "phone_number")))
 		phone_value = phone.get_property("value")
 		if phone_value == "":
 			phone.send_keys(phone_number)
 
 		#Check address two field
-		address = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "address_two")))
+		address = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.NAME, "address_two")))
 		address_value = address.get_property("value")
 		if address_value == "":
 			address.send_keys(address_two)
@@ -52,10 +52,9 @@ class RegistrAttorney:
 		if value == bar_number:
 			wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
 
-
 	def assert_secreatry(self):
 		wd =self.app.wd
-		check_name = WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.XPATH, "//h3[text()='Add secretary']"))).text
+		check_name = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.XPATH, "//h3[text()='Add secretary']"))).text
 		if check_name == 'Add secretary':
 			pass
 
@@ -71,7 +70,7 @@ class RegistrAttorney:
 		wd = self.app.wd
 		#image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
 		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/images/logo.jpg")
-		check_name = WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='Your photo account']"))).text
+		check_name = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='Your photo account']"))).text
 		if check_name == 'Your photo account':
 			wd.find_element(By.NAME, "uploadPhotoRefReg").send_keys(image)
 		else:
@@ -94,7 +93,7 @@ class RegistrAttorney:
 
 	def confirm_password(self, text1, text2):
 		wd = self.app.wd
-		input = WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
+		input = WebDriverWait(wd, 15).until(EC.visibility_of_element_located(
 			(By.CSS_SELECTOR, "input[name='password']")))
 		input.send_keys(Keys.CONTROL + "a")
 		input.send_keys(Keys.BACK_SPACE)

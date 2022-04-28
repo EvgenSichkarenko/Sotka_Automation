@@ -10,7 +10,7 @@ class Schedual:
 
 	def open(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(
+		WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.XPATH, "//div[text()='Schedule']"))).click()
 
 	def check_day(self,slider, element):

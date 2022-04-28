@@ -26,7 +26,7 @@ class Secretary:
 
 	def contact_person(self, secr_new_email, secr_old_email,  secr_fullname):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='homeAddNewAttorneyIcon']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='homeAddNewAttorneyIcon']"))).click()
 		wd.find_element(By.NAME, "addNewCPBtnModal").click()
 		wd.find_element(By.CSS_SELECTOR, "input[name='full_name']").clear()
 		wd.find_element(By.CSS_SELECTOR, "input[name='full_name']").send_keys(secr_fullname)
@@ -46,4 +46,4 @@ class Secretary:
 		input_email.send_keys(Keys.CONTROL + "a")
 		input_email.send_keys(Keys.BACK_SPACE)
 		wd.find_element(By.CSS_SELECTOR, "input[name='email']").send_keys(text)
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.NAME, "addSecretaryInvite"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "addSecretaryInvite"))).click()

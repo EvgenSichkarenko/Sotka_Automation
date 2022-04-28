@@ -16,32 +16,32 @@ class Session:
 		wd.find_element(By.NAME, "login").send_keys(login)
 		wd.find_element(By.NAME, "password").clear()
 		wd.find_element(By.NAME, "password").send_keys(password)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
 
 	def logout(self):
 		wd = self.app.wd
 		time.sleep(1)
 		wd.refresh()
-		basic = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
+		basic = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
 		time.sleep(1)
 		wd.execute_script("arguments[0].click()", basic)
 		time.sleep(1)
-		log = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "li[data-name='dropdownLogout']")))
+		log = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "li[data-name='dropdownLogout']")))
 		time.sleep(1)
 		wd.execute_script("arguments[0].click()", log)
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_secretary(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_cr(self):
 		wd = self.app.wd
-		return WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
+		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def ensure_logout(self):
 		wd = self.app.wd

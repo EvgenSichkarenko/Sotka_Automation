@@ -1,4 +1,6 @@
 import platform
+import time
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
@@ -84,7 +86,7 @@ class Application:
 
 		#STAGE
 		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
-
+		time.sleep(1)
 		#STAGE2
 		#wd.get("http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/")
 

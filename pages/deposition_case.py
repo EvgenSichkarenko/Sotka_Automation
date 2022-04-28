@@ -28,23 +28,23 @@ class DepositionCase:
 
 	def deponent_deposition(self, deponent):
 		wd = self.app.wd
-		input = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div [data-name='caseDeponentInput'] input")))
+		input = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div [data-name='caseDeponentInput'] input")))
 		input.send_keys(deponent)
 		input.send_keys(Keys.RETURN)
 
 	def location_deposition(self):
 		wd = self.app.wd
-		case_location = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='caseLocationTitle']"))).text
+		case_location = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='caseLocationTitle']"))).text
 		assert case_location == 'Select location', "Select location tab isn't working"
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationCompanyDifLocationBtn"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationByZoomBtn"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "caseLocationCompanyDifLocationBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "caseLocationByZoomBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
 
 	def attorneys(self,op_sbn, name_voting):
 		wd = self.app.wd
 		#check data attorney
 		#add opposing counsel
-		input_sbn_op = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
+		input_sbn_op = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
 		input_sbn_op.click()
 		input_sbn_op.send_keys(op_sbn)
 		op = wd.find_element(By.XPATH, f"//span[text()='{name_voting}']")
@@ -57,7 +57,7 @@ class DepositionCase:
 
 	def set_time_manually(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[text()='Set up time manually']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, "//div[text()='Set up time manually']"))).click()
 		row = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyRow']")
 		row.find_element(By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']").send_keys(Keys.RETURN)
 
@@ -93,7 +93,7 @@ class DepositionCase:
 		time.sleep(1)
 		input = wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
 		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
 
 	def check_exists_el(self,name_cr):
 		wd = self.app.wd
@@ -105,14 +105,14 @@ class DepositionCase:
 
 	def delivery(self, name_cr):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
 
 		while self.check_exists_el(name_cr) == False:
 			self.change_time_manually(name_cr)
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
-		WebDriverWait(wd, 10).until(
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
+		WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
 
 	# def delivery_for_voting(self):
@@ -128,11 +128,11 @@ class DepositionCase:
 	def change_time_manually(self, name_cr):
 		wd = self.app.wd
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).clear()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "deliveryBackBtn"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "depoBackbtn"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "manualPickedChangeBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "deliveryBackBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "depoBackbtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "manualPickedChangeBtn"))).click()
 
 
 		today = datetime.now()
@@ -179,7 +179,7 @@ class DepositionCase:
 		wd.find_element(By.NAME, "depositionManualConfirmBtn").send_keys(Keys.RETURN)
 		wd.find_element(By.NAME, "depoContinueBtn").send_keys(Keys.RETURN)
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
 
 	def finish_depo_attorney(self, depo_name, at_name, at_email,at_phone,op_name, op_email, op_phone,
@@ -187,7 +187,7 @@ class DepositionCase:
 		wd = self.app.wd
 		time.sleep(1)
 
-		name_depo = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//div[text()='{depo_name}']"))).text
+		name_depo = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//div[text()='{depo_name}']"))).text
 		assert name_depo == depo_name
 
 		#DAY
@@ -199,7 +199,7 @@ class DepositionCase:
 			pass
 
 		#Attorney info
-		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
+		name_attorney = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
 		phone_finish = wd.find_element(By.XPATH, f"//span[text()='{at_phone}']").text
 
@@ -242,11 +242,11 @@ class DepositionCase:
 	cr_name,cr_email,cr_phone):
 		wd = self.app.wd
 		time.sleep(1)
-		name_depo = WebDriverWait(wd, 10).until(
+		name_depo = WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.XPATH, f"//div[text()='{depo_name}']"))).text
 		assert name_depo == depo_name
 		# Attorney info
-		name_attorney = WebDriverWait(wd, 10).until(
+		name_attorney = WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
 		phone_finish = wd.find_element(By.XPATH, f"//span[text()='{at_phone}']").text
@@ -279,13 +279,13 @@ class DepositionCase:
 		wd = self.app.wd
 		try:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
+			block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
 			block_depo_cases.click()
 		except TimeoutException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").click()
 			time.sleep(2)
-			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
+			block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
 			block_depo_cases.click()
 
 	def confirm(self):
@@ -298,13 +298,13 @@ class DepositionCase:
 		wd = self.app.wd
 
 		#Open past deposition
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
 		# search input
-		input_cr_search = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchInputBlock']")))
+		input_cr_search = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchInputBlock']")))
 		input_cr_search.send_keys(f"{depo_name}")
 
 		#Found deposition and check data
-		cr_depo = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		cr_depo = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='pdBlockList'] > div")))
 		check_name_depo = cr_depo.find_element(By.XPATH, f"//div[text()='{depo_name}']")
 		check_name_att = cr_depo.find_element(By.XPATH, f"//div[text()='{att_name}']")
@@ -318,7 +318,7 @@ class DepositionCase:
 		cr_depo.find_element(By.XPATH, "//div[text()='Details']").click()
 
 		#check op
-		block_op = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
+		block_op = WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR,
 		"div[data-name='opposingCounselBlock']")))
 
 		name = block_op.find_element(By.XPATH, f"//h2[text()='{op_name}']").text
@@ -335,13 +335,13 @@ class DepositionCase:
 	def download_any_transcript(self):
 		wd = self.app.wd
 		#Open past deposition
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
 
 		#search input and click "Details" button
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test_deposition2022-12-44-15")
 		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
 		"div[data-name='pastDepositionBtnDownloadBlock2678'] button"))).send_keys(Keys.RETURN)
 		time.sleep(1)
 		wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer'] button").click()
@@ -360,13 +360,13 @@ class DepositionCase:
 	def download_depo_document(self):
 		wd = self.app.wd
 		#Open past deposition
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
 
 		#search input and click "Details" button
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Test_deposition2022-12-44-15")
 		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable(
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable(
 			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock2678'] button"))).send_keys(Keys.RETURN)
 		time.sleep(1)
 		wd.find_element(By.XPATH, "//div[text()='Download Depo notice']").click()
@@ -383,12 +383,12 @@ class DepositionCase:
 	#Test voting attorney calendar
 	def date_and_time_voting(self):
 		wd = self.app.wd
-		two_hour = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']")))
+		two_hour = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']")))
 		two_hour.click()
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid0'] button")
 		count = 0
 		for i in days:
-			time.sleep(2)
+			time.sleep(3)
 			if i.text == "Select":
 				i.click()
 				wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
@@ -471,10 +471,10 @@ class DepositionCase:
 		time.sleep(2)
 
 		#Login
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='loginHeaderBtn']"))).send_keys(Keys.RETURN)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='loginHeaderBtn']"))).send_keys(Keys.RETURN)
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='email']"))).send_keys(login_att)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password_att)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='email']"))).send_keys(login_att)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password_att)
 		wd.find_element(By.CSS_SELECTOR, "button[name='loginModalBtn']").send_keys(Keys.RETURN)
 		time.sleep(2)
 
@@ -507,7 +507,7 @@ class DepositionCase:
 		wd = self.app.wd
 		time.sleep(1)
 		#Attorney info
-		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
+		name_attorney = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{at_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{at_email}']").text
 		phone_finish = wd.find_element(By.XPATH, f"//span[text()='{at_phone}']").text
 
@@ -528,7 +528,7 @@ class DepositionCase:
 
 		#Cr info
 		time.sleep(1)
-		name_cr =  WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{cr_name}']"))).text
+		name_cr =  WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{cr_name}']"))).text
 		email_cr = wd.find_element(By.XPATH, f"//span[text()='{cr_email}']").text
 		phone_cr = wd.find_element(By.XPATH,f"//span[text()='{cr_phone}']").text
 
@@ -542,9 +542,9 @@ class DepositionCase:
 	def edit_date_in_depo(self):
 		wd = self.app.wd
 		time.sleep(3)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoBackbtn']"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='manualPickedChangeBtn']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoBackbtn']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='manualPickedChangeBtn']"))).click()
 
 		#Choose two hours
 		row = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyRow']")
@@ -572,9 +572,9 @@ class DepositionCase:
 		wd.find_element(By.XPATH, "//div[text()='Confirm']").click()
 
 		#Confirm btn
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoContinueBtn']"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='finishConfirmBtn']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoContinueBtn']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='finishConfirmBtn']"))).click()
 
 		assert self.day_deposition != day_new
 
@@ -607,7 +607,7 @@ class DepositionCase:
 			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 
 		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
 		time.sleep(1)
 		wd.find_element(By.XPATH, "//div[text()='Yes, cancel']").click()
 		time.sleep(3)
@@ -624,7 +624,7 @@ class DepositionCase:
 
 	def decline_appearence_cr(self, att_email):
 		wd = self.app.wd
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='appearancesList']")))
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='appearancesList']")))
 		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
 		time.sleep(1)
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
