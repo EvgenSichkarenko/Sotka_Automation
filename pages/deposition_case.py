@@ -530,6 +530,7 @@ class DepositionCase:
 		assert phone_op == f"{op_phone}"
 
 		#Cr info
+		wd.refresh()
 		time.sleep(3)
 		cr = wd.find_element(By.CSS_SELECTOR, "div[data-name='finishExecutorBlock']")
 		time.sleep(1)
