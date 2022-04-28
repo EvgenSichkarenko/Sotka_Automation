@@ -52,7 +52,7 @@ class Application:
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
 		self.options.binary_location = "/usr/bin/google-chrome"
 		self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
-		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), chrome_options=self.options)
+		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), options=self.options)
 		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager(self.chrome_driver_binary).install()), options=self.options, executable_path="/home/ubuntu/drivers/chromedriver")
 		self.wd.implicitly_wait(5)

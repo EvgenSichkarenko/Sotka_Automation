@@ -69,7 +69,8 @@ class RegistrAttorney:
 
 	def img_account_send(self):
 		wd = self.app.wd
-		image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
+		#image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
+		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/images/logo.jpg")
 		check_name = WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='Your photo account']"))).text
 		if check_name == 'Your photo account':
 			wd.find_element(By.NAME, "uploadPhotoRefReg").send_keys(image)

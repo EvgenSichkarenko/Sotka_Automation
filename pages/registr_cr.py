@@ -70,7 +70,8 @@ class RegistrCR:
 
 	def upload_photo(self):
 		wd = self.app.wd
-		image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
+		#image = os.path.abspath("C:\Python\Sotka_auto\data\images\logo.jpg")
+		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/images/logo.jpg")
 		WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "uploadPhotoRefReg")))
 		wd.find_element(By.NAME, "uploadPhotoRefReg").send_keys(image)
 		wd.find_element(By.NAME, "uploadPhotoContinueBtn").click()
