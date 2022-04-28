@@ -83,6 +83,7 @@ def test_deposition_create_manually_edit(app, deposition, cr, op, att):
 
 
 @allure.description("Upload transcript, cr")
+@pytest.mark.skip(reason="No deposition for upload transcript")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 def test_cr_add_transcript(app, att, deposition):
