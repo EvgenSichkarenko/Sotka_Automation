@@ -10,8 +10,8 @@ class Photo:
 
 	def add_photo(self):
 		wd = self.app.wd
-		#image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/images/logo.jpg")
-		image = os.path.abspath("C:\Python_project\Sotka_auto\data\images\logo.jpg")
+		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_stage/data/images/logo.jpg")
+		#image = os.path.abspath("C:\Python_project\Sotka_auto\data\images\logo.jpg")
 		basic_btn = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
 		wd.execute_script("arguments[0].click();", basic_btn)
 		wd.find_element(By.XPATH, "//div[text()=' Change photo']").click()
