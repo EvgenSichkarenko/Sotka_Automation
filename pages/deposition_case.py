@@ -448,6 +448,7 @@ class DepositionCase:
 		for i in days:
 			time.sleep(2)
 			if i.text == "10:00 AM":
+				time.sleep(2)
 				i.click()
 				wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
 				break

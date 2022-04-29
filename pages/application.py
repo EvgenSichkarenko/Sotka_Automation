@@ -48,7 +48,7 @@ class Application:
 		self.options = webdriver.ChromeOptions()
 		self.options.add_argument('--no-sandbox')
 		self.options.add_argument('--window-size=1366,768')
-		self.options.add_argument('--headless')
+		#self.options.add_argument('--headless')
 		self.options.add_argument('--make-default-browse')
 		self.options.add_argument('--disable-gpu')
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
