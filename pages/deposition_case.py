@@ -48,13 +48,8 @@ class DepositionCase:
 		input_sbn_op.click()
 		input_sbn_op.send_keys(op_sbn)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{email_voting}']"))).click()
-		#op_email = wd.find_element(By.XPATH, f"//span[text()='{email_voting}']")
-		#op_email.click()
-
-		add_op = len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='rightBlockExistedOC'] > div"))
-
-		if add_op > 0:
-			wd.find_element(By.NAME, "caseLocationContinueBtn").click()
+		time.sleep(1)
+		wd.find_element(By.NAME, "caseLocationContinueBtn").click()
 
 	def set_time_manually(self):
 		wd = self.app.wd
@@ -440,6 +435,7 @@ class DepositionCase:
 		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
 		link = link[0:-1]
 		print(link)
+		time.sleep(2)
 		wd.get(link)
 		time.sleep(1)
 
@@ -447,7 +443,7 @@ class DepositionCase:
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
 		for i in days:
 			time.sleep(2)
-			if i.text == "10:00 AM":
+			if (i.text == "10:00 AM"):
 				time.sleep(2)
 				i.click()
 				wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
