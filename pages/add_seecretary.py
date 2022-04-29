@@ -32,8 +32,9 @@ class Secretary:
 		wd.find_element(By.CSS_SELECTOR, "input[name='full_name']").send_keys(secr_fullname)
 		self.add_input_data(secr_old_email)
 		#check validation secretary with this email is registered User with email: testSecattr@inboxbear.com is exists
-		validation_exist = wd.find_element(By.XPATH, f"//div[text()='User with email: {secr_old_email} is exists']")\
-			.get_attribute("textContent")
+		#User with email: testSecattr@inboxbear.com is exists
+		time.sleep(1)
+		validation_exist = wd.find_element(By.XPATH, f"//div[text()='User with email: {secr_old_email} is exists']").get_attribute("textContent")
 		if validation_exist:
 			with allure.step(f"New email for secretary is '{secr_new_email}''"):
 				self.add_input_data(secr_new_email)

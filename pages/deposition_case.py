@@ -68,6 +68,7 @@ class DepositionCase:
 
 		day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+		time.sleep(1)
 		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
 		time.sleep(1)
 		#Enter time manually
@@ -437,7 +438,7 @@ class DepositionCase:
 		print(link)
 		time.sleep(2)
 		wd.get(link)
-		time.sleep(1)
+		time.sleep(2)
 
 		#Select date opposing counsel
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
