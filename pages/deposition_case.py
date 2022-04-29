@@ -40,14 +40,14 @@ class DepositionCase:
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationByZoomBtn"))).click()
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "caseLocationContinueBtn"))).click()
 
-	def attorneys(self,op_sbn, name_voting):
+	def attorneys(self,op_sbn, email_voting):
 		wd = self.app.wd
 		#check data attorney
 		#add opposing counsel
 		input_sbn_op = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
 		input_sbn_op.click()
 		input_sbn_op.send_keys(op_sbn)
-		op = wd.find_element(By.XPATH, f"//span[text()='{name_voting}']")
+		op = wd.find_element(By.XPATH, f"//span[text()='{email_voting}']")
 		op.click()
 
 		add_op = len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='rightBlockExistedOC'] > div"))
@@ -276,6 +276,13 @@ class DepositionCase:
 
 	def depo_dashboard_manualy(self,depo_name):
 		wd = self.app.wd
+		time.sleep(2)
+		today = datetime.now()
+		day = today.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
+		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
+		btn_day.send_keys(Keys.RETURN)
+		time.sleep(1)
 		try:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']")))
