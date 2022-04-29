@@ -16,6 +16,7 @@ class Schedual:
 	def check_day(self,slider, element):
 		if slider == False:
 			element.click()
+			time.sleep(1)
 
 	def change_time_monday(self):
 		wd = self.app.wd
