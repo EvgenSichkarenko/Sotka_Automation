@@ -12,10 +12,16 @@ class Session:
 		wd = self.app.wd
 		self.app.open_login()
 		time.sleep(1)
-		wd.find_element(By.NAME, "login").clear()
-		wd.find_element(By.NAME, "login").send_keys(login)
-		wd.find_element(By.NAME, "password").clear()
-		wd.find_element(By.NAME, "password").send_keys(password)
+		login_input = WebDriverWait(wd, 15).until(
+			EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='login']")))
+		login_input.send_keys(Keys.CONTROL + "a")
+		login_input.send_keys(Keys.BACK_SPACE)
+		login_input.send_keys(login)
+
+		password_input = wd.find_element(By.CSS_SELECTOR, "input[name='password']")
+		password_input.send_keys(Keys.CONTROL + "a")
+		password_input.send_keys(Keys.BACK_SPACE)
+		password_input.send_keys(password)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
 
