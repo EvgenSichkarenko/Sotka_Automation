@@ -391,6 +391,7 @@ class DepositionCase:
 	#Test voting attorney calendar
 	def date_and_time_voting(self):
 		wd = self.app.wd
+		time.sleep(1)
 		two_hour = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']")))
 		two_hour.click()
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid0'] button")
