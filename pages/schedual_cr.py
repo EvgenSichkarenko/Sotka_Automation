@@ -25,7 +25,7 @@ class Schedual:
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']").is_displayed()
 		self.check_day(slider,element)
-		time.sleep(1)
+		time.sleep(3)
 		#slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")
 		slider1 = WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")))
 		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0'] > input")
