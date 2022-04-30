@@ -26,7 +26,7 @@ class Schedual:
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']").is_displayed()
 
 		self.check_day(slider,element)
-		time,sleep(1)
+		time.sleep(1)
 		#wrapper_slider = wd.find_element(By.CSS_SELECTOR, "span[data-name='editTimeSlider']")
 		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")
 		time.sleep(1)
