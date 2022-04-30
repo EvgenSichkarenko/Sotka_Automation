@@ -14,13 +14,13 @@ class CrAppearance:
 	def confirm_appear(self, att_name, att_email, att_phone, op_name, op_email, op_phone):
 		wd = self.app.wd
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
 		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
 		time.sleep(1)
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 		# Attorney info
-		name_attorney = WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{att_name}']"))).text
+		name_attorney = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//h2[text()='{att_name}']"))).text
 		email_finish = wd.find_element(By.XPATH, f"//span[text()='{att_email}']").text
 		phone_finish = wd.find_element(By.XPATH, f"//span[text()='{att_phone}']").text
 
@@ -44,11 +44,10 @@ class CrAppearance:
 	def check_data_dashboard(self, att_name, att_email, att_phone, op_name, op_email, op_phone):
 		wd = self.app.wd
 
-		time.sleep(1.5)
-		time.sleep(2)
+		time.sleep(3)
 		#search deposition in dashboard cr
 		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		block_depo_cases = WebDriverWait(block, 10).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
+		block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
 		block_depo_cases.click()
 
 		time.sleep(2)
@@ -75,7 +74,7 @@ class CrAppearance:
 	def past_deposition(self):
 		wd = self.app.wd
 		#click button past deposition
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "crHomePastDepositionsBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "crHomePastDepositionsBtn"))).click()
 		#Found deposition and check data
 		depo = wd.find_elements(By.XPATH, "//div[text()='Details']")
 		time.sleep(2)
@@ -103,6 +102,7 @@ class CrAppearance:
 		wd = self.app.wd
 		time.sleep(2)
 		#upload transcript
+		# image_path = r"/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/transcript.pdf"
 		image_path = r"C:\Python_project\Sotka_auto\data\doc\transcript.pdf"
 		wd.find_element(By.NAME, "InfoHeaderButton").click()
 		wd.find_element(By.NAME, "pages_count").send_keys("2")

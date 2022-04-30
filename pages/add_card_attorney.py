@@ -13,10 +13,10 @@ class Creditcard:
 	def credit_card(self, card_number, expiry_date, cvv):
 		wd = self.app.wd
 		time.sleep(1)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID,"basic-button"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.XPATH,
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.ID,"basic-button"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH,
 		"//ul/li//div[text()='Add new credit card']"))).click()
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME,"companyPaymentAddNewCardBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME,"companyPaymentAddNewCardBtn"))).click()
 		title = WebDriverWait(wd, 10).until(EC.presence_of_element_located((By.XPATH, "//h1 [text()='Add your credit card']"))).text
 		if title == 'Add your credit card':
 			wd.find_element(By.NAME, "modalPaymentCardNumber").click()
@@ -27,12 +27,11 @@ class Creditcard:
 			wd.find_element(By.NAME, "modalPaymentCvv").send_keys(cvv)
 			wd.find_element(By.NAME, "modalPaymentSaveCardBtn").click()
 
-		successfully_add_card = WebDriverWait(wd, 10).until(EC.presence_of_element_located((
-			By.XPATH, "//div [text()='Card has been successfully added']"))).text
-		time.sleep(2)
+		time.sleep(1)
+		successfully_add_card = WebDriverWait(wd, 15).until(EC.presence_of_element_located((
+			By.XPATH, "//div [text()='Card has been successfully added']"))).get_attribute("textContent")
 		assert successfully_add_card == 'Card has been successfully added'
-		time.sleep(3)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
-		time.sleep(2)
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()
-		time.sleep(2)
+
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "cardDeleteCardBtn"))).click()
+		time.sleep(1)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "companyPaymentCloseBtn"))).click()

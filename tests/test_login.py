@@ -23,7 +23,6 @@ def test_login_secretary(app):
 
 
 """login cr"""
-#@pytest.mark.skip(reason="Check skip this test")
 @allure.description("Llogin cour reporter with invalid and valid data")
 @pytest.mark.login
 def test_login_cr(app):

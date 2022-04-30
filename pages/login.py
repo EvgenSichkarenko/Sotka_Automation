@@ -13,9 +13,9 @@ class Login:
 		wd = self.app.wd
 		self.app.open_login()
 		self.check_valid_login(invalid_login, invalid_password)
-		invalid_email = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
+		invalid_email = WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.XPATH ,
 		"//span[text()='login must be a valid email']")))
-		invalid_pasword = WebDriverWait(wd, 5).until(EC.presence_of_element_located((By.XPATH ,
+		invalid_pasword = WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.XPATH ,
 		"//span[text()='This field should contain at least 6 characters']")))
 		if invalid_email and invalid_pasword:
 			self.check_valid_login(valid_login, valid_password)
@@ -25,7 +25,7 @@ class Login:
 	def check_valid_login(self, text1, text2):
 		wd = self.app.wd
 
-		login = WebDriverWait(wd, 10).until(
+		login = WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='login']")))
 		login.send_keys(Keys.CONTROL + "a")
 		login.send_keys(Keys.BACK_SPACE)
@@ -39,5 +39,5 @@ class Login:
 
 	def logout(self):
 		wd = self.app.wd
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
-		WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, "//ul/li/div[text()=' Log Out']"))).click()

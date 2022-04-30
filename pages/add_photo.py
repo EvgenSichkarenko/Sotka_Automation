@@ -10,17 +10,22 @@ class Photo:
 
 	def add_photo(self):
 		wd = self.app.wd
-		image = os.path.abspath("C:\Python_project\Sotka_auto\data\images\logo.jpg")
+		#image = os.path.abspath("C:\Python_project\Sotka_auto\data\images\logo.jpg")
+		image = os.path.abspath("C:\Users\User\.jenkins\workspace\Sotka_pre_prod\data\images\logo.jpg")
 		#image = os.path.abspath("/var/lib/jenkins/workspace/Test_sotka/data/images/logo.jpg")
 
-		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.ID, "basic-button"))).click()
+		basic_btn = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
+		wd.execute_script("arguments[0].click();", basic_btn)
 		wd.find_element(By.XPATH, "//div[text()=' Change photo']").click()
 
 		title = wd.find_element(By.XPATH, "//h1[text()='Your photo account']").text
 
 		if title == "Your photo account":
-			wd.find_element(By.NAME, "uploadPhotoRef").send_keys(image)
+			time.sleep(1)
+			wd.find_element(By.CSS_SELECTOR, "input[name='uploadPhotoRef']").send_keys(image)
+			time.sleep(1)
 			wd.find_element(By.NAME, "uploadPhotoSaveBtn").click()
+			time.sleep(1)
 			return True
 		else:
 			return False
