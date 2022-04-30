@@ -24,13 +24,12 @@ class Schedual:
 		element = wd.find_element(By.NAME, "editTimeBtn0")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']").is_displayed()
-
 		self.check_day(slider,element)
-		time.sleep(1)
-		#wrapper_slider = wd.find_element(By.CSS_SELECTOR, "span[data-name='editTimeSlider']")
 		slider1 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']")
+		time.sleep(1)
 		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
+		time.sleep(1)
 		ActionChains(wd).move_to_element(slider1.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(10, 0).release().perform()
 
