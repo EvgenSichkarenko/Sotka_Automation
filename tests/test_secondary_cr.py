@@ -7,7 +7,7 @@ import allure
 def test_add_photo_cr(app):
 	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
 	app.add_photo.add_photo()
-	assert app.session.text_name_attribute_cr() == "CR Automation "
+	assert app.session.text_name_attribute_cr() == "CR Automation"
 	app.session.logout()
 
 """edit price cr"""
