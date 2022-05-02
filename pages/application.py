@@ -26,17 +26,17 @@ class Application:
 		self.options = webdriver.ChromeOptions()
 		self.options.add_argument('--no-sandbox')
 		self.options.add_argument('--window-size=1280,720')
-		#self.options.add_argument('--headless')
+		self.options.add_argument('--headless')
 		self.options.add_argument('start-maximized')
 		self.options.add_argument('disable-infobars')
 		self.options.add_argument('--make-default-browse')
 		self.options.add_argument('--disable-gpu')
 		self.options.add_argument("--disable-extensions")
 		self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
-		#self.options.binary_location = "/usr/bin/google-chrome"
-		#self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
-		#self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), options=self.options)
-		self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
+		self.options.binary_location = "/usr/bin/google-chrome"
+		self.chrome_driver_binary = "/home/ubuntu/drivers/chromedriver"
+		self.wd = webdriver.Chrome(service=Service(self.chrome_driver_binary), options=self.options)
+		#self.wd = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 		self.wd.maximize_window()
 		self.secretary = Secretary(self)
 		self.session = Session(self)
