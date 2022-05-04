@@ -90,7 +90,7 @@ class DepositionCase:
 		#wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
 		wd.find_element(By.CSS_SELECTOR, "input[name='inputFileHidden']").send_keys(image)
 		time.sleep(1)
-		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "depoContinueBtn"))).send_keys(Keys.RETURN)
 
 	def check_exists_el(self,name_cr):
 		wd = self.app.wd
@@ -229,6 +229,8 @@ class DepositionCase:
 				wd.find_element(By.NAME, "finishConfirmBtn").click()
 		except NoSuchElementException:
 			pass
+
+		time.sleep(3)
 
 	def name_deposition_case(self, depo_name):
 		wd = self.app.wd

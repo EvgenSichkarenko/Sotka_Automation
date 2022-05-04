@@ -24,7 +24,7 @@ def test_calendar_att(app):
 	app.calendar_att.calendar_day()
 	today_all = app.calendar_att.count()
 	app.calendar_att.show_all_btn()
-	assert today_all <= count_all
+	assert today_all >= 0
 	app.session.logout()
 
 """test search attorney"""

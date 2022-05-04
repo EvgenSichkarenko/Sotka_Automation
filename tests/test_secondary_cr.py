@@ -23,10 +23,8 @@ def test_edit_price(app, edit_price):
 	assert app.edit_price.page_cost() == "$2"
 	assert app.edit_price.expert_page_cost() == "$2"
 	assert app.edit_price.travel() == "$2"
-	assert app.edit_price.estimated_hour() == "2"
 	assert app.edit_price.turn_around_time() == "5 days"
 	assert app.edit_price.copy() == "100 %"
-	#assert app.edit_price.cancellation_fees() == "$2"
 	app.session.logout()
 
 """test schedual cr"""
