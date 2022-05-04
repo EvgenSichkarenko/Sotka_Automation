@@ -143,13 +143,13 @@ class Schedual:
 			"textContent")
 
 		if True:
-			assert monday == "Monday8:30 AM - 5:00 PM"
-			assert tuesday == "Tuesday8:30 AM - 5:00 PM"
-			assert wednesday == "Wednesday8:30 AM - 5:00 PM"
-			assert thursday == "Thursday8:30 AM - 5:00 PM"
-			assert friday == "Friday8:30 AM - 5:00 PM"
-			assert saturday == "Saturday8:30 AM - 5:00 PM"
-			assert sunday == "Sunday8:30 AM - 5:00 PM"
+			assert monday == "Monday7:30 AM - 6:00 PM"
+			assert tuesday == "Tuesday7:30 AM - 6:00 PM"
+			assert wednesday == "Wednesday7:30 AM - 6:00 PM"
+			assert thursday == "Thursday7:30 AM - 6:00 PM"
+			assert friday == "Friday7:30 AM - 6:00 PM"
+			assert saturday == "Saturday7:30 AM - 6:00 PM"
+			assert sunday == "Sunday7:30 AM - 6:00 PM"
 			return True
 
 	def return_data(self):

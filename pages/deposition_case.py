@@ -231,6 +231,8 @@ class DepositionCase:
 		except NoSuchElementException:
 			pass
 
+		time.sleep(3)
+
 	def name_deposition_case(self, depo_name):
 		wd = self.app.wd
 		name = depo_name
@@ -275,7 +277,6 @@ class DepositionCase:
 
 	def depo_dashboard_manualy(self,depo_name):
 		wd = self.app.wd
-
 		today = datetime.now()
 		day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
@@ -546,6 +547,7 @@ class DepositionCase:
 
 		#Confirm
 		wd.find_element(By.NAME, "finishConfirmBtn").click()
+		time.sleep(3)
 
 	def edit_date_in_depo(self):
 		wd = self.app.wd

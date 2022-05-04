@@ -27,18 +27,18 @@ def test_deposition_create_manually(app, deposition, cr, op, att):
 	app.deposition.depo_dashboard_manualy(deposition.name)
 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email,op.phone,cr.name,cr.email,cr.phone)
 	app.session.logout()
-#
-# """test confirm cr appearence"""
-# @allure.description("Confirm appearance from cr and check data")
-# @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-# @pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
-# @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
-# @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-# def test_cr_appearances(app, deposition, cr, op, att):
-# 	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
-# 	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
-# 	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
-# 	app.session.logout()
+
+"""test confirm cr appearence"""
+@allure.description("Confirm appearance from cr and check data")
+@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+@pytest.mark.parametrize("cr", cr, ids=[repr(x) for x in cr])
+@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
+@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+def test_cr_appearances(app, deposition, cr, op, att):
+	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
+	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.session.logout()
 
 # """test deposition case manually create and change day in deposition"""
 # @allure.description("Create deposition case and cansel depo with check dots in calendar on home page")
