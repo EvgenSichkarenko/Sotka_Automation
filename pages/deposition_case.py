@@ -482,7 +482,7 @@ class DepositionCase:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='email']"))).send_keys(login_att)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password_att)
 		wd.find_element(By.CSS_SELECTOR, "button[name='loginModalBtn']").send_keys(Keys.RETURN)
-		time.sleep(2)
+		time.sleep(3)
 
 	def get_message_info(self,message):
 
