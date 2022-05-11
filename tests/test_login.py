@@ -9,6 +9,8 @@ def test_login_attorney(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
 		valid_login="testatt@inboxbear.com", valid_password="1234Qwer")
 	assert "Danielle Theresa Kennedy " == app.session.text_name_attribute_attroney()
+	r = app.wd.execute_script("window.localStorage.getItem(token)")
+
 	app.login.logout()
 
 

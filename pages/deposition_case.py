@@ -110,6 +110,7 @@ class DepositionCase:
 			self.change_time_manually(name_cr)
 
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
+		time.sleep(1)
 		WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
 
