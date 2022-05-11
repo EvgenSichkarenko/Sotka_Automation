@@ -1,6 +1,7 @@
 import time
+import pytest
 import allure
-
+from data.data_model.data_test_attorney import attorneys
 
 """add credit card"""
 @allure.description("Add credit card to attorney company")
@@ -30,9 +31,13 @@ def test_calendar_att(app):
 
 """test search attorney"""
 @allure.description("Test search attorney in a company")
-def test_search_attorney(app):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.find_att.input(name="Martha")
+@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+def test_search_attorney(app, att):
+	app.session.login(login="attorney0@yahoo.com", password="1234Qwer")
+	app.find_att.input(name="  ")
 	assert app.find_att.count() == 1
+	app.find_att.input(name="Daniel")
+	assert app.find_att.count() == 2
+	assert app.find_att.check_name(att.name_voting) == att.name_voting
 	app.session.logout()
 

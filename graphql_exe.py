@@ -13,6 +13,8 @@ data = {"query": data_query}
 #json_data = json.dumps(data)
 
 response = requests.post(url, data=data)
+
+
 response.raise_for_status()
 api_token = response.json()['data']['signIn']['access_token']
 print(api_token)
