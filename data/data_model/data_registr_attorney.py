@@ -2,11 +2,11 @@ from model.model_registr_attorney import ModelRegisrtAttorney
 
 
 regisrt_data = [ModelRegisrtAttorney(
-    bar_number='256690',
-    email="testsecr@inboxbear.com",
+    bar_number='000000',
+    email="testqa000000@gmail.com",
     valid_password="1234Qwer",
     invalid_password="123",
-    password_match="12",
+    password_match="1234Qwer",
     name_secretary='Polinal',
     email_secretary='testSecattr@inboxbear.com',
     phone_number="510-288-8737",

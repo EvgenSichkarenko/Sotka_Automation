@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import json
+import requests
 
 class RegistrAttorney:
 	def __init__(self, app):
@@ -111,3 +113,26 @@ class RegistrAttorney:
 		#return wd.find_element(By.CSS_SELECTOR, "a[data-name='endStepLinkLink']").get_attribute("textContent")
 		return WebDriverWait(wd, 10).until(EC.visibility_of_element_located((
 			By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
+
+	def delete_att_from_database(self):
+		wd = self.app.wd
+
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
+		headers = {
+			"qa_token":"JEKA_QA_TEST_TOKEN"
+		}
+
+		data_query ='''mutation{
+  			deleteUser(sbn:"000000"){
+   			 status
+    		message
+ 		 }
+		}	
+		'''
+
+		data = {"query": data_query}
+		response = requests.post(url, headers=headers,data=data)
+
+		print(response.status_code)
+		print(response.json())
