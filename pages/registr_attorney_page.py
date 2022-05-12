@@ -117,6 +117,8 @@ class RegistrAttorney:
 	def delete_att_from_database(self):
 		wd = self.app.wd
 
+		message = "User and company successfully deleted"
+
 		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 
 		headers = {
@@ -132,7 +134,11 @@ class RegistrAttorney:
 		'''
 
 		data = {"query": data_query}
-		response = requests.post(url, headers=headers,data=data)
 
-		print(response.status_code)
-		print(response.json())
+		response = requests.post(url, headers=headers,data=data)
+		response_status = response.json()["data"]["deleteUser"]["status"]
+		response_message = response.json()["data"]["deleteUser"]["message"]
+
+		assert response.status_code == 200, f"Incorrect status code. Status code id {response.status_code}"
+		assert response_status == True, f"Incorrect status. Status response is {response_status}"
+		assert response_message == message, f"Incorrect status. Status response is {response_message}"
