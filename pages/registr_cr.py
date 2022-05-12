@@ -4,6 +4,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import requests
+import json
 
 class RegistrCR:
 	def __init__(self, app):
@@ -93,3 +95,30 @@ class RegistrCR:
 			return True
 		else:
 			return False, f"Cannot find '{login_text}' in last screen"
+
+	def delete_user_from_database(self):
+
+		message = "User Executor successfully deleted"
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
+		headers = {
+			"qatoken":"JEKA_QA_TEST_TOKEN"
+		}
+
+		data_query = '''mutation{
+		  			deleteCrAccount(sbn:"0"){
+		   			status
+		    		message
+		 		 }
+				}	
+				'''
+		data = {"query":data_query}
+
+		response = requests.post(url, headers=headers, data=data)
+
+		response_status = response.json()["data"]["deleteCrAccount"]["status"]
+		response_message = response.json()["data"]["deleteCrAccount"]["message"]
+
+		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
+		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
+		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
