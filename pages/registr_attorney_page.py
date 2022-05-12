@@ -115,8 +115,8 @@ class RegistrAttorney:
 			By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
 
 	def delete_att_from_database(self):
-		wd = self.app.wd
 
+		message = "Attorney and company successfully deleted"
 		url = "https://apidemo.trialbase.com/graphql"
 
 		headers = {
@@ -134,6 +134,9 @@ class RegistrAttorney:
 		data = {"query": data_query}
 		response = requests.post(url, headers=headers,data=data)
 
+		response_status = response.json()["data"]["deleteAttorneyAccount"]["status"]
+		response_message = response.json()["data"]["deleteAttorneyAccount"]["message"]
 
-		print(response.status_code)
-		print(response.json())
+		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
+		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
+		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"

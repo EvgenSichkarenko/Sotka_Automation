@@ -17,11 +17,11 @@ def test_registr_attorney(app,regisrt_data):
 	app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
 	assert app.regAttorney.login_present() == 'Login'
-	time.sleep(50)
+	time.sleep(2)
 	app.regAttorney.delete_att_from_database()
 
 
-@pytest.mark.skip(reason="For test should change input date every time")
+#@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new cour reporter")
 @pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
 def test_reg_cr(app, cr_data):
@@ -34,6 +34,7 @@ def test_reg_cr(app, cr_data):
 	app.cr.upload_photo()
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
+	app.cr.delete_att_from_database()
 
 
 """add secretary"""
