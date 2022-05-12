@@ -96,6 +96,7 @@ class DepositionCase:
 	def check_exists_el(self,name_cr):
 		wd = self.app.wd
 		try:
+			time.sleep(1)
 			wd.find_element(By.XPATH, f"//span[text()='{name_cr}']")
 			return True
 		except NoSuchElementException:
@@ -105,8 +106,10 @@ class DepositionCase:
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
+		time.sleep(2)
 
 		while self.check_exists_el(name_cr) == False:
+			time.sleep(2)
 			self.change_time_manually(name_cr)
 
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
@@ -633,7 +636,7 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
-	def decline_appearence_cr(self, att_email):
+	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='appearancesList']")))
 		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
@@ -641,8 +644,10 @@ class DepositionCase:
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 
 		#Decline button
+		time.sleep(4)
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsDecline']").click()
 		time.sleep(4)
+		#depo_name = "Test_email_data"
 		server = "imap.mail.yahoo.com"
 		port = 993
 		login = "attorney0@yahoo.com"
@@ -660,8 +665,11 @@ class DepositionCase:
 		message = email.message_from_bytes(raw_email)
 		text, encoding, mime = self.get_message_info(message)
 
-		new_email = re.sub(r"\r\n", " ", text)
-		str_email = "You are all set for this deposition, but you can always make" \
-				  " an alternative selection by visiting your Trialbase account:"
-
+		#Compare email
+		#self.day_deposition()
+		new_email = re.sub(r"\r\n", "", text)
+		str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
+		print(str_email)
 		assert new_email.count(str_email) == 1
+#You are all set for this deposition, but you can always make" \
+				  #" an alternative selection by visiting your Trialbase account:"
