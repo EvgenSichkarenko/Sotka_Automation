@@ -17,7 +17,7 @@ def test_registr_attorney(app,regisrt_data):
 	app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
 	assert app.regAttorney.login_present() == 'Login'
-	time.sleep(2)
+	time.sleep(50)
 	app.regAttorney.delete_att_from_database()
 
 

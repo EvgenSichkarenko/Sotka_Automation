@@ -120,12 +120,12 @@ class RegistrAttorney:
 		url = "https://apidemo.trialbase.com/graphql"
 
 		headers = {
-			"qa_token":"JEKA_QA_TEST_TOKEN"
+			"qatoken":"JEKA_QA_TEST_TOKEN"
 		}
 
 		data_query ='''mutation{
-  			deleteUser(sbn:"000000"){
-   			 status
+  			deleteAttorneyAccount(sbn:"000000"){
+   			status
     		message
  		 }
 		}	
