@@ -289,7 +289,7 @@ class DepositionCase:
 		time.sleep(1)
 
 		try:
-			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
 			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 		except NoSuchElementException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
