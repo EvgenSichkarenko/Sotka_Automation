@@ -67,7 +67,9 @@ class DepositionCase:
 			calendar.find_element(By.CSS_SELECTOR, "svg[data-name='calendarArrowLeft']").click()
 
 		day = today.day
+		time.sleep(2)
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='depositionManuallyCalendar']")
+		time.sleep(2)
 		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
 		time.sleep(1)
 		#Enter time manually
@@ -83,8 +85,8 @@ class DepositionCase:
 
 	def upload_doc(self):
 		wd = self.app.wd
-		#image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
-		image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_pre_prod/data/doc/DEPO.pdf")
+		image = "C:\Python_project\Sotka_auto\data\doc\DEPO.pdf"
+		#image = os.path.abspath("/var/lib/jenkins/workspace/Sotka_pre_prod/data/doc/DEPO.pdf")
 		#WebDriverWait(wd, 10).until(EC.element_to_be_clickable(By.NAME, "depoUploadBtn")).click()
 		time.sleep(2)
 		#wd.find_element(By.XPATH, "//input[@name='inputFileHidden']").send_keys(image)
@@ -95,6 +97,7 @@ class DepositionCase:
 	def check_exists_el(self,name_cr):
 		wd = self.app.wd
 		try:
+			time.sleep(2)
 			wd.find_element(By.XPATH, f"//span[text()='{name_cr}']")
 			return True
 		except NoSuchElementException:
@@ -105,10 +108,13 @@ class DepositionCase:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
 
+		time.sleep(2)
 		while self.check_exists_el(name_cr) == False:
+			time.sleep(2)
 			self.change_time_manually(name_cr)
 
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{name_cr}']"))).click()
+		time.sleep(2)
 		WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
 
@@ -602,8 +608,12 @@ class DepositionCase:
 		#Find depo on dahsboard
 
 		try:
+			time.sleep(1)
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+			time.sleep(2)
+			block.find_element(By.XPATH, f"//p[text()='{depo_name}']").send_keys(Keys.RETURN)
+			time.sleep(2)
+			#WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).send_keys(Keys.RETURN)
 		except NoSuchElementException:
 			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			time.sleep(1)
@@ -628,7 +638,7 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
-	def decline_appearence_cr(self, att_email):
+	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
@@ -656,8 +666,8 @@ class DepositionCase:
 		message = email.message_from_bytes(raw_email)
 		text, encoding, mime = self.get_message_info(message)
 
-		new_email = re.sub(r"\r\n", " ", text)
-		str_email = "You are all set for this deposition, but you can always make" \
-				  " an alternative selection by visiting your Trialbase account:"
-
+		new_email = re.sub(r"\r\n", "", text)
+		print(new_email)
+		str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
+		print(str_email)
 		assert new_email.count(str_email) == 1
