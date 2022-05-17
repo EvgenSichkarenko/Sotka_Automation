@@ -1,11 +1,16 @@
 import os.path
+from datetime import datetime, timedelta
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import requests
+import sys
+import imaplib
+import email
 import json
+import re
 
 class RegistrAttorney:
 	def __init__(self, app):
@@ -107,15 +112,80 @@ class RegistrAttorney:
 		wd.find_element(By.CSS_SELECTOR, "input[name='confirmPassword']").send_keys(text2)
 		wd.find_element(By.NAME, "stepSevenContinueBtn").click()
 
-	def login_present(self):
+	def check_send_mail(self):
 		wd = self.app.wd
-		#return WebDriverWait(wd, 5).until(EC.visibility_of((By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
-		#return wd.find_element(By.CSS_SELECTOR, "a[data-name='endStepLinkLink']").get_attribute("textContent")
-		return WebDriverWait(wd, 10).until(EC.visibility_of_element_located((
-			By.CSS_SELECTOR, "a[data-name='endStepLinkLink']"))).get_attribute("textContent")
+		time.sleep(4)
+
+		current_zone = datetime.now()
+		three_hours = timedelta(hours=3)
+		min_three = current_zone - three_hours
+		current_date = datetime.today().strftime(f'%a, %d %b %Y {min_three.strftime("%H")}')
+		self.sotka_time = f"{current_date}"
+
+		text = wd.find_element(By.XPATH, "//div[text()='Please check your mailbox. We have sent you a confirmation email']").get_attribute("textContent")
+
+		if text == 'Please check your mailbox. We have sent you a confirmation email':
+			return True
+		else:
+			return False, f"Cannot find '{text}' in last screen"
+
+	def get_message_info(self,message):
+
+		message_text, encoding, mime = "Нет тела сообщения", "-", "-"
+		if message.is_multipart():
+			for part in message.walk():
+				if part.get_content_type() in ("text/html", "text/plain"):
+					message_text, encoding, mime = self.get_part_info(part)
+					break  # Только первое вхождение
+		else:
+			message_text, encoding, mime = self.get_part_info(message)
+
+		return message_text, encoding, mime
+
+	def get_part_info(self,part):
+
+		encoding = part.get_content_charset()
+		if not encoding:
+			encoding = sys.stdout.encoding
+
+		mime = part.get_content_type()
+		message = part.get_payload(decode=True).decode(encoding, errors="ignore").strip()
+
+		return message, encoding, mime
+
+	def check_confirmation_letter(self):
+		wd = self.app.wd
+		time.sleep(2)
+		server = "imap.mail.yahoo.com"
+		port = 993
+		login = "testqa000000@yahoo.com"
+		password = "ksbbaatxxwotyabq"
+
+		mail = imaplib.IMAP4_SSL(server, port)
+		mail.login(login, password)
+		mail.select()
+		type, data = mail.search(None, "(FROM 'Trialbase')")
+		data = data[0].split()
+		latest_id = data[-1]
+		result, data = mail.fetch(latest_id, "(RFC822)")
+
+		raw_email = data[0][1]
+		message = email.message_from_bytes(raw_email)
+		date_email = message["Date"]
+
+		text, encoding, mime = self.get_message_info(message)
+
+		new_email = re.sub(r"\r\n", "", text)
+		str_email = f"Dear Jeka test qa, Thank you for signing up for Trialbase," \
+					f" we are excited to have you withus! Please click the button below to let us know you've received this emailand to confirm your Attorney account."
+		if (new_email.count(str_email) == 1) and (date_email.count(self.sotka_time) == 1):
+			return True
+		else:
+			return False
 
 	def delete_att_from_database(self):
 
+		time.sleep(2)
 		message = "Attorney and company successfully deleted"
 		url = "https://apidemo.trialbase.com/graphql"
 

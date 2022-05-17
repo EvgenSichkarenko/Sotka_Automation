@@ -16,8 +16,8 @@ def test_registr_attorney(app,regisrt_data):
 	#app.regAttorney.bank_account_button()
 	#app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
-	assert app.regAttorney.login_present() == 'Login'
-	time.sleep(2)
+	assert app.regAttorney.check_send_mail()
+	assert app.regAttorney.check_confirmation_letter()
 	app.regAttorney.delete_att_from_database()
 
 
@@ -34,10 +34,12 @@ def test_reg_cr(app, cr_data):
 	app.cr.upload_photo()
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
+	assert app.cr.check_confirmation_letter()
 	app.cr.delete_att_from_database()
 
 
 """add secretary"""
+@pytest.mark.skip(reason="Need add new attribute")
 @allure.description("Add new secretary for attorney company")
 @pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
 def test_add_secreatry(app, secretary):

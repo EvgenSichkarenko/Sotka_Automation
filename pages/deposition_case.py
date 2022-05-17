@@ -288,13 +288,15 @@ class DepositionCase:
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
 		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
 		btn_day.send_keys(Keys.RETURN)
-		time.sleep(1)
+		time.sleep(2)
 
 		try:
-			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
+			time.sleep(2)
 			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+			time.sleep(2)
 		except NoSuchElementException:
-			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
 			time.sleep(1)
 			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
 			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
@@ -554,7 +556,7 @@ class DepositionCase:
 	def edit_date_in_depo(self):
 		wd = self.app.wd
 		time.sleep(3)
-		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).send_keys(Keys.RETURN)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoBackbtn']"))).click()
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='manualPickedChangeBtn']"))).click()
 
@@ -608,10 +610,10 @@ class DepositionCase:
 		#Find depo on dahsboard
 
 		try:
-			time.sleep(1)
-			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 			time.sleep(2)
-			block.find_element(By.XPATH, f"//p[text()='{depo_name}']").send_keys(Keys.RETURN)
+			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
+			time.sleep(1)
+			block.find_element(By.XPATH, f"//p[text()='{depo_name}']").click()
 			time.sleep(2)
 			#WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).send_keys(Keys.RETURN)
 		except NoSuchElementException:
