@@ -11,20 +11,33 @@ import imaplib
 import email
 import sys
 import re
+import requests
 
 
 class DepositionCase:
 	def __init__(self, app):
 		self.app = app
 
+	#global number_of_deposition
+
 	def name_deposition(self, name):
 		wd = self.app.wd
-		time.sleep(1)
+		time.sleep(2)
 		WebDriverWait(wd,  15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomeNewDepBtn"))).click()
 		input = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='caseNameSearchInputWrapper'] input")))
 		time.sleep(2)
+		self.number_of_deposition = self.get_id_deposition_case()
 		input.send_keys(name)
 		input.send_keys(Keys.ENTER)
+		time.sleep(1)
+
+	def get_id_deposition_case(self):
+		wd = self.app.wd
+		url = wd.current_url
+		default = "http://stoke-test.s3-website.us-east-2.amazonaws.com/progressCase/"
+		id_case = url.replace(default, "")
+		number = int(id_case)
+		return number
 
 	def deponent_deposition(self, deponent):
 		wd = self.app.wd
@@ -189,6 +202,12 @@ class DepositionCase:
 	cr_name,cr_email,cr_phone):
 		wd = self.app.wd
 		time.sleep(1)
+		#Current time
+		# current_zone = datetime.now()
+		# three_hours = timedelta(hours=3)
+		# min_three = current_zone - three_hours
+		# current_date = datetime.today().strftime(f'%a, %d %b %Y {min_three.strftime("%H")}')
+		# self.sotka_time = f"{current_date}"
 
 		name_depo = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//div[text()='{depo_name}']"))).text
 		assert name_depo == depo_name
@@ -290,16 +309,18 @@ class DepositionCase:
 		btn_day.send_keys(Keys.RETURN)
 		time.sleep(2)
 
-		try:
-			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
-			time.sleep(2)
-			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
-			time.sleep(2)
-		except NoSuchElementException:
-			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
-			time.sleep(1)
-			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
-			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+
+		# try:
+		# 	#block = wd.find_element(By.CSS_SELECTOR, "div[data-name='statusContainer']")
+		# 	time.sleep(2)
+		# 	WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
+		# 	wd.find_element(By.CSS_SELECTOR, "p[data-name='StatusProcessCaseName0']")
+		# 	time.sleep(2)
+		# except NoSuchElementException:
+		# 	block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
+		# 	time.sleep(1)
+		# 	block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
+		# 	WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
 
 	def confirm(self):
 		wd = self.app.wd
@@ -411,8 +432,9 @@ class DepositionCase:
 					wd.find_element(By.CSS_SELECTOR, "button[name='calendarVotingBtn']").click()
 					time.sleep(2)
 					break
-
-		wd.find_element(By.CSS_SELECTOR, "button[name='voteModalApply']").click()
+		time.sleep(2)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='voteModalApply']"))).click()
+		#wd.find_element(By.CSS_SELECTOR, "button[name='voteModalApply']").click()
 
 	def check_el_present(self):
 		wd = self.app.wd
@@ -422,33 +444,17 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
-	#Email
-	def get_link_from_email_op(self):
+	def get_link_from_email(self):
 		wd = self.app.wd
-		server = "imap.mail.yahoo.com"
-		port = 993
-		login = "evgen20@yahoo.com"
-		password = "udxyliiyxemzfjww"
-		#Susan Calabrese Miller
-		mail = imaplib.IMAP4_SSL(server, port)
-		mail.login(login, password)
-		mail.select()
-		type, data = mail.search(None, "(FROM 'Trialbase')")
-		data = data[0].split()
-		latest_id = data[-1]
-		result, data = mail.fetch(latest_id, "(RFC822)")
-		raw_email = data[0][1]
-
-		message = email.message_from_bytes(raw_email)
-		text, encoding, mime = self.get_message_info(message)
-		#link = re.search('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', text)
-		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
+		link = re.search("(?P<url>https?://[^\s]+)", self.text).group("url")
 		link = link[0:-1]
 		time.sleep(1)
 		wd.get(link)
 		time.sleep(2)
 
-		#Select date opposing counsel
+	def select_date_op_voting(self):
+		wd = self.app.wd
+		time.sleep(2)
 		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
 		for i in days:
 			time.sleep(2)
@@ -456,37 +462,12 @@ class DepositionCase:
 				i.click()
 				wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
 				break
-		time.sleep(1)
-
-	def get_link_from_email_attorney(self, login_att, password_att):
-		wd = self.app.wd
-
-		server = "imap.mail.yahoo.com"
-		port = 993
-		login = "attorney0@yahoo.com"
-		password = "iqdollxuiqxwxozf"
-
-		mail = imaplib.IMAP4_SSL(server, port)
-		mail.login(login, password)
-		mail.select()
-		type, data = mail.search(None, "(FROM 'Trialbase')")
-		data = data[0].split()
-		latest_id = data[-1]
-		result, data = mail.fetch(latest_id, "(RFC822)")
-
-		raw_email = data[0][1]
-		message = email.message_from_bytes(raw_email)
-		text, encoding, mime = self.get_message_info(message)
-		#link = re.search('https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+', text)
-		link = re.search("(?P<url>https?://[^\s]+)", text).group("url")
-		link = link[0:-1]
-		time.sleep(1)
-		wd.get(link)
 		time.sleep(2)
 
-		#Login
+	def login_attorney_voting(self,  login_att, password_att):
+		wd = self.app.wd
+		time.sleep(2)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='loginHeaderBtn']"))).send_keys(Keys.RETURN)
-
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='email']"))).send_keys(login_att)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password_att)
 		wd.find_element(By.CSS_SELECTOR, "button[name='loginModalBtn']").send_keys(Keys.RETURN)
@@ -592,7 +573,6 @@ class DepositionCase:
 
 		assert self.day_deposition != day_new
 
-
 	def cansel_deposition(self, depo_name):
 		wd = self.app.wd
 
@@ -640,6 +620,16 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
+	def confirm_appearance(self, att_email):
+		wd = self.app.wd
+		time.sleep(2)
+		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
+		time.sleep(1)
+		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
+		time.sleep(2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").click()
+		time.sleep(1)
+
 	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
@@ -673,3 +663,64 @@ class DepositionCase:
 		str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
 		print(str_email)
 		assert new_email.count(str_email) == 1
+
+	def get_letter_from_email(self, login, password):
+		wd = self.app.wd
+		time.sleep(2)
+		server = "imap.mail.yahoo.com"
+		port = 993
+
+		mail = imaplib.IMAP4_SSL(server, port)
+		mail.login(login, password)
+		mail.select()
+		type, data = mail.search(None, "(FROM 'Trialbase')")
+		data = data[0].split()
+		latest_id = data[-1]
+		result, data = mail.fetch(latest_id, "(RFC822)")
+
+		raw_email = data[0][1]
+		message = email.message_from_bytes(raw_email)
+		self.date_email = message["Date"]
+		self.text, encoding, mime = self.get_message_info(message)
+		time.sleep(2)
+
+	def current_time(self):
+		current_zone = datetime.now()
+		three_hours = timedelta(hours=3)
+		min_three = current_zone - three_hours
+		current_date = datetime.today().strftime(f'%a, %d %b %Y {min_three.strftime("%H")}')
+		sotka_time = f"{current_date}"
+		return sotka_time
+
+	def compare_email_and_date(self, emails):
+		wd = self.app.wd
+		time.sleep(2)
+		new_email = re.sub(r"\r\n", "", self.text)
+		print(new_email)
+		if (new_email.count(emails) == 1): #and (self.date_email.count(self.current_time()) == 1):
+			return True
+		else:
+			return False
+
+	def	delete_deposition_from_database(self):
+		wd = self.app.wd
+		message = "Deposition case successfully deleted with all relations and files"
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		#url = "https://apidemo.trialbase.com/graphql"
+
+		headers = {
+			"qatoken": "JEKA_QA_TEST_TOKEN"
+		}
+		print(self.number_of_deposition)
+		data_query = "mutation{deleteDepositionCase(deposition_id:" + f"{self.number_of_deposition})" + "{status message} }"
+
+		data = {"query": data_query}
+
+		response = requests.post(url, headers=headers, data=data)
+
+		response_status = response.json()["data"]["deleteDepositionCase"]["status"]
+		response_message = response.json()["data"]["deleteDepositionCase"]["message"]
+
+		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
+		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
+		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"

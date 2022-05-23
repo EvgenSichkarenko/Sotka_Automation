@@ -17,6 +17,7 @@ from pages.calendar_cr import CalendarCr
 from pages.cr_deposition_info import CrDepoInfo
 from pages.att_search_att import FindAtt
 from pages.cr_appearances import CrAppearance
+from pages.forgot_password import ForgotPassword
 
 class Application:
 
@@ -54,14 +55,8 @@ class Application:
 		self.cr_finish_depo = CrDepoInfo(self)
 		self.find_att = FindAtt(self)
 		self.cr_appear = CrAppearance(self)
+		self.forgot_password = ForgotPassword(self)
 
-
-	def is_valid(self):
-		try:
-			self.wd.current_url
-			return True
-		except:
-			return False
 
 	def open_login(self):
 		wd = self.wd
@@ -73,9 +68,9 @@ class Application:
 		#wd.get("https://trialbase.com/login")
 
 		#PREPROD
-		wd.get("https://demo.trialbase.com/login")
+		#wd.get("https://demo.trialbase.com/login")
 		#STAGE
-		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
+		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 
 		# time.sleep(5)
 		# WebDriverWait(wd, 10).until(

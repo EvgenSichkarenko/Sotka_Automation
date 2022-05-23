@@ -3,6 +3,7 @@ import os
 import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 class Photo:
 	def __init__(self, app):
@@ -23,9 +24,9 @@ class Photo:
 		if title == "Your photo account":
 			time.sleep(1)
 			wd.find_element(By.CSS_SELECTOR, "input[name='uploadPhotoRef']").send_keys(image)
-			time.sleep(1)
-			wd.find_element(By.NAME, "uploadPhotoSaveBtn").click()
-			time.sleep(1)
+			time.sleep(2)
+			wd.find_element(By.NAME, "uploadPhotoSaveBtn").send_keys(Keys.RETURN)
+			time.sleep(2)
 			return True
 		else:
 			return False

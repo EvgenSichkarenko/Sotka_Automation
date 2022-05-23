@@ -125,7 +125,7 @@ class RegistrCR:
 
 		return message, encoding, mime
 
-	def check_confirmation_letter(self):
+	def check_confirmation_letter(self,email_reg_cr):
 		wd = self.app.wd
 		time.sleep(2)
 		server = "imap.mail.yahoo.com"
@@ -149,10 +149,8 @@ class RegistrCR:
 		text, encoding, mime = self.get_message_info(message)
 
 		new_email = re.sub(r"\r\n", "", text)
-		print(new_email)
-		str_email = f"Dear AutomationCR, Thank you for signing up for Trialbase," \
-					f" we are excited to have you withus! Please click the button below to let us know you've received this emailand to confirm your Court Reporter account."
-		if (new_email.count(str_email) == 1) and (date_email.count(self.sotka_time) == 1):
+
+		if (new_email.count(email_reg_cr) == 1) and (date_email.count(self.sotka_time) == 1):
 			return True
 		else:
 			return False

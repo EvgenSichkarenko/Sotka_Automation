@@ -5,16 +5,16 @@ import allure
 """add new photo cr"""
 @allure.description("Add new photo cr")
 def test_add_photo_cr(app):
-	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.add_photo.add_photo()
-	assert app.session.text_name_attribute_cr() == "CR Automation "
+	assert app.session.text_name_attribute_cr() == "AutomationCR "
 	app.session.logout()
 
 """edit price cr"""
 @allure.description("Edit price cr")
 @pytest.mark.parametrize("edit_price", edit_price, ids=[repr(i) for i in edit_price])
 def test_edit_price(app, edit_price):
-	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.edit_price.change_price(edit_price.appearance_fee, edit_price.page_cost,edit_price.expert_page_cost,
 	edit_price.travel,edit_price.estimated,edit_price.turn_around_page,edit_price.copy,
 	edit_price.cancellation_fee)
@@ -31,7 +31,7 @@ def test_edit_price(app, edit_price):
 #@pytest.mark.skip(reason="Test don't work, block front-end")
 @allure.description("Change schedual cr")
 def test_schedual_cr(app):
-	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.schedule.open()
 	app.schedule.change_time_monday()
 	app.schedule.change_time_tuesday()
@@ -50,7 +50,7 @@ def test_schedual_cr(app):
 """test calendar cr"""
 @allure.description("Check display deposition on dashboard cr")
 def test_calendar_cr(app):
-	app.session.login(login="testcr20@getnada.com", password="1234Qwer")
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	count_all = app.calendar_cr.count()
 	app.calendar_cr.calendar_day()
 	day_count = app.calendar_att.count()

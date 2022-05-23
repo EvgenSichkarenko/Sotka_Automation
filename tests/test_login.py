@@ -7,8 +7,8 @@ import allure
 @pytest.mark.login
 def test_login_attorney(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="testatt@inboxbear.com", valid_password="1234Qwer")
-	assert "Danielle Theresa Kennedy " == app.session.text_name_attribute_attroney()
+		valid_login="qaautomationatt@yahoo.com", valid_password="ZXcv@123580")
+	assert "Daniel Vlad Tabakh " == app.session.text_name_attribute_attroney()
 	app.login.logout()
 
 
@@ -17,8 +17,8 @@ def test_login_attorney(app):
 @pytest.mark.login
 def test_login_secretary(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="testSecattr@inboxbear.com", valid_password="1234Qwer" )
-	assert "Rita " == app.session.text_name_attribute_secretary()
+		valid_login="qaautomationsecr@yahoo.com", valid_password="ZXcv@123580" )
+	assert "Rita QA " == app.session.text_name_attribute_secretary()
 	app.login.logout()
 
 
@@ -27,6 +27,6 @@ def test_login_secretary(app):
 @pytest.mark.login
 def test_login_cr(app):
 	app.login.login(invalid_login="a123", invalid_password="13",
-		valid_login="cr1auto@getnada.com", valid_password="1234Qwer")
+		valid_login="qaautomationcr@yahoo.com", valid_password="ZXcv@123580")
 	assert app.session.text_name_attribute_cr() == "AutomationCR "
 	app.login.logout()

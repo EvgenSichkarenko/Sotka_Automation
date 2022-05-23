@@ -40,14 +40,17 @@ class Session:
 
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
+		time.sleep(2)
 		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_secretary(self):
 		wd = self.app.wd
+		time.sleep(2)
 		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def text_name_attribute_cr(self):
 		wd = self.app.wd
+		time.sleep(2)
 		return WebDriverWait(wd, 15).until(EC.presence_of_element_located((By.ID, "basic-button"))).get_attribute("textContent")
 
 	def ensure_logout(self):

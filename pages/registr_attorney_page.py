@@ -153,7 +153,7 @@ class RegistrAttorney:
 
 		return message, encoding, mime
 
-	def check_confirmation_letter(self):
+	def check_confirmation_letter(self, email_reg_att):
 		wd = self.app.wd
 		time.sleep(2)
 		server = "imap.mail.yahoo.com"
@@ -176,9 +176,7 @@ class RegistrAttorney:
 		text, encoding, mime = self.get_message_info(message)
 
 		new_email = re.sub(r"\r\n", "", text)
-		str_email = f"Dear Jeka test qa, Thank you for signing up for Trialbase," \
-					f" we are excited to have you withus! Please click the button below to let us know you've received this emailand to confirm your Attorney account."
-		if (new_email.count(str_email) == 1) and (date_email.count(self.sotka_time) == 1):
+		if (new_email.count(email_reg_att) == 1) and (date_email.count(self.sotka_time) == 1):
 			return True
 		else:
 			return False
@@ -187,8 +185,8 @@ class RegistrAttorney:
 
 		time.sleep(2)
 		message = "Attorney and company successfully deleted"
-		url = "https://apidemo.trialbase.com/graphql"
-
+		#url = "https://apidemo.trialbase.com/graphql"
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 		headers = {
 			"qatoken":"JEKA_QA_TEST_TOKEN"
 		}

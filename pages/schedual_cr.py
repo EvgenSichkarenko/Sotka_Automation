@@ -142,15 +142,14 @@ class Schedual:
 			"textContent")
 		sunday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn6"))).get_attribute(
 			"textContent")
-
 		if True:
-			assert monday == "Monday7:30 AM - 6:30 PM"
-			assert tuesday == "Tuesday7:30 AM - 6:30 PM"
-			assert wednesday == "Wednesday7:30 AM - 6:30 PM"
-			assert thursday == "Thursday7:30 AM - 6:30 PM"
-			assert friday == "Friday7:30 AM - 6:30 PM"
-			assert saturday == "Saturday7:30 AM - 6:30 PM"
-			assert sunday == "Sunday7:30 AM - 6:30 PM"
+			assert monday == "Monday7:30 AM - 7:00 PM"
+			assert tuesday == "Tuesday7:30 AM - 7:00 PM"
+			assert wednesday == "Wednesday7:30 AM - 7:00 PM"
+			assert thursday == "Thursday7:30 AM - 7:00 PM"
+			assert friday == "Friday7:30 AM - 7:00 PM"
+			assert saturday == "Saturday7:30 AM - 7:00 PM"
+			assert sunday == "Sunday7:30 AM - 7:00 PM"
 			return True
 
 	def return_data(self):

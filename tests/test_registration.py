@@ -3,12 +3,14 @@ import allure
 from data.data_model.data_registr_cr import cr_data
 from data.data_model.data_registr_attorney import regisrt_data
 from data.data_model.data_registr_secretary import regisrt_secr
+from data.data_model.data_email import email
 import time
 
 #@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new attorney")
+@pytest.mark.parametrize("email", email)
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
-def test_registr_attorney(app,regisrt_data):
+def test_registr_attorney(app,regisrt_data, email):
 	app.regAttorney.registration_page(regisrt_data.bar_number)
 	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number, regisrt_data.phone_number, regisrt_data.address_two)
 	app.regAttorney.assert_secreatry()
@@ -17,14 +19,15 @@ def test_registr_attorney(app,regisrt_data):
 	#app.regAttorney.img_account_send()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
 	assert app.regAttorney.check_send_mail()
-	assert app.regAttorney.check_confirmation_letter()
+	assert app.regAttorney.check_confirmation_letter(email.email_reg_att)
 	app.regAttorney.delete_att_from_database()
 
 
 #@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new cour reporter")
 @pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
-def test_reg_cr(app, cr_data):
+@pytest.mark.parametrize("emails", email)
+def test_reg_cr(app, cr_data, emails):
 	app.cr.cr_registration_form(cr_data.bar_number)
 	assert cr_data.bar_number == app.cr.license_num_input_attribute()
 	app.cr.cr_data_form(cr_data.email, cr_data.phone_number, cr_data.full_name, cr_data.issuance,
@@ -34,19 +37,18 @@ def test_reg_cr(app, cr_data):
 	app.cr.upload_photo()
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
-	assert app.cr.check_confirmation_letter()
+	assert app.cr.check_confirmation_letter(emails.email_reg_cr)
 	app.cr.delete_att_from_database()
 
 
 """add secretary"""
-@pytest.mark.skip(reason="Need add new attribute")
 @allure.description("Add new secretary for attorney company")
 @pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
 def test_add_secreatry(app, secretary):
-	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-	app.secretary.contact_person( secr_old_email="testSecattr@inboxbear.com",
+	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
+	app.secretary.contact_person( secr_old_email="qaautomationsecr@yahoo.com",
 		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
-	assert app.session.text_name_attribute_attroney() == "Danielle Theresa Kennedy "
+	assert app.session.text_name_attribute_attroney() == "Daniel Vlad Tabakh "
 	time.sleep(4)
 	app.session.logout()
 

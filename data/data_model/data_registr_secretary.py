@@ -5,7 +5,7 @@ email = "secreatry" + datetime.datetime.now().strftime("%Y_%H_%M_%S") + "@zetmai
 
 regisrt_secr = [ModelSecretary(
     secr_email=email,
-    secr_fullname="Ella",
+    secr_fullname="Rita QA",
 ),
                    # ...
                    ]
