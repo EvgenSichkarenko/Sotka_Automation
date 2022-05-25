@@ -60,8 +60,23 @@ def test_add_secretary(app, secretary, emails):
 	app.session.logout()
 	app.secretary.delete_secretary_from_database(secretary.secr_email)
 
-
-
+"""add attorney"""
+@pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
+@pytest.mark.parametrize("emails", email)
+def test_add_attorney_company(app, regisrt_data, emails):
+	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
+	app.add_att.attorney_company(regisrt_data.bar_number, registr_email="Jeka test qa")
+	app.session.logout()
+	app.deposition.get_letter_from_email(login="testqa000000@yahoo.com", password="ksbbaatxxwotyabq")
+	assert app.deposition.compare_email_and_date(emails.email_att_confirm_psw)
+	time.sleep(3)
+	app.deposition.get_link_from_email()
+	app.add_att.set_password(password="1234Qwer")
+	app.secretary.login(login="testqa000000@yahoo.com", password="1234Qwer")
+	assert app.session.text_name_attribute_attroney() == "Jeka test qa "
+	app.session.logout()
+	app.add_att.delete_att_from_database(regisrt_data.bar_number)
+#Attorneys was invited  successfully div
 
 # """different bar number"""
 # def test_add_attr_dif_company(app):
@@ -70,9 +85,3 @@ def test_add_secretary(app, secretary, emails):
 # 		new_email="sotka05@zetmail.com")
 # 	app.session.logout()
 
-# """same bar number"""
-# def test_add_attorney_company(app):
-# 	app.session.login(login="testatt@inboxbear.com", password="1234Qwer")
-# 	app.add_art.attorney_company(att_sbn='123456', att_email_old='sotka02@zetmail.com',
-# 		att_phonenumber='+380982542188', new_email='sotka0@zetmail.com')
-# 	app.session.logout()

@@ -43,7 +43,7 @@ class Application:
 		self.session = Session(self)
 		self.regAttorney = RegistrAttorney(self)
 		self.cr = RegistrCR(self)
-		self.add_art = Attorney(self)
+		self.add_att = Attorney(self)
 		self.login = Login(self)
 		self.att_credit = Creditcard(self)
 		self.add_photo = Photo(self)

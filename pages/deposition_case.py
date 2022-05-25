@@ -723,7 +723,6 @@ class DepositionCase:
 		wd = self.app.wd
 		time.sleep(2)
 		new_email = re.sub(r"\r\n", "", self.text)
-		print(new_email)
 		if (new_email.count(emails) == 1): #and (self.date_email.count(self.current_time()) == 1):
 			return True
 		else:

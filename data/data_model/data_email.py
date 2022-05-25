@@ -15,6 +15,7 @@ email = [Email(
 	f" of deposition scheduling!  Please click the button below to let us know you've received this email  and confirm your account.",
 	email_create_depo_manually_op = f"Dear {op[0].name}, This is to confirm that {attorneys[0].name} has noticed the deposition of{deposition[0].deponent} " \
 	f"in {deposition[0].name} for",
+	email_att_confirm_psw = "Set password for your account Please click the button and set password for your account",
 	email_create_depo_manually_cr = f"Dear {cr_voting[0].name}, We have received a request for your appearance at the deposition " \
 	f"of{deposition[0].deponent} in {deposition[0].name} on",
 	email_befor_voting_op = f"Dear {op[0].name}, Attorney {attorneys[0].name} would like to depose {deposition[0].deponent} in{deposition[0].name}" \
