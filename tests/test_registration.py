@@ -43,14 +43,24 @@ def test_reg_cr(app, cr_data, emails):
 
 """add secretary"""
 @allure.description("Add new secretary for attorney company")
+@pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
-def test_add_secreatry(app, secretary):
+def test_add_secretary(app, secretary, emails):
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.secretary.contact_person( secr_old_email="qaautomationsecr@yahoo.com",
-		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_fullname)
-	assert app.session.text_name_attribute_attroney() == "Daniel Vlad Tabakh "
-	time.sleep(4)
+		secr_new_email=secretary.secr_email, secr_fullname=secretary.secr_new_name)
+	time.sleep(3)
 	app.session.logout()
+	app.deposition.get_letter_from_email(login="qaautomationsecrdel@yahoo.com", password="xudxrtihgkpxetfh")
+	assert app.deposition.compare_email_and_date(emails.email_invite_new_secr)
+	app.deposition.get_link_from_email()
+	app.secretary.set_password(password="1234Qwer")
+	app.secretary.login(login="qaautomationsecrdel@yahoo.com", password="1234Qwer")
+	assert app.session.text_name_attribute_secretary() == "Secretary QA "
+	app.session.logout()
+	app.secretary.delete_secretary_from_database(secretary.secr_email)
+
+
 
 
 # """different bar number"""

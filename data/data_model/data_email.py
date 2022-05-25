@@ -6,11 +6,13 @@ from data.data_model.data_test_cr_voting import cr_voting
 
 
 email = [Email(
-	email_reg_att =f"Dear Jeka test qa, Thank you for signing up for Trialbase," \
+	email_reg_att =f"Dear Jeka Test Qa, Thank you for signing up for Trialbase," \
 					f" we are excited to have you withus! Please click the button below to let us know you've " \
 				   f"received this emailand to confirm your Attorney account.",
 	email_reg_cr=f"Dear Automation, Thank you for signing up for Trialbase," \
 					f" we are excited to have you withus! Please click the button below to let us know you've received this emailand to confirm your Court Reporter account.",
+	email_invite_new_secr = f"You’ve been invited by {attorneys[0].name} to join Trialbase and discoverthe new world"
+	f" of deposition scheduling!  Please click the button below to let us know you've received this email  and confirm your account.",
 	email_create_depo_manually_op = f"Dear {op[0].name}, This is to confirm that {attorneys[0].name} has noticed the deposition of{deposition[0].deponent} " \
 	f"in {deposition[0].name} for",
 	email_create_depo_manually_cr = f"Dear {cr_voting[0].name}, We have received a request for your appearance at the deposition " \

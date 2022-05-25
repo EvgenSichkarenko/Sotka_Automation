@@ -176,7 +176,7 @@ class RegistrAttorney:
 		text, encoding, mime = self.get_message_info(message)
 
 		new_email = re.sub(r"\r\n", "", text)
-		if (new_email.count(email_reg_att) == 1) and (date_email.count(self.sotka_time) == 1):
+		if (new_email.count(email_reg_att) == 1):
 			return True
 		else:
 			return False
@@ -192,7 +192,7 @@ class RegistrAttorney:
 		}
 
 		data_query ='''mutation{
-  			deleteAttorneyAccount(sbn:"000000"){
+  			deleteAttorneyAccount(sbn:"000000", withCompany:true){
    			status
     		message
  		 }
