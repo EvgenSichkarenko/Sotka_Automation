@@ -299,7 +299,7 @@ class DepositionCase:
 		assert email_cr == f"{cr_email}"
 		assert phone_cr == f"{cr_phone}"
 
-	def depo_dashboard_manualy(self,depo_name):
+	def depo_dashboard_manualy(self):
 		wd = self.app.wd
 		time.sleep(2)
 		today = datetime.now()
@@ -307,6 +307,12 @@ class DepositionCase:
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
 		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
 		btn_day.send_keys(Keys.RETURN)
+		depo_present = wd.find_element(By.CSS_SELECTOR, "div[data-name='StatusProcessCaseItem0']")
+		if depo_present.is_displayed() == True:
+			return True
+		else:
+			return False
+
 		time.sleep(2)
 
 
@@ -462,6 +468,26 @@ class DepositionCase:
 				i.click()
 				wd.find_element(By.CSS_SELECTOR, "button[name='confirmDepositionConfirmBtn']").click()
 				break
+		time.sleep(2)
+
+	def select_date_as_op_suggest(self):
+		wd = self.app.wd
+		time.sleep(2)
+		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid1'] button")
+		count = 0
+		for i in days:
+			time.sleep(2)
+			if i.text == "Suggest":
+				time.sleep(1)
+				i.click()
+				wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
+				count += 1
+				if count == 4:
+					time.sleep(1)
+					WebDriverWait(wd, 15).until(
+						EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='calendarConfirmBtn']"))).click()
+					break
+
 		time.sleep(2)
 
 	def login_attorney_voting(self,  login_att, password_att):
@@ -639,30 +665,31 @@ class DepositionCase:
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 
 		#Decline button
+		time.sleep(3)
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsDecline']").click()
 		time.sleep(4)
-		server = "imap.mail.yahoo.com"
-		port = 993
-		login = "attorney0@yahoo.com"
-		password = "iqdollxuiqxwxozf"
-
-		mail = imaplib.IMAP4_SSL(server, port)
-		mail.login(login, password)
-		mail.select()
-		type, data = mail.search(None, "(FROM 'Trialbase')")
-		data = data[0].split()
-		latest_id = data[-1]
-		result, data = mail.fetch(latest_id, "(RFC822)")
-
-		raw_email = data[0][1]
-		message = email.message_from_bytes(raw_email)
-		text, encoding, mime = self.get_message_info(message)
-
-		new_email = re.sub(r"\r\n", "", text)
-		print(new_email)
-		str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
-		print(str_email)
-		assert new_email.count(str_email) == 1
+		# server = "imap.mail.yahoo.com"
+		# port = 993
+		# login = "attorney0@yahoo.com"
+		# password = "iqdollxuiqxwxozf"
+		#
+		# mail = imaplib.IMAP4_SSL(server, port)
+		# mail.login(login, password)
+		# mail.select()
+		# type, data = mail.search(None, "(FROM 'Trialbase')")
+		# data = data[0].split()
+		# latest_id = data[-1]
+		# result, data = mail.fetch(latest_id, "(RFC822)")
+		#
+		# raw_email = data[0][1]
+		# message = email.message_from_bytes(raw_email)
+		# text, encoding, mime = self.get_message_info(message)
+		#
+		# new_email = re.sub(r"\r\n", "", text)
+		# print(new_email)
+		# str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
+		# print(str_email)
+		# assert new_email.count(str_email) == 1
 
 	def get_letter_from_email(self, login, password):
 		wd = self.app.wd
@@ -702,7 +729,7 @@ class DepositionCase:
 		else:
 			return False
 
-	def	delete_deposition_from_database(self):
+	def	delete_deposition_from_database(self, id_depo):
 		wd = self.app.wd
 		message = "Deposition case successfully deleted with all relations and files"
 		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
@@ -711,8 +738,8 @@ class DepositionCase:
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
-		print(self.number_of_deposition)
-		data_query = "mutation{deleteDepositionCase(deposition_id:" + f"{self.number_of_deposition})" + "{status message} }"
+		#print(self.number_of_deposition)
+		data_query = "mutation{deleteDepositionCase(deposition_id:" + f"{id_depo})" + "{status message} }"
 
 		data = {"query": data_query}
 
@@ -724,3 +751,34 @@ class DepositionCase:
 		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
 		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
 		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
+
+	def create_fake_deposition(self):
+		wd = self.app.wd
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		# url = "https://apidemo.trialbase.com/graphql"
+
+		# Login, Get access token
+		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
+		  access_token
+		}
+
+		}"""
+		data = {"query": qu}
+		response = requests.post(url, data=data)
+		access_token = response.json()["data"]["signIn"]["access_token"]
+
+		# Create deposition
+		auth_header = 'Bearer ' + access_token
+		headers = {
+			"Authorization": auth_header,
+			"qatoken": "JEKA_QA_TEST_TOKEN"
+		}
+
+		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE", withUnregisterOp:false)}'
+		# data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
+		data2 = {"query": data1}
+
+		response = requests.post(url, headers=headers, data=data2)
+		self.id_case = response.json()["data"]["createFakeDepositionCase"]
+		wd.refresh()
+		time.sleep(2)

@@ -26,5 +26,18 @@ email = [Email(
 	f"in{deposition[0].name} for",
 	email_forgot_password = "We received your request to change password at Trialbase! Please click thebutton below to access your account",
 	email_cr_agreed_for_deal = f"Dear {attorneys[0].name}, The {cr_voting[0].name} has accepted an appearance at the deposition"
-	f" of {deposition[0].deponent}in {deposition[0].name} on"
+	f" of {deposition[0].deponent}in {deposition[0].name} on",
+	email_all_op_vote= f"Dear {attorneys[0].name}, All parties have responded to the proposed dates for the deposition "
+	f"of{deposition[0].deponent} in {deposition[0].name}.",
+	email_cr_decline = f"Dear {attorneys[0].name}, {cr_voting[0].name} declined an appearance at the deposition of{deposition[0].deponent} "
+	f"in ",
+	cr_new_appearance_fake = f"Dear {cr_voting[0].name}, "
+							 f"We have received a request for your appearance at the deposition of"
+	f"{deposition[0].fake_deponent} in {deposition[0].fake_name} on",
+	cr_decline_apear_fake = f"Dear {attorneys[0].name}, {cr_voting[0].name} declined an appearance at the deposition of "
+	f"{deposition[0].fake_deponent} in{deposition[0].fake_name} on",
+	cr_accept_apear_fake = f"Dear {attorneys[0].name}, The {cr_voting[0].name} has accepted an appearance at the deposition "
+	f"of{deposition[0].fake_deponent} in {deposition[0].fake_name} on"
+	# email_all_op_vote = f"Dear {attorneys[0].name}, {op[0].name} has responded to the proposed dates for thedeposition "
+	# f"of {deposition[0].deponent} in {deposition[0].name}."
 )]

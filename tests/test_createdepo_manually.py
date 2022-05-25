@@ -74,19 +74,10 @@ def test_deposition_create_manually(app, deposition, cr_voting, op, att, emails)
 	app.deposition.depo_dashboard_manualy(deposition.name)
 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email,op.phone,
 		cr_voting.name,cr_voting.email,cr_voting.phone)
-	app.deposition.delete_deposition_from_database()
+	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 	app.session.logout()
 
-"""test confirm cr appearence"""
-@allure.description("Confirm appearance from cr and check data")
-@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
-@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-def test_cr_appearances(app, deposition, op, att):
-	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
-	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
-	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
-	app.session.logout()
+
 
 @allure.description("Upload transcript, cr")
 @pytest.mark.skip(reason="No deposition for uppload transcript")

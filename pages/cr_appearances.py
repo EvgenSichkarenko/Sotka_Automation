@@ -44,11 +44,11 @@ class CrAppearance:
 	def check_data_dashboard(self, att_name, att_email, att_phone, op_name, op_email, op_phone):
 		wd = self.app.wd
 
-		time.sleep(3)
+
 		#search deposition in dashboard cr
-		block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-		block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
-		block_depo_cases.click()
+		# block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
+		# block_depo_cases = WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{self.name_deposition}']")))
+		# block_depo_cases.click()
 
 		time.sleep(2)
 		#Check executor
