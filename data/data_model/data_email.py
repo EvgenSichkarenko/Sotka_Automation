@@ -3,7 +3,8 @@ from data.data_model.data_test_op import op
 from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_deposition_case import deposition
 from data.data_model.data_test_cr_voting import cr_voting
-
+from data.data_model.data_registr_secretary import regisrt_secr
+from data.data_model.op_unregistered import op_unreg
 
 email = [Email(
 	email_reg_att =f"Dear Jeka Test Qa, Thank you for signing up for Trialbase," \
@@ -36,11 +37,17 @@ email = [Email(
 	f"in ",
 	cr_new_appearance_fake = f"Dear {cr_voting[0].name}, "
 							 f"We have received a request for your appearance at the deposition of"
-	f"{deposition[0].fake_deponent} in {deposition[0].fake_name} on",
+	f"{deposition[0].fake_deponent} in {deposition[0].fake_name_case} on",
 	cr_decline_apear_fake = f"Dear {attorneys[0].name}, {cr_voting[0].name} declined an appearance at the deposition of "
-	f"{deposition[0].fake_deponent} in{deposition[0].fake_name} on",
+	f"{deposition[0].fake_deponent} in{deposition[0].fake_name_case} on",
 	cr_accept_apear_fake = f"Dear {attorneys[0].name}, The {cr_voting[0].name} has accepted an appearance at the deposition "
-	f"of{deposition[0].fake_deponent} in {deposition[0].fake_name} on"
-	# email_all_op_vote = f"Dear {attorneys[0].name}, {op[0].name} has responded to the proposed dates for thedeposition "
-	# f"of {deposition[0].deponent} in {deposition[0].name}."
+	f"of{deposition[0].fake_deponent} in {deposition[0].fake_name_case} on",
+	email_op_transcript_add = f"The transcript of deposition of {cr_voting[0].name} in{deposition[0].fake_name_case} completed",
+	email_att_transcript_add = f"The transcript of the deposition of {deposition[0].fake_deponent} in{deposition[0].fake_name_case} completed",
+	email_op_unregist_transcript = f"The transcript of deposition of {cr_voting[0].name} in{deposition[0].fake_name_case} completed",
+	email_secr_op_confirm_depo = f"Dear {regisrt_secr[0].secr_fullname}, This is to confirm that {attorneys[0].name} has noticed the "
+	f"deposition of{deposition[0].deponent} in {deposition[0].name} for",
+	email_opunregistr_vote = f"Dear {op_unreg[0].name}, Attorney {attorneys[0].name} would like to depose {deposition[0].deponent} "
+	f"in{deposition[0].name} and meet and confer about the deposition dateacceptable to all parties."
+
 )]

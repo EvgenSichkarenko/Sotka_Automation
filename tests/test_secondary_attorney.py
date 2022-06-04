@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from data.data_model.data_test_attorney import attorneys
@@ -17,16 +19,7 @@ def test_add_photo_attorney(app):
 	assert app.session.text_name_attribute_attroney() == "Daniel Vlad Tabakh "
 	app.session.logout()
 
-"""test calendar attorney"""
-@allure.description("Test, check deposition cases current day and shows all deposition")
-def test_calendar_att(app):
-	app.session.login(login="qaautomationop@yahoo.com", password="ZXcv@123580")
-	count_all = app.calendar_att.count()
-	app.calendar_att.calendar_day()
-	today_all = app.calendar_att.count()
-	app.calendar_att.show_all_btn()
-	assert today_all >= 0
-	app.session.logout()
+
 
 """test search attorney"""
 @allure.description("Test search attorney in a company")

@@ -24,7 +24,7 @@ def test_deposition_create_voting(app, deposition, op, emails, att, cr_voting):
 	app.session.logout()
 	#test email voting as op
 	app.deposition.get_letter_from_email(login = "qaautomationop@yahoo.com", password = "jphbtksnxhediwws")
-	app.deposition.compare_email_and_date(emails.email_befor_voting_op) #10 email
+	assert app.deposition.compare_email_and_date(emails.email_befor_voting_op) #10 email
 	app.deposition.get_link_from_email()
 	app.deposition.select_date_op_voting()
 	#test_email_voting_as_attorney
@@ -70,12 +70,18 @@ def test_revoting(app, emails, att,cr_voting, deposition,op):
 	app.session.logout()
 	#test email voting as op
 	app.deposition.get_letter_from_email(login = "qaautomationop@yahoo.com", password = "jphbtksnxhediwws")
-	app.deposition.compare_email_and_date(emails.email_befor_voting_op) #10 email
+	print(emails.email_befor_voting_op)
+	assert app.deposition.compare_email_and_date(emails.email_befor_voting_op) #10 email
 	app.deposition.get_link_from_email()
 	app.deposition.select_date_as_op_suggest()
 	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
-	print(emails.email_all_op_vote)
-	assert app.deposition.compare_email_and_date(emails.email_all_op_vote) #19 email
-	app.deposition.get_link_from_email()
-	app.deposition.select_date_op_voting()
+	app.deposition.get_link_from_email() #email 19 or 11
+	app.deposition.select_date_op_voting() #select new date as attorney
+	app.deposition.login_attorney_voting(login_att="qaautomationatt@yahoo.com", password_att="ZXcv@123580" )
+	app.deposition.upload_doc()
+	app.deposition.delivery(cr_voting.name)
+	app.deposition.finish_depo_attorney_voting(att.name,att.email,att.phone,op.name,op.email,op.phone,
+		cr_voting.name,cr_voting.email,cr_voting.phone)
+	app.session.logout()
+	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 	time.sleep(2)

@@ -2,7 +2,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 import time
+from datetime import datetime
 
 class Schedual:
 	def __init__(self, app):
@@ -12,6 +15,7 @@ class Schedual:
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(
 			EC.element_to_be_clickable((By.XPATH, "//div[text()='Schedule']"))).click()
+		time.sleep(1)
 
 	def check_day(self,slider, element):
 		if slider == False:
@@ -125,22 +129,23 @@ class Schedual:
 	def save_schedual(self):
 		wd = self.app.wd
 		wd.find_element(By.NAME, "editTimeSaveBtn").click()
+		time.sleep(1)
 
 	def check_data(self):
 		wd = self.app.wd
-		monday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn0"))).get_attribute(
+		monday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock0']"))).get_attribute(
 			"textContent")
-		tuesday =  WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn1"))).get_attribute(
+		tuesday =  WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock1']"))).get_attribute(
 			"textContent")
-		wednesday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn2"))).get_attribute(
+		wednesday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock2']"))).get_attribute(
 			"textContent")
-		thursday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn3"))).get_attribute(
+		thursday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock3']"))).get_attribute(
 			"textContent")
-		friday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn4"))).get_attribute(
+		friday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock4']"))).get_attribute(
 			"textContent")
-		saturday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn5"))).get_attribute(
+		saturday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock5']"))).get_attribute(
 			"textContent")
-		sunday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.NAME, "editTimeBtn6"))).get_attribute(
+		sunday = WebDriverWait(wd, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[data-name='editTimeBtnBlock6']"))).get_attribute(
 			"textContent")
 		if True:
 			assert monday == "Monday7:30 AM - 7:00 PM"
@@ -198,3 +203,50 @@ class Schedual:
 		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		wd.find_element(By.NAME, "editTimeBtn6").click()
+
+	def disable_day(self):
+		wd = self.app.wd
+		time.sleep(1)
+		self.open() #open schedule
+		today = datetime.today().strftime("%A")
+		time.sleep(2)
+		attributes = {
+			"Monday":"editTimeBtnWrapper0",
+			"Tuesday":"editTimeBtnWrapper1",
+			"Wednesday":"editTimeBtnWrapper2",
+			"Thursday": "editTimeBtnWrapper3",
+			"Friday":"editTimeBtnWrapper4",
+			"Saturday": "editTimeBtnWrapper5",
+			"Sunday": "editTimeBtnWrapper6"
+		}
+		self.data_name = attributes[f"{today}"]
+		count_span = len(wd.find_elements(By.CSS_SELECTOR, f"div[data-name='{self.data_name}'] span"))
+		time.sleep(2)
+		if count_span != 0:
+			wd.find_element(By.CSS_SELECTOR, f"div[data-name='{self.data_name}'] div ").click()
+			time.sleep(2)
+			self.save_schedual()
+		else:
+			time.sleep(2)
+			self.save_schedual()
+
+
+	def enable_day(self):
+		wd = self.app.wd
+		time.sleep(1)
+		today = datetime.today().strftime("%A")
+		self.open() #open schedule
+		wd.find_element(By.CSS_SELECTOR, f"div[data-name='{self.data_name}'] div ").click()
+		time.sleep(2)
+		self.save_schedual()
+
+	def delivery_check_cr(self, name_cr):
+		wd = self.app.wd
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
+			By.CSS_SELECTOR, "div[data-name='deliverySearchInput'] input"))).send_keys(f"{name_cr}")
+		try:
+			time.sleep(2)
+			wd.find_element(By.XPATH, f"//span[text()='{name_cr}']")
+			return True
+		except NoSuchElementException:
+			return False

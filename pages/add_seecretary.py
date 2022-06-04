@@ -66,6 +66,19 @@ class Secretary:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
 
+	def check_secr_on_dashboard(self):
+		wd = self.app.wd
+		time.sleep(2)
+		contact_person = wd.find_element(By.CSS_SELECTOR, "div[data-name='contactPersonWrapper']")
+		time.sleep(1)
+		name = contact_person.find_element(By.XPATH, "//div[text()='Secretary QA']").text
+		time.sleep(1)
+		email = contact_person.find_element(By.XPATH, "//p[text()='qaautomationsecrdel@yahoo.com']").text
+		if (name and email):
+			return True
+		else:
+			return False
+
 	def delete_secretary_from_database(self,secr_new_email):
 
 		message_delete = "Secretary was successfully deleted"
@@ -80,7 +93,6 @@ class Secretary:
 		data = {"query": qu}
 		response = requests.post(url, data=data)
 		access_token = response.json()["data"]["signIn"]["access_token"]
-
 		#Deleet from database
 		auth_header = 'Bearer ' + access_token
 		headers = {

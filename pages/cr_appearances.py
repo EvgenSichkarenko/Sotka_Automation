@@ -71,24 +71,18 @@ class CrAppearance:
 		assert email_finish == f"{op_email}"
 		assert phone_finish == f"{op_phone}"
 
+		time.sleep(1)
+
 	def past_deposition(self):
 		wd = self.app.wd
 		#click button past deposition
+		time.sleep(2)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "crHomePastDepositionsBtn"))).click()
 		#Found deposition and check data
-		depo = wd.find_elements(By.XPATH, "//div[text()='Details']")
 		time.sleep(2)
-		for dep in depo:
-			dep.click()
-			time.sleep(1)
-			if self.element_present() == True:
-				self.upload_transcript()
-				break
-			else:
-				wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
+		wd.find_element(By.XPATH, "//div[text()='Details']").click()
+		time.sleep(2)
 
-		time.sleep(1)
-		wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
 
 	def element_present(self):
 		wd = self.app.wd
@@ -105,8 +99,14 @@ class CrAppearance:
 		# image_path = r"/var/lib/jenkins/workspace/Test_stoke_sotka/data/doc/transcript.pdf"
 		image_path = r"C:\Python_project\Sotka_auto\data\doc\transcript.pdf"
 		wd.find_element(By.NAME, "InfoHeaderButton").click()
+		time.sleep(2)
 		wd.find_element(By.NAME, "pages_count").send_keys("2")
-		time.sleep(1)
+		time.sleep(2)
 		wd.find_element(By.CSS_SELECTOR, "input[name='file']").send_keys(image_path)
 		time.sleep(2)
 		wd.find_element(By.NAME, "downloadExpertConfirmBtn").send_keys(Keys.RETURN)
+		time.sleep(5)
+		wd.find_element(By.CSS_SELECTOR, "button[name='invoiceBillingBtn']").click()
+		time.sleep(1)
+		wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
+		time.sleep(1)

@@ -65,13 +65,16 @@ class RegistrAttorney:
 		if check_name == 'Add secretary':
 			pass
 
+	def skip_secretary(self):
+		wd = self.app.wd
+		wd.find_element(By.NAME, "addSecretaryContinueBtn").click()
+
 	def add_secretary(self, name_secretary, email_secretary):
 		wd = self.app.wd
-		# WebDriverWait(wd, 5).until(EC.visibility_of_element_located((By.NAME, "full_name"))).send_keys(name_secretary)
-		# wd.find_element(By.NAME, "email").send_keys(email_secretary)
+		time.sleep(2)
+		WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.NAME, "full_name"))).send_keys(name_secretary)
+		wd.find_element(By.NAME, "email").send_keys(email_secretary)
 		wd.find_element(By.NAME, "addSecretaryContinueBtn").click()
-		# WebDriverWait(wd, 5).until(EC.visibility_of_element_located(
-		# 	(By.NAME, "addSecretarySkipBtn"))).click()
 
 	def img_account_send(self):
 		wd = self.app.wd
@@ -158,11 +161,11 @@ class RegistrAttorney:
 		time.sleep(2)
 		server = "imap.mail.yahoo.com"
 		port = 993
-		login = "testqa000000@yahoo.com"
-		password = "ksbbaatxxwotyabq"
+		log = "qaautomationsecrdel@yahoo.com"
+		password = "xudxrtihgkpxetfh"
 
 		mail = imaplib.IMAP4_SSL(server, port)
-		mail.login(login, password)
+		mail.login(log, password)
 		mail.select()
 		type, data = mail.search(None, "(FROM 'Trialbase')")
 		data = data[0].split()
@@ -173,9 +176,10 @@ class RegistrAttorney:
 		message = email.message_from_bytes(raw_email)
 		date_email = message["Date"]
 
-		text, encoding, mime = self.get_message_info(message)
+		self.text, encoding, mime = self.get_message_info(message)
 
-		new_email = re.sub(r"\r\n", "", text)
+		new_email = re.sub(r"\r\n", "", self.text)
+		print(new_email)
 		if (new_email.count(email_reg_att) == 1):
 			return True
 		else:
@@ -208,3 +212,9 @@ class RegistrAttorney:
 		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
 		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
 		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
+
+	def create_acc_unregistr(self):
+		wd = self.app.wd
+		time.sleep(2)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='createTrialbase']"))).click()
+		time.sleep(1)

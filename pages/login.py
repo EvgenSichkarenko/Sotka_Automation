@@ -2,12 +2,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-import time
+
+import time, os
 
 
 class Login:
 	def __init__(self, app):
 		self.app = app
+
+	def change_time_zone(self):
+		wd = self.app.wd
+
+		print(time.strftime('%Y-%m-%d %H:%M:%S'))  # before timezone change
+		os.system('tzutil /s "Central America Standard Time"')
+
 
 	def login(self, invalid_login, invalid_password, valid_login, valid_password):
 		wd = self.app.wd

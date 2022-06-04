@@ -19,6 +19,21 @@ class DepositionCase:
 		self.app = app
 
 	#global number_of_deposition
+	def login_without_open_link(self, login, password):
+		wd = self.app.wd
+		time.sleep(1)
+		login_input = WebDriverWait(wd, 15).until(
+			EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='login']")))
+		login_input.send_keys(Keys.CONTROL + "a")
+		login_input.send_keys(Keys.BACK_SPACE)
+		login_input.send_keys(login)
+
+		password_input = wd.find_element(By.CSS_SELECTOR, "input[name='password']")
+		password_input.send_keys(Keys.CONTROL + "a")
+		password_input.send_keys(Keys.BACK_SPACE)
+		password_input.send_keys(password)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
+			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
 
 	def name_deposition(self, name):
 		wd = self.app.wd
@@ -376,26 +391,16 @@ class DepositionCase:
 		wd = self.app.wd
 		#Open past deposition
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomePastDepBtn"))).click()
-
-		#search input and click "Details" button
-		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
-			By.CSS_SELECTOR, "div[data-name='searchInputBlock'] input"))).send_keys("Download depo amd transcript")
-		time.sleep(1)
-		WebDriverWait(wd, 15).until(EC.element_to_be_clickable(
-			(By.CSS_SELECTOR, "div[data-name='pastDepositionBtnDownloadBlock566'] button"))).send_keys(Keys.RETURN)
-		time.sleep(1)
-		wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer'] button").click()
-		time.sleep(1)
-		wd.find_element(By.NAME, "closeBtnModal").click()
-		time.sleep(1)
+		time.sleep(2)
+		wd.find_element(By.XPATH, "//div[text()='Details']").click()
+		time.sleep(3)
 		# Download transcript
-		wd.find_element(By.CSS_SELECTOR, "button[name='pastDepositionBtnDetails566']").send_keys(Keys.RETURN)
 		file_transcript = wd.find_element(By.CSS_SELECTOR, "div[data-name='fileContainer']")
 		time.sleep(1)
 		file_transcript.find_element(By.CSS_SELECTOR, "button").click()
 		time.sleep(2)
 		wd.find_element(By.NAME, "closeBtnModal").click()
-		time.sleep(1)
+		time.sleep(2)
 
 	def download_depo_document(self):
 		wd = self.app.wd
@@ -452,6 +457,7 @@ class DepositionCase:
 
 	def get_link_from_email(self):
 		wd = self.app.wd
+		time.sleep(3)
 		link = re.search("(?P<url>https?://[^\s]+)", self.text).group("url")
 		link = link[0:-1]
 		time.sleep(1)
@@ -658,6 +664,7 @@ class DepositionCase:
 
 	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
 		wd = self.app.wd
+		time.sleep(2)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "div[data-name='appearancesList']")))
 		list = wd.find_element(By.CSS_SELECTOR, "div[data-name='appearancesList']")
@@ -693,7 +700,7 @@ class DepositionCase:
 
 	def get_letter_from_email(self, login, password):
 		wd = self.app.wd
-		time.sleep(2)
+		time.sleep(4)
 		server = "imap.mail.yahoo.com"
 		port = 993
 
@@ -708,8 +715,14 @@ class DepositionCase:
 		raw_email = data[0][1]
 		message = email.message_from_bytes(raw_email)
 		self.date_email = message["Date"]
+		self.from_message = message["From"] #Trialbase <info@trialbase.com>
+		self.to_message = message["To"] #email address ended user
 		self.text, encoding, mime = self.get_message_info(message)
 		time.sleep(2)
+
+	def compare_from_to_email(self, from_m, to_m):
+		assert self.from_message == from_m
+		assert self.to_message == to_m
 
 	def current_time(self):
 		current_zone = datetime.now()
@@ -723,6 +736,7 @@ class DepositionCase:
 		wd = self.app.wd
 		time.sleep(2)
 		new_email = re.sub(r"\r\n", "", self.text)
+		print(new_email)
 		if (new_email.count(emails) == 1): #and (self.date_email.count(self.current_time()) == 1):
 			return True
 		else:
@@ -751,7 +765,7 @@ class DepositionCase:
 		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
 		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
 
-	def create_fake_deposition(self):
+	def create_fake_deposition_waiting(self, status):
 		wd = self.app.wd
 		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 		# url = "https://apidemo.trialbase.com/graphql"
@@ -773,11 +787,42 @@ class DepositionCase:
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
 
-		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE", withUnregisterOp:false)}'
+		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE",' + f'withUnregisterOp:{status}' + ")}"
 		# data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
 		data2 = {"query": data1}
 
 		response = requests.post(url, headers=headers, data=data2)
 		self.id_case = response.json()["data"]["createFakeDepositionCase"]
+		wd.refresh()
+		time.sleep(2)
+
+	def create_fake_deposition_voting(self, status):
+		wd = self.app.wd
+
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		# url = "https://apidemo.trialbase.com/graphql"
+
+		# Login, Get access token
+		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
+		  access_token
+		}
+
+		}"""
+		data = {"query": qu}
+		response = requests.post(url, data=data)
+		access_token = response.json()["data"]["signIn"]["access_token"]
+
+		# Create deposition
+		auth_header = 'Bearer ' + access_token
+		headers = {
+			"Authorization": auth_header,
+			"qatoken": "JEKA_QA_TEST_TOKEN"
+		}
+
+		#data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE",' + f'withUnregisterOp:{status}' + ")}"
+		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION",' + f'withUnregisterOp:{status})' + "}"
+		data2 = {"query": data1}
+		response = requests.post(url, headers=headers, data=data2)
+		self.id_fake_depo = response.json()["data"]["createFakeDepositionCase"]
 		wd.refresh()
 		time.sleep(2)

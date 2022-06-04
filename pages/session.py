@@ -27,7 +27,7 @@ class Session:
 
 	def logout(self):
 		wd = self.app.wd
-		time.sleep(1)
+		time.sleep(2)
 		wd.refresh()
 		basic = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='basic-button']")))
 		time.sleep(1)

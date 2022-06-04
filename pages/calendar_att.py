@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 
 class CalendarAtt:
@@ -16,8 +17,19 @@ class CalendarAtt:
 		no_meeting = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 		return WebDriverWait(no_meeting, 15).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='There are no meetings today']"))).get_attribute("textContent")
 
+	def check_el_present(self, block,locator):
+		wd = self.app.wd
+		try:
+			block = wd.find_element(By.CSS_SELECTOR, f"{block}")
+			time.sleep(2)
+			block.find_element(By.CSS_SELECTOR, f"{locator}")
+			return True
+		except NoSuchElementException:
+			return False
+
 	def calendar_day(self):
 		wd = self.app.wd
+		time.sleep(1)
 		today = datetime.now()
 		day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
@@ -27,8 +39,13 @@ class CalendarAtt:
 		wd = self.app.wd
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='calendarShowAllBtn']"))).click()
 
-
 	def count(self):
 		wd = self.app.wd
 		time.sleep(2)
 		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] > div > div"))
+
+	def cansel_depo(self):
+		wd = self.app.wd
+		time.sleep(2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']").click()
+		time.sleep(1)

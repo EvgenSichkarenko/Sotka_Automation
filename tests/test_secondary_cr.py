@@ -1,6 +1,13 @@
 from data.data_model.data_edit_price import edit_price
 import pytest
 import allure
+import time
+from data.data_model.data_deposition_case import deposition
+from data.data_model.data_test_op import op
+from data.data_model.data_test_attorney import attorneys
+from data.data_model.data_test_cr_voting import cr_voting
+from data.data_model.data_email import email
+
 
 """add new photo cr"""
 @allure.description("Add new photo cr")
@@ -56,3 +63,28 @@ def test_calendar_cr(app):
 	day_count = app.calendar_att.count()
 	assert day_count <= count_all
 	app.session.logout()
+
+
+#Test case 2.17
+@allure.description("CR Avalibility")
+@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+@pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
+@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
+@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+def test_cr_availability(app, deposition, cr_voting, op, att):
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
+	app.schedule.disable_day()
+	app.session.logout()
+	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
+	app.deposition.name_deposition(deposition.name)
+	app.deposition.deponent_deposition(deposition.deponent)
+	app.deposition.location_deposition()
+	app.deposition.attorneys(deposition.sbn_op, op.email)
+	app.deposition.set_time_manually()
+	app.deposition.upload_doc()
+	assert app.schedule.delivery_check_cr(cr_voting.name) == False
+	app.session.logout()
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
+	app.schedule.enable_day()
+	app.session.logout()
+	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
