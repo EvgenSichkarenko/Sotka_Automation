@@ -1,14 +1,15 @@
 from model.model_edit_price import EditPrice
 
 edit_price = [EditPrice(
-    appearance_fee='1',
-    page_cost="2",
-    expert_page_cost="2",
-    travel="2",
-    estimated="2",
-    turn_around_page='5',
-    copy='100',
-	cancellation_fee="2"
+    minimum_transcript_charge="$400",
+    appearance_fee='$1',
+    page_cost="$6",
+    expert_page_cost="$6.5",
+    travel="$1",
+    estimated="40",
+    turn_around_page='10 days',
+    copy='50 %',
+	cancellation_fee="$200"
 
 ),
                    # ...

@@ -58,15 +58,16 @@ class RegistrCR:
 
 	def price_form(self):
 		wd = self.app.wd
-		form_price = wd.find_element(By.CSS_SELECTOR, "form[data-name='stepSixForCrForm']")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='appearanceFee'] input[name='appearanceFee']").send_keys("22")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='pageCost'] input[name='pageCost']").send_keys("2")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='expertPageCost'] input[name='expertPageCost']").send_keys("3")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='travel'] input[name='travel']").send_keys("3")
-		#form_price.find_element(By.CSS_SELECTOR, "div[data-name='estimated'] input[name='estimated']").send_keys("10")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='turnAroundTime'] input[name='turnAroundTime']").send_keys("5")
-		form_price.find_element(By.CSS_SELECTOR, "div[data-name='copy'] input[name='copy']").send_keys("100%")
-		wd.find_element(By.NAME, "stepSixContinueBtn").click()
+		time.sleep(1)
+		# form_price = wd.find_element(By.CSS_SELECTOR, "form[data-name='stepSixForCrForm']")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='appearanceFee'] input[name='appearanceFee']").send_keys("22")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='pageCost'] input[name='pageCost']").send_keys("2")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='expertPageCost'] input[name='expertPageCost']").send_keys("3")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='travel'] input[name='travel']").send_keys("3")
+		# #form_price.find_element(By.CSS_SELECTOR, "div[data-name='estimated'] input[name='estimated']").send_keys("10")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='turnAroundTime'] input[name='turnAroundTime']").send_keys("5")
+		# form_price.find_element(By.CSS_SELECTOR, "div[data-name='copy'] input[name='copy']").send_keys("100%")
+		wd.find_element(By.CSS_SELECTOR, "button[name='stepSixContinueBtn']").click()
 
 	def upload_photo(self):
 		wd = self.app.wd
@@ -146,26 +147,63 @@ class RegistrCR:
 
 		date_email = message["Date"]
 
-		text, encoding, mime = self.get_message_info(message)
+		self.text, encoding, mime = self.get_message_info(message)
 
-		new_email = re.sub(r"\r\n", "", text)
+		new_email = re.sub(r"\r\n", "", self.text)
 
 		if (new_email.count(email_reg_cr) == 1) and (date_email.count(self.sotka_time) == 1):
 			return True
 		else:
 			return False
 
+	def get_link_from_email(self):
+		wd = self.app.wd
+		time.sleep(3)
+		link = re.search("(?P<url>https?://[^\s]+)", self.text).group("url")
+		link = link[0:-1]
+		time.sleep(1)
+		wd.get(link)
+		time.sleep(2)
+
+	def check_price_dashboard(self, minimum_transcript_charge, page_cost ,expert_page_cost,travel, estimated, cancellation_fee,
+	turn_around_page,copy):
+		wd = self.app.wd
+		time.sleep(2)
+		pr_block = wd.find_element(By.CSS_SELECTOR, "div[data-name='pricePricesBlock']")
+		minTrCharge = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper0'] span").get_attribute("textContent")
+		# pageCost = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper1'] span").get_attribute("textContent")
+		# expertPageCost = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper2'] span").get_attribute("textContent")
+		# travell = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper3'] span").get_attribute("textContent")
+		# estimat = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper4'] span").get_attribute("textContent")
+		# cancelation = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper5'] span").get_attribute("textContent")
+		# turn_around = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper6'] span").get_attribute("textContent")
+		# #cancel_term = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper7'] span").get_attribute("textContent")
+		# copy_page = pr_block.find_element(By.CSS_SELECTOR, "div[data-name='priceDataWrapper8'] span").get_attribute("textContent")
+		print(minTrCharge)
+		print(type(minTrCharge))
+		print(minimum_transcript_charge)
+		print(type(minimum_transcript_charge))
+		assert minimum_transcript_charge == minTrCharge
+		# assert pageCost == page_cost
+		# assert expertPageCost == expert_page_cost
+		# assert travell == travel
+		# assert estimat == estimated
+		# assert cancelation == cancellation_fee
+		# assert turn_around == turn_around_page
+		# assert copy_page == copy
+
 	def delete_att_from_database(self):
 
 		message = "User Executor successfully deleted"
-		url = "https://apidemo.trialbase.com/graphql"
+		#url = "https://apidemo.trialbase.com/graphql"
+		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
 
 		data_query = '''mutation{
-  			deleteCrAccount(sbn:"0"){
+  			deleteCrAccount(sbn:"0",withCompany:true){
    			status
     		message
  		 }
@@ -176,6 +214,7 @@ class RegistrCR:
 		response = requests.post(url, headers=headers, data=data)
 		response_status = response.json()["data"]["deleteCrAccount"]["status"]
 		response_message = response.json()["data"]["deleteCrAccount"]["message"]
+
 
 		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
 		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"

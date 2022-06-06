@@ -27,11 +27,11 @@ def test_edit_price(app, edit_price):
 	edit_price.cancellation_fee)
 	app.edit_price.save()
 	assert app.edit_price.appearance_fee() ==  "$1"
-	assert app.edit_price.page_cost() == "$2"
-	assert app.edit_price.expert_page_cost() == "$2"
-	assert app.edit_price.travel() == "$2"
-	assert app.edit_price.turn_around_time() == "5 days"
-	assert app.edit_price.copy() == "100 %"
+	assert app.edit_price.page_cost() == "$6"
+	assert app.edit_price.expert_page_cost() == "$6.5"
+	assert app.edit_price.travel() == "$1"
+	assert app.edit_price.turn_around_time() == "10 days"
+	assert app.edit_price.copy() == "50 %"
 	app.session.logout()
 
 """test schedual cr"""

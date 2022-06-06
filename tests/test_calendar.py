@@ -5,6 +5,7 @@ from data.data_model.data_test_op import op
 from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_test_cr_voting import cr_voting
 from data.data_model.data_email import email
+from data.data_model.data_edit_price import edit_price
 import time
 
 #Test case 3.1
@@ -97,11 +98,15 @@ def test_decline_appearence(app, deposition, cr_voting, op, att, emails):
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("emails", email)
+@pytest.mark.parametrize("prices", edit_price)
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-def test_cr_confirm_appearances(app, deposition, op, att, emails):
+def test_cr_confirm_appearances(app, deposition, op, att, emails,prices):
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
-	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.check_data_appearance(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.check_prices_appearance(prices.minimum_transcript_charge, prices.page_cost, prices.expert_page_cost,
+	prices.travel, prices.copy)
+	app.cr_appear.confirm_appearance()
 	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
 	assert app.deposition.compare_email_and_date(emails.cr_accept_apear_fake)  #8  email
 	app.cr_appear.check_data_dashboard(att.name, att.email, att.phone, op.name, op.email, op.phone)
@@ -118,7 +123,7 @@ def test_cr_confirm_appearances(app, deposition, op, att, emails):
 def test_cr_upload_transcript(app, att, deposition, op, emails):
 	app.deposition.create_fake_deposition_waiting(status="true")
 	app.session.login(login = "qaautomationcr@yahoo.com", password="ZXcv@123580")
-	app.cr_appear.confirm_appear(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.check_data_appearance(att.name, att.email, att.phone, op.name, op.email, op.phone)
 	app.cr_appear.past_deposition()
 	app.cr_appear.upload_transcript()
 	app.session.logout()

@@ -43,5 +43,4 @@ def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	assert app.deposition.compare_email_and_date(emails.email_op_noticed_depo) #12 email
 	#check email for cr new appearance
 	app.deposition.get_letter_from_email(login = "qaautomationcr@yahoo.com", password = "rsjbfjbpzorrntuc")
-	print(emails.email_cr_new_appearance)
 	assert app.deposition.compare_email_and_date(emails.email_cr_new_appearance) #7 email

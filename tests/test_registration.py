@@ -9,9 +9,10 @@ from data.data_model.data_test_attorney import attorneys
 from data.data_model.data_test_cr_voting import cr_voting
 from data.data_model.data_email import email
 from data.data_model.op_unregistered import op_unreg
+from data.data_model.data_edit_price import edit_price
 import time
 
-#@pytest.mark.skip(reason="For test should change input date every time")
+#Test case 1.1
 @allure.description("Registration new attorney")
 @pytest.mark.parametrize("email", email)
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
@@ -27,18 +28,18 @@ def test_registr_attorney(app,regisrt_data, email):
 	app.regAttorney.delete_att_from_database()
 
 
+#Test case 1.2
 #@pytest.mark.skip(reason="For test should change input date every time")
 @allure.description("Registration new cour reporter")
 @pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
 @pytest.mark.parametrize("emails", email)
-def test_reg_cr(app, cr_data, emails):
+@pytest.mark.parametrize("prices", edit_price)
+def test_reg_cr(app, cr_data, emails, prices):
 	app.cr.cr_registration_form(cr_data.bar_number)
 	assert cr_data.bar_number == app.cr.license_num_input_attribute()
 	app.cr.cr_data_form(cr_data.email, cr_data.phone_number, cr_data.full_name, cr_data.issuance,
 		cr_data.expiration_data, cr_data.address_one, cr_data.addres_two)
-	app.cr.availability_button()
 	app.cr.price_form()
-	app.cr.upload_photo()
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
 	assert app.cr.check_confirmation_letter(emails.email_reg_cr)
