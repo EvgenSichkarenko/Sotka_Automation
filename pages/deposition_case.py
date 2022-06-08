@@ -605,52 +605,14 @@ class DepositionCase:
 
 		assert self.day_deposition != day_new
 
-	def cansel_deposition(self, depo_name):
+	def cansel_deposition(self):
 		wd = self.app.wd
-
 		time.sleep(2)
-		today = datetime.now()
-		day = today.day
-		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
-		btn_day = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
-		btn_day.send_keys(Keys.RETURN)
-		time.sleep(1)
 
-		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
-		assert self.chech_status_approve(parents) == True
-
-		#Find depo on dahsboard
-
-		try:
-			time.sleep(2)
-			block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
-			time.sleep(1)
-			block.find_element(By.XPATH, f"//p[text()='{depo_name}']").click()
-			time.sleep(2)
-			#WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).send_keys(Keys.RETURN)
-		except NoSuchElementException:
-			block = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
-			time.sleep(1)
-			block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
-			WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
-
-		time.sleep(1)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']"))).click()
 		time.sleep(1)
-		wd.find_element(By.XPATH, "//div[text()='Yes, cancel']").click()
+		wd.find_element(By.CSS_SELECTOR, "button[name='cancellationConfirmBtn']").click()
 		time.sleep(3)
-		# wd.refresh()
-		# time.sleep(2)
-		#parents = btn_day.parent
-		parents = wd.find_element(By.XPATH,f"//button[text()='{day}']/.." )
-
-		#assert self.chech_status_approve(parents) == False
-
-	def chech_status_approve(self, parents):
-		try:
-			return parents.find_element(By.CSS_SELECTOR, "div[data-name='CircleApproved']").is_enabled()
-		except NoSuchElementException:
-			return False
 
 	def confirm_appearance(self, att_email):
 		wd = self.app.wd
@@ -697,7 +659,6 @@ class DepositionCase:
 		# str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
 		# print(str_email)
 		# assert new_email.count(str_email) == 1
-
 	def get_letter_from_email(self, login, password):
 		wd = self.app.wd
 		time.sleep(4)

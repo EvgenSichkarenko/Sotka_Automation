@@ -17,12 +17,15 @@ class CalendarAtt:
 		no_meeting = wd.find_element(By.CSS_SELECTOR, "main[data-name='statusProcessMain']")
 		return WebDriverWait(no_meeting, 15).until(EC.visibility_of_element_located((By.XPATH, "//div[text()='There are no meetings today']"))).get_attribute("textContent")
 
-	def check_el_present(self, block,locator):
+	def check_el_present(self,day,locator):
 		wd = self.app.wd
+		time.sleep(2)
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
+		child = calendar.find_element(By.XPATH, f"//button[text()='{day}']")
+		child.send_keys(Keys.RETURN)
+		parent = child.find_element(By.XPATH, "..")
 		try:
-			block = wd.find_element(By.CSS_SELECTOR, f"{block}")
-			time.sleep(2)
-			block.find_element(By.CSS_SELECTOR, f"{locator}")
+			parent.find_element(By.CSS_SELECTOR, f"{locator}")
 			return True
 		except NoSuchElementException:
 			return False
@@ -31,9 +34,9 @@ class CalendarAtt:
 		wd = self.app.wd
 		time.sleep(1)
 		today = datetime.now()
-		day = today.day
+		self.day = today.day
 		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
-		calendar.find_element(By.XPATH, f"//button[text()='{day}']").send_keys(Keys.RETURN)
+		calendar.find_element(By.XPATH, f"//button[text()='{self.day}']").send_keys(Keys.RETURN)
 
 	def show_all_btn(self):
 		wd = self.app.wd

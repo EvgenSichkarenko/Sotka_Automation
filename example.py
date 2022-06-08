@@ -15,16 +15,16 @@ response = requests.post(url, data=data)
 access_token = response.json()["data"]["signIn"]["access_token"]
 print(access_token)
 #Create deposition
-auth_header = 'Bearer ' + access_token
-headers = {
-	"Authorization": auth_header,
-	"qatoken": "JEKA_QA_TEST_TOKEN"
-}
-
-data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE", withUnregisterOp:false)}'
-#data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
-data2 = {"query": data1}
-
-response = requests.post(url, headers=headers, data=data2)
-print(response.status_code)
-print(response.json()["data"]["createFakeDepositionCase"])
+# auth_header = 'Bearer ' + access_token
+# headers = {
+# 	"Authorization": auth_header,
+# 	"qatoken": "JEKA_QA_TEST_TOKEN"
+# }
+#
+# data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE", withUnregisterOp:false)}'
+# #data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
+# data2 = {"query": data1}
+#
+# response = requests.post(url, headers=headers, data=data2)
+# print(response.status_code)
+# print(response.json()["data"]["createFakeDepositionCase"])

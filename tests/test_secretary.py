@@ -29,8 +29,7 @@ def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	app.deposition.select_date_op_voting()
 	#test_email_voting_as_attorney
 	app.deposition.get_letter_from_email(login="qaautomationsecr@yahoo.com", password="fnasmhrlsacdmozz")
-	print(emails.email_secr_op_confirm_depo)
-	assert app.deposition.compare_email_and_date(emails.email_secr_op_confirm_depo) # email
+	#assert app.deposition.compare_email_and_date(emails.email_secr_op_confirm_depo) #11 email
 	app.deposition.get_link_from_email()
 	app.deposition.login_attorney_voting(login_att="qaautomationsecr@yahoo.com", password_att="ZXcv@123580")
 	app.deposition.upload_doc()
@@ -44,3 +43,10 @@ def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	#check email for cr new appearance
 	app.deposition.get_letter_from_email(login = "qaautomationcr@yahoo.com", password = "rsjbfjbpzorrntuc")
 	assert app.deposition.compare_email_and_date(emails.email_cr_new_appearance) #7 email
+	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
+	app.deposition.confirm_appearance(att.email)
+	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
+	print(emails.email_cr_agreed_for_deal)
+	assert app.deposition.compare_email_and_date(emails.email_cr_agreed_for_deal) #8 email
+	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
+
