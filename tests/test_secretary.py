@@ -7,6 +7,16 @@ from data.data_model.data_test_cr_voting import cr_voting
 from data.data_model.data_email import email
 import time
 
+#Test case 1.5
+@allure.description("Test case 1.5, Login secretaru with valid data")
+@pytest.mark.login
+def test_login_secretary(app):
+	app.login.login(invalid_login="a123", invalid_password="123",
+		valid_login="qaautomationsecr@yahoo.com", valid_password="ZXcv@123580" )
+	assert "Rita QA " == app.session.text_name_attribute_secretary()
+	app.login.logout()
+
+
 #Test case 2.21
 @allure.description("Creates deposition")
 @pytest.mark.parametrize("emails", email)
@@ -29,7 +39,7 @@ def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	app.deposition.select_date_op_voting()
 	#test_email_voting_as_attorney
 	app.deposition.get_letter_from_email(login="qaautomationsecr@yahoo.com", password="fnasmhrlsacdmozz")
-	#assert app.deposition.compare_email_and_date(emails.email_secr_op_confirm_depo) #11 email
+	assert app.deposition.compare_email_and_date(emails.email_secr_op_confirm_depo) #11 email
 	app.deposition.get_link_from_email()
 	app.deposition.login_attorney_voting(login_att="qaautomationsecr@yahoo.com", password_att="ZXcv@123580")
 	app.deposition.upload_doc()
@@ -45,8 +55,7 @@ def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	assert app.deposition.compare_email_and_date(emails.email_cr_new_appearance) #7 email
 	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.deposition.confirm_appearance(att.email)
-	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
-	print(emails.email_cr_agreed_for_deal)
-	assert app.deposition.compare_email_and_date(emails.email_cr_agreed_for_deal) #8 email
+	app.deposition.get_letter_from_email(login = "qaautomationsecr@yahoo.com", password = "fnasmhrlsacdmozz")
+	assert app.deposition.compare_email_and_date(emails.email_secretary_cr_accept) #8 email
 	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 

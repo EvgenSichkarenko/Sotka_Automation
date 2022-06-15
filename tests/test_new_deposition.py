@@ -11,7 +11,7 @@ import time
 
 
 #Test case 2.1
-@allure.description("Create deposition case with time manually")
+@allure.description("Test case 2.1, Create deposition case with time manually")
 @pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
@@ -33,14 +33,15 @@ def test_deposition_create_manually(app, deposition, cr_voting, op, att, emails)
 	assert app.deposition.compare_email_and_date(emails.email_create_depo_manually_op)
 	app.deposition.get_letter_from_email(login = "qaautomationcr@yahoo.com", password = "rsjbfjbpzorrntuc")
 	assert app.deposition.compare_email_and_date(emails.email_create_depo_manually_cr)
-	app.deposition.depo_dashboard_manualy(deposition.name)
+	app.calendar_att.calendar_day()
+	app.deposition.depo_dashboard_manualy()
 	app.deposition.finish_depo_attorney(deposition.name,att.name,att.email,att.phone,op.name,op.email,op.phone,
 		cr_voting.name,cr_voting.email,cr_voting.phone)
 	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 	app.session.logout()
 
 #Test case 2.2
-@allure.description("Voting process")
+@allure.description("Test case 2.2, Voting process")
 @pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("att", attorneys, ids=[repr(i) for i in attorneys])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(i) for i in cr_voting])
@@ -86,7 +87,7 @@ def test_deposition_create_voting(app, deposition, op, emails, att, cr_voting):
 	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 
 #Test case 2.3
-@allure.description("Revoting process")
+@allure.description("Test case 2.3, Revoting process")
 @pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("att", attorneys, ids=[repr(i) for i in attorneys])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(i) for i in cr_voting])
@@ -118,8 +119,8 @@ def test_revoting(app, emails, att,cr_voting, deposition,op):
 	app.deposition.delete_deposition_from_database(app.deposition.number_of_deposition)
 
 
-#Test case #2.6
-@allure.description("create depo and decline cr deposition, check email owner")
+#Test case #2.6 and 2.22
+@allure.description("Test case, 2.6, 2.22, create depo and decline cr deposition, check email owner")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
@@ -133,11 +134,12 @@ def test_decline_appearence(app, deposition, cr_voting, op, att, emails):
 	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.deposition.decline_appearence_cr(att.email, att.name, cr_voting.name, deposition.name)
 	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
+	print(emails.cr_decline_apear_fake)
 	assert app.deposition.compare_email_and_date(emails.cr_decline_apear_fake)  # 6 email
 	app.deposition.delete_deposition_from_database(app.deposition.id_case)
 
 #Test case 2.9, 2.10, 2.11, 2.16, 2.8
-@allure.description("Upload transcript, cr")
+@allure.description("Test case 2.8, 2.9, 2.10, 2.11, 2.16")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
@@ -146,11 +148,15 @@ def test_cr_upload_transcript(app, att, deposition, op, emails):
 	app.deposition.create_fake_deposition_waiting(status="true")
 	app.session.login(login = "qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.cr_appear.check_data_appearance(att.name, att.email, att.phone, op.name, op.email, op.phone)
+	app.cr_appear.confirm_appearance()
 	app.cr_appear.past_deposition()
 	app.cr_appear.upload_transcript()
 	app.session.logout()
 	time.sleep(2)
 	app.deposition.get_letter_from_email(login = "qaautomationop@yahoo.com", password = "jphbtksnxhediwws")
+	print(emails.email_op_transcript_add)
+	print(emails.email_att_transcript_add)
+	print(emails.email_op_unregist_transcript)
 	assert app.deposition.compare_email_and_date(emails.email_op_transcript_add) #email 15
 	time.sleep(2)
 	app.deposition.get_letter_from_email(login = "qaautomationatt@yahoo.com", password = "emxbsociwrqsdcwp")
@@ -165,13 +171,14 @@ def test_cr_upload_transcript(app, att, deposition, op, emails):
 	app.session.logout()
 	#download as op unregistered Test case 2.16
 	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
-	print(emails.email_op_unregist_transcript)
 	assert app.deposition.compare_email_and_date(emails.email_op_unregist_transcript) #email 22
 	app.deposition.get_link_from_email()
+
 	app.deposition.delete_deposition_from_database(id_depo=app.deposition.id_case)
+	app.cr_appear.delete_att_from_database()
 
 #Test case #2.15
-@allure.description("Confirm appearance from cr and check data")
+@allure.description("Test case 2.15, Confirm appearance from cr and check data")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("emails", email)
@@ -191,7 +198,7 @@ def test_cr_confirm_appearances(app, deposition, op, att, emails,prices):
 	app.deposition.delete_deposition_from_database(app.deposition.id_case)
 
 #Test case 2.17
-@allure.description("CR Avalibility")
+@allure.description("Test case 2.17, CR Avalibility")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])

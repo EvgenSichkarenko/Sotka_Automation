@@ -6,6 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 from data.data_model.data_edit_price import edit_price
 import time
+import requests
 
 
 class CrAppearance:
@@ -43,8 +44,8 @@ class CrAppearance:
 	def confirm_appearance(self):
 
 		wd = self.app.wd
-		time.sleep(1)
-		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").click()
+		time.sleep(2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").send_keys(Keys.RETURN)
 
 	def check_data_dashboard(self, att_name, att_email, att_phone, op_name, op_email, op_phone):
 		wd = self.app.wd
@@ -97,19 +98,20 @@ class CrAppearance:
 		expertPageCost = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorPriceExpertPageCostValue']").text
 		travel_ap = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorPriceTravelValue']").text
 		copy_ap = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorPriceCopyValue']").text
-
 		copy = copy.replace(" ","")
-		assert self.cut_str_to_int(minTrChange) == minimum_transcript_charge
-		assert self.cut_str_to_int(pageCost) == page_cost
-		assert self.cut_str_to_int(expertPageCost) == expert_page_cost
-		assert self.cut_str_to_int(travel_ap) == travel
+		print(self.cut_str_to_int(minTrChange))
+		print(self.cut_str_to_int(minimum_transcript_charge))
+		assert self.cut_str_to_int(minTrChange) == self.cut_str_to_int(minimum_transcript_charge)
+		assert self.cut_str_to_int(pageCost) == self.cut_str_to_int(page_cost)
+		assert self.cut_str_to_int(expertPageCost) == self.cut_str_to_int(expert_page_cost)
+		assert self.cut_str_to_int(travel_ap) == self.cut_str_to_int(travel)
 		assert copy_ap == copy
 
 	def cut_str_to_int(self, row):
 
 		row = row[1:] #Cut $ from str
 		row = float(row)
-		row = int(row)
+		#row = int(row)
 		new_row = "$" + str(row)
 		return new_row
 
@@ -139,3 +141,29 @@ class CrAppearance:
 		time.sleep(1)
 		wd.find_element(By.CSS_SELECTOR, "button[name='closeBtnModal']").click()
 		time.sleep(1)
+
+	def delete_att_from_database(self):
+		time.sleep(2)
+		message = "Attorney and company successfully deleted"
+		url = "https://apidemo.trialbase.com/graphql"
+		# url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		headers = {
+			"qatoken": "JEKA_QA_TEST_TOKEN"
+		}
+
+		data_query = '''mutation{deleteAttorneyAccount(sbn:"000003",withCompany:true){
+  status
+  message
+}
+		}	
+				'''
+
+		data = {"query": data_query}
+		response = requests.post(url, headers=headers, data=data)
+
+		response_status = response.json()["data"]["deleteAttorneyAccount"]["status"]
+		response_message = response.json()["data"]["deleteAttorneyAccount"]["message"]
+
+		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
+		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
+		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"

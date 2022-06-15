@@ -39,7 +39,8 @@ class Attorney:
 
 		message_delete = "Attorney successfully deleted"
 
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
 
 		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
 		  access_token

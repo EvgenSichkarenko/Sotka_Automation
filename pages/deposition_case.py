@@ -49,7 +49,8 @@ class DepositionCase:
 	def get_id_deposition_case(self):
 		wd = self.app.wd
 		url = wd.current_url
-		default = "http://stoke-test.s3-website.us-east-2.amazonaws.com/progressCase/"
+		#default = "http://stoke-test.s3-website.us-east-2.amazonaws.com/progressCase/"
+		default = "https://demo.trialbase.com/progressCase/"
 		id_case = url.replace(default, "")
 		number = int(id_case)
 		return number
@@ -106,7 +107,7 @@ class DepositionCase:
 		hour.find_element(By.CSS_SELECTOR, "input").send_keys(Keys.CONTROL + "a")
 		hour.find_element(By.CSS_SELECTOR, "input").send_keys(Keys.BACK_SPACE)
 		time.sleep(1)
-		hour.find_element(By.CSS_SELECTOR, "input").send_keys("7:00 AM")
+		hour.find_element(By.CSS_SELECTOR, "input").send_keys("9:00 AM")
 		self.time_value = hour.find_element(By.CSS_SELECTOR, "input").get_attribute("value")
 		time.sleep(1)
 		wd.find_element(By.XPATH, "//div[text()='Confirm']").click()
@@ -425,6 +426,35 @@ class DepositionCase:
 		wd.find_element(By.NAME, "closeBtnModal").click()
 		time.sleep(1)
 
+	def begin_date_voting(self):
+		wd = self.app.wd
+		time.sleep(1)
+		two_hour = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='TWO_HOURSdurationBtn']")))
+		two_hour.click()
+		prev_btn = wd.find_element(By.CSS_SELECTOR, "button[data-name='DirectionButtonPrev']")
+		time.sleep(1)
+		prev_btn.send_keys(Keys.RETURN)
+		time.sleep(2)
+		prev_btn.send_keys(Keys.RETURN)
+		time.sleep(2)
+		prev_btn.send_keys(Keys.RETURN)
+		time.sleep(2)
+		days = wd.find_elements(By.CSS_SELECTOR, "div[data-name='grid0'] button")
+		count = 0
+		for i in days:
+			time.sleep(3)
+			if i.text == "Select":
+				i.click()
+				wd.find_element(By.CSS_SELECTOR, "button[name='depositionModalConfirmBtn']").click()
+				count += 1
+				if count == 4:
+					wd.find_element(By.CSS_SELECTOR, "button[name='calendarVotingBtn']").click()
+					time.sleep(2)
+					break
+		time.sleep(2)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='voteModalApply']"))).click()
+		time.sleep(2)
+
 	#Test voting attorney calendar
 	def date_and_time_voting(self):
 		wd = self.app.wd
@@ -602,8 +632,7 @@ class DepositionCase:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='depoContinueBtn']"))).click()
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='deliveryContinueBtn']"))).click()
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='finishConfirmBtn']"))).click()
-
-		assert self.day_deposition != day_new
+		print(day_new)
 
 	def cansel_deposition(self):
 		wd = self.app.wd
@@ -622,7 +651,7 @@ class DepositionCase:
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 		time.sleep(2)
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").click()
-		time.sleep(1)
+		time.sleep(2)
 
 	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
 		wd = self.app.wd
@@ -703,11 +732,20 @@ class DepositionCase:
 		else:
 			return False
 
+	def get_current_time(self):
+		wd = self.app.wd
+
+		month = {
+			"January" : 1,
+			"February": 2,
+
+		}
+
 	def	delete_deposition_from_database(self, id_depo):
 		wd = self.app.wd
 		message = "Deposition case successfully deleted with all relations and files"
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		#url = "https://apidemo.trialbase.com/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
 
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"
@@ -728,9 +766,13 @@ class DepositionCase:
 
 	def create_fake_deposition_waiting(self, status):
 		wd = self.app.wd
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		# url = "https://apidemo.trialbase.com/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
 
+		#date
+		date = datetime.now()
+		today = date.strftime("%Y-%m-%d")
+		date_time = f'["{today} 06:00:00.000000"]'
 		# Login, Get access token
 		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
 		  access_token
@@ -740,7 +782,7 @@ class DepositionCase:
 		data = {"query": qu}
 		response = requests.post(url, data=data)
 		access_token = response.json()["data"]["signIn"]["access_token"]
-
+		print(access_token)
 		# Create deposition
 		auth_header = 'Bearer ' + access_token
 		headers = {
@@ -748,21 +790,34 @@ class DepositionCase:
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
 
-		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE",' + f'withUnregisterOp:{status}' + ")}"
+		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE",' + f'withUnregisterOp:{status},' + f"dates:{date_time})" + "{id start_time}}"
 		# data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
 		data2 = {"query": data1}
-
 		response = requests.post(url, headers=headers, data=data2)
-		self.id_case = response.json()["data"]["createFakeDepositionCase"]
+		print(response.json())
+		self.id_case = response.json()["data"]["createFakeDepositionCase"]["id"]
+		self.start_time = response.json()["data"]["createFakeDepositionCase"]["start_time"]
+		assert response.status_code == 200
 		wd.refresh()
 		time.sleep(2)
 
 	def create_fake_deposition_voting(self, status):
 		wd = self.app.wd
 
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		# url = "https://apidemo.trialbase.com/graphql"
 
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
+
+		#date
+		date = datetime.now()
+		today = date.strftime("%Y-%m-%d")
+		tomorrow_state = date + timedelta(1)
+		tomorrow = tomorrow_state.strftime("%Y-%m-%d")
+		next_state = tomorrow_state + timedelta(1)
+		next_day = next_state.strftime("%Y-%m-%d")
+		one_next_st = next_state + timedelta(1)
+		one_next = one_next_st.strftime("%Y-%m-%d")
+		date_time = f'["{today} 06:00:00.000000","{tomorrow} 06:00:00.000000","{next_day} 06:00:00.000000","{one_next} 06:00:00.000000"]'
 		# Login, Get access token
 		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
 		  access_token
@@ -781,9 +836,10 @@ class DepositionCase:
 		}
 
 		#data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_SERVICE",' + f'withUnregisterOp:{status}' + ")}"
-		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION",' + f'withUnregisterOp:{status})' + "}"
+		data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION",' + f"withUnregisterOp:{status}," + f"dates:{date_time})" + "{id start_time}}"
 		data2 = {"query": data1}
 		response = requests.post(url, headers=headers, data=data2)
-		self.id_fake_depo = response.json()["data"]["createFakeDepositionCase"]
+		self.id_fake_depo = response.json()["data"]["createFakeDepositionCase"]["id"]
+		self.start_time_vot = response.json()["data"]["createFakeDepositionCase"]["start_time"]
 		wd.refresh()
 		time.sleep(2)

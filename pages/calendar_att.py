@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from datetime import datetime
+from datetime import datetime, timedelta
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -29,6 +29,20 @@ class CalendarAtt:
 			return True
 		except NoSuchElementException:
 			return False
+
+	def next_day(self):
+		wd = self.app.wd
+		time.sleep(1)
+		today = datetime.now()
+		tomorrow  = today + timedelta(1)
+		self.tomorrow = tomorrow.day
+		calendar = wd.find_element(By.CSS_SELECTOR, "div[data-name='attorneyHomePageCalendar']")
+		calendar.find_element(By.XPATH, f"//button[text()='{self.tomorrow}']").send_keys(Keys.RETURN)
+
+	def number_of_element(self):
+		wd = self.app.wd
+		time.sleep(2)
+		assert len(wd.find_elements(By.CSS_SELECTOR, "div[data-name='CircleBlock'] div")) == 1
 
 	def calendar_day(self):
 		wd = self.app.wd

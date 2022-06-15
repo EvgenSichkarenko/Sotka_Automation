@@ -195,8 +195,8 @@ class RegistrCR:
 	def delete_att_from_database(self):
 
 		message = "User Executor successfully deleted"
-		#url = "https://apidemo.trialbase.com/graphql"
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"

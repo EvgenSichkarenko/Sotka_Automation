@@ -68,9 +68,9 @@ class Application:
 		#wd.get("https://trialbase.com/login")
 
 		#PREPROD
-		#wd.get("https://demo.trialbase.com/login")
+		wd.get("https://demo.trialbase.com/login")
 		#STAGE
-		wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
+		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 
 		# time.sleep(5)
 		# WebDriverWait(wd, 10).until(

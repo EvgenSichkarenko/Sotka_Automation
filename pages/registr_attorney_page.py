@@ -156,13 +156,11 @@ class RegistrAttorney:
 
 		return message, encoding, mime
 
-	def check_confirmation_letter(self, email_reg_att):
+	def check_confirmation_letter(self, email_reg_att, log, password):
 		wd = self.app.wd
 		time.sleep(2)
 		server = "imap.mail.yahoo.com"
 		port = 993
-		log = "qaautomationsecrdel@yahoo.com"
-		password = "xudxrtihgkpxetfh"
 
 		mail = imaplib.IMAP4_SSL(server, port)
 		mail.login(log, password)
@@ -189,8 +187,8 @@ class RegistrAttorney:
 
 		time.sleep(2)
 		message = "Attorney and company successfully deleted"
-		#url = "https://apidemo.trialbase.com/graphql"
-		url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		url = "https://apidemo.trialbase.com/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 		headers = {
 			"qatoken":"JEKA_QA_TEST_TOKEN"
 		}

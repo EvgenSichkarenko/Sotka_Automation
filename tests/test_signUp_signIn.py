@@ -16,7 +16,7 @@ from datetime import datetime
 
 
 #Test case 1.1
-@allure.description("Registration new attorney")
+@allure.description("Test case 1.1, Registration new attorney")
 @pytest.mark.parametrize("email", email)
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 def test_registr_attorney(app,regisrt_data, email):
@@ -26,12 +26,11 @@ def test_registr_attorney(app,regisrt_data, email):
 	app.regAttorney.skip_secretary()
 	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
 	assert app.regAttorney.check_send_mail()
-	print(email.email_reg_att)
-	assert app.regAttorney.check_confirmation_letter(email.email_reg_att, login="testqa000000@yahoo.com", password="ksbbaatxxwotyabq" )
+	assert app.regAttorney.check_confirmation_letter(email.email_reg_att, log="testqa000000@yahoo.com", password="ksbbaatxxwotyabq")
 	app.regAttorney.delete_att_from_database()
 
 #Test case 1.2
-@allure.description("Registration new cour reporter")
+@allure.description("Test case 1.2, Registration new cour reporter")
 @pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
 @pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("prices", edit_price)
@@ -48,6 +47,7 @@ def test_reg_cr(app, cr_data, emails, prices):
 
 #Test case 1.3
 @allure.description("Login attorney with invalid and valid data")
+@pytest.mark.skip(reason="edit time zone")
 @pytest.mark.login
 def test_login_attorney(app):
 	print(time.strftime('%Y-%m-%d %H:%M:%S'))  # before timezone change
@@ -63,8 +63,7 @@ def test_login_attorney(app):
 
 
 #Test case 1.4
-@allure.description("Login cour reporter with invalid and valid data")
-@pytest.mark.login
+@allure.description("Test case 1.4, Login cour reporter with invalid and valid data")
 def test_login_cr(app):
 	app.login.login(invalid_login="a123", invalid_password="13",
 		valid_login="qaautomationcr@yahoo.com", valid_password="ZXcv@123580")
@@ -72,44 +71,36 @@ def test_login_cr(app):
 	app.login.logout()
 
 
-#Test case 1.5
-@allure.description("Login secretaru with valid data")
-@pytest.mark.login
-def test_login_secretary(app):
-	app.login.login(invalid_login="a123", invalid_password="123",
-		valid_login="qaautomationsecr@yahoo.com", valid_password="ZXcv@123580" )
-	assert "Rita QA " == app.session.text_name_attribute_secretary()
-	app.login.logout()
 
-
-# #Test case 1.6 Not working, need add unregistered op
-# @allure.description("Unregistered op sign up")
-# @pytest.mark.parametrize("emails", email)
-# @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-# @pytest.mark.parametrize("op_unreg", op_unreg, ids=[repr(x) for x in op_unreg])
-# @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
-# @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
-# @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-# def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg, emails):
-# 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
-# 	app.deposition.name_deposition(deposition.name)
-# 	app.deposition.deponent_deposition(deposition.deponent)
-# 	app.deposition.location_deposition()
-# 	app.deposition.attorneys(deposition.sbn_op_unreg, op_unreg.sbn)
-# 	app.deposition.date_and_time_voting()
-# 	app.session.logout()
-# 	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
-# 	assert app.deposition.compare_email_and_date(emails.email_opunregistr_vote)#email 10 for op unregistered
-# 	app.deposition.get_link_from_email()
-# 	app.deposition.select_date_op_voting()
-# 	app.regAttorney.create_acc_unregistr()
-# 	app.regAttorney.add_bar_number(deposition.sbn_op_unreg)
-# 	time.sleep(10)
-# 	app.deposition.delete_deposition_from_database(id_depo=app.deposition.number_of_deposition)
+#Test case 1.6 Not working, need add unregistered op
+@allure.description("Unregistered op sign up")
+@pytest.mark.skip("will fix")
+@pytest.mark.parametrize("emails", email)
+@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+@pytest.mark.parametrize("op_unreg", op_unreg, ids=[repr(x) for x in op_unreg])
+@pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
+@pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
+@pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
+def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg, emails):
+	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
+	app.deposition.name_deposition(deposition.name)
+	app.deposition.deponent_deposition(deposition.deponent)
+	app.deposition.location_deposition()
+	app.deposition.attorneys(deposition.sbn_op_unreg, op_unreg.sbn)
+	app.deposition.date_and_time_voting()
+	app.session.logout()
+	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
+	assert app.deposition.compare_email_and_date(emails.email_opunregistr_vote)#email 10 for op unregistered
+	app.deposition.get_link_from_email()
+	app.deposition.select_date_op_voting()
+	app.regAttorney.create_acc_unregistr()
+	app.regAttorney.add_bar_number(deposition.sbn_op_unreg)
+	time.sleep(10)
+	app.deposition.delete_deposition_from_database(id_depo=app.deposition.number_of_deposition)
 
 
 #Test case 1.8
-@allure.description("Forgot password test")
+@allure.description("Test case 1.8, Forgot password test")
 @pytest.mark.parametrize("op", op)
 @pytest.mark.parametrize("emails", email)
 def test_forgot_password(app, op, emails):
@@ -123,6 +114,7 @@ def test_forgot_password(app, op, emails):
 	app.login.logout()
 
 # Test case 1.11
+@allure.description("Test case 1.11")
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 @pytest.mark.parametrize("emails", email)
 def test_add_attorney_company(app, regisrt_data, emails):
@@ -130,7 +122,7 @@ def test_add_attorney_company(app, regisrt_data, emails):
 	app.add_att.attorney_company(regisrt_data.bar_number, registr_email="Jeka test qa")
 	app.session.logout()
 	app.deposition.get_letter_from_email(login="testqa000000@yahoo.com", password="ksbbaatxxwotyabq")
-	assert app.deposition.compare_email_and_date(emails.email_att_confirm_psw) #2 email
+	assert app.deposition.compare_email_and_date(emails.email_invite_att_to_company) #2 email
 	time.sleep(3)
 	app.deposition.get_link_from_email()
 	app.add_att.set_password(password="1234Qwer")
@@ -140,7 +132,7 @@ def test_add_attorney_company(app, regisrt_data, emails):
 	app.add_att.delete_att_from_database(regisrt_data.bar_number)
 
 #Test case 1.12
-@allure.description("Test search attorney in a company")
+@allure.description("Test case 1.12, Test search attorney in a company")
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 def test_search_attorney(app, att):
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
@@ -152,7 +144,7 @@ def test_search_attorney(app, att):
 	app.session.logout()
 
 #Test case 1.9/ 1.14 удалять секретаря Антон
-@allure.description("Registration new attorney with secretary")
+@allure.description("Test case 1.14, 1.9, Registration new attorney with secretary")
 @pytest.mark.parametrize("email", email)
 @pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
 @pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
@@ -166,6 +158,7 @@ def test_reg_att_with_secr(app, regisrt_data, email, secretary):
 	assert app.regAttorney.check_send_mail()
 	app.deposition.get_letter_from_email(login="qaautomationsecrdel@yahoo.com", password="xudxrtihgkpxetfh")
 	app.deposition.compare_from_to_email(from_m="Trialbase <info@trialbase.com>", to_m="qaautomationsecrdel@yahoo.com")
+	print(email.email_invite_new_secr)
 	assert app.deposition.compare_email_and_date(email.email_invite_new_secr)
 	app.deposition.get_link_from_email()
 	app.secretary.set_password(password="1234Qwer")
@@ -175,7 +168,7 @@ def test_reg_att_with_secr(app, regisrt_data, email, secretary):
 	app.regAttorney.delete_att_from_database()
 
 #Test case 1.18 / 1.10
-@allure.description("Add new secretary for attorney company")
+@allure.description("Test case 1.18, 1.10, Add new secretary for attorney company")
 @pytest.mark.parametrize("emails", email)
 @pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
 def test_add_secretary(app, secretary, emails):
@@ -185,7 +178,7 @@ def test_add_secretary(app, secretary, emails):
 	time.sleep(3)
 	app.session.logout()
 	app.deposition.get_letter_from_email(login="qaautomationsecrdel@yahoo.com", password="xudxrtihgkpxetfh")
-	assert app.deposition.compare_email_and_date(emails.email_invite_new_secr) #email 2
+	assert app.deposition.compare_email_and_date(emails.email_invite_att_to_company) #email 2
 	app.deposition.get_link_from_email()
 	app.secretary.set_password(password="1234Qwer")
 	app.secretary.login(login="qaautomationsecrdel@yahoo.com", password="1234Qwer")

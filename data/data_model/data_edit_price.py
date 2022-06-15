@@ -2,7 +2,7 @@ from model.model_edit_price import EditPrice
 
 edit_price = [EditPrice(
     minimum_transcript_charge="$400",
-    appearance_fee='$1',
+    appearance_fee='$400',
     page_cost="$6",
     expert_page_cost="$6.5",
     travel="$1",
