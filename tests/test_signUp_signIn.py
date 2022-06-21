@@ -72,21 +72,21 @@ def test_login_cr(app):
 
 
 
-#Test case 1.6 Not working, need add unregistered op
-@allure.description("Unregistered op sign up")
-@pytest.mark.skip("will fix")
+#Test case 1.6
+@allure.description("Test case 1.6, Unregistered op sign up")
 @pytest.mark.parametrize("emails", email)
+@pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("op_unreg", op_unreg, ids=[repr(x) for x in op_unreg])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg, emails):
+def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg, emails,regisrt_data):
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)
 	app.deposition.location_deposition()
-	app.deposition.attorneys(deposition.sbn_op_unreg, op_unreg.sbn)
+	app.regAttorney.add_op_unregister(deposition.sbn_op_unreg, op_unreg.sbn)
 	app.deposition.date_and_time_voting()
 	app.session.logout()
 	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
@@ -95,7 +95,18 @@ def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg,
 	app.deposition.select_date_op_voting()
 	app.regAttorney.create_acc_unregistr()
 	app.regAttorney.add_bar_number(deposition.sbn_op_unreg)
-	time.sleep(10)
+	app.regAttorney.fill_form(op_unreg.email, regisrt_data.bar_number, regisrt_data.phone_number, regisrt_data.address_two)
+	app.regAttorney.next_step()
+	app.regAttorney.assert_secreatry()
+	app.regAttorney.skip_secretary()
+	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
+	assert app.regAttorney.check_send_mail()
+	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
+	app.deposition.get_link_from_email()
+	app.session.login(login="qaautomationopunreg@yahoo.com", password="1234Qwer")
+	app.session.text_name_attribute_attroney() == " Jeka test unregister op"
+	app.session.logout()
+	app.regAttorney.delete_op_from_database()
 	app.deposition.delete_deposition_from_database(id_depo=app.deposition.number_of_deposition)
 
 

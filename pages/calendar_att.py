@@ -61,7 +61,7 @@ class CalendarAtt:
 		time.sleep(2)
 		return len(wd.find_elements(By.CSS_SELECTOR, "main[data-name='statusProcessMain'] > div > div"))
 
-	def cansel_depo(self):
+	def cancel_depo(self):
 		wd = self.app.wd
 		time.sleep(2)
 		wd.find_element(By.CSS_SELECTOR, "button[name='attorneyHomeBtnCancel4']").click()

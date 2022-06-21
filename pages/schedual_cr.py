@@ -25,7 +25,7 @@ class Schedual:
 	def change_time_monday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn0")
+		element = wd.find_element(By.NAME, "MONDAYenabled")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']").is_displayed()
 		self.check_day(slider,element)
@@ -42,7 +42,7 @@ class Schedual:
 	def change_time_tuesday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn1")
+		element = wd.find_element(By.NAME, "TUESDAYenabled")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper1']").is_displayed()
 		self.check_day(slider,element)
@@ -56,7 +56,7 @@ class Schedual:
 	def change_time_wednesday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn2")
+		element = wd.find_element(By.NAME, "WEDNESDAYenabled")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper2']").is_displayed()
 
@@ -71,7 +71,7 @@ class Schedual:
 	def change_time_thursday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn3")
+		element = wd.find_element(By.NAME, "THURSDAYenabled")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper3']").is_displayed()
 
@@ -86,7 +86,7 @@ class Schedual:
 	def change_time_friday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn4")
+		element = wd.find_element(By.NAME, "FRIDAYenabled")
 		#slider = WebDriverWait(wd, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper0']"))).is_displayed()
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper4']").is_displayed()
 
@@ -101,7 +101,7 @@ class Schedual:
 	def change_time_saturday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn5")
+		element = wd.find_element(By.NAME, "SATURDAYenabled")
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']").is_displayed()
 
 		self.check_day(slider,element)
@@ -115,7 +115,7 @@ class Schedual:
 	def change_time_sunday(self):
 		wd = self.app.wd
 
-		element = wd.find_element(By.NAME, "editTimeBtn6")
+		element = wd.find_element(By.NAME, "SUNDAYenabled")
 		slider = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']").is_displayed()
 
 		self.check_day(slider,element)
@@ -195,14 +195,14 @@ class Schedual:
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		wd.find_element(By.NAME, "editTimeBtn5").click()
+		wd.find_element(By.NAME, "SATURDAYenabled").click()
 		#Sunday
 		slider7 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']")
 		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='0']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		wd.find_element(By.NAME, "editTimeBtn6").click()
+		wd.find_element(By.NAME, "SUNDAYenabled").click()
 
 	def disable_day(self):
 		wd = self.app.wd
@@ -229,7 +229,6 @@ class Schedual:
 		else:
 			time.sleep(2)
 			self.save_schedual()
-
 
 	def enable_day(self):
 		wd = self.app.wd

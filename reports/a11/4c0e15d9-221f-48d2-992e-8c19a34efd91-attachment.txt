@@ -1,5 +1,0 @@
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MDMsInJvbGUiOiJBVFRPUk5FWSIsIm5hbWUiOiJEYW5pZWwgVmxhZCBUYWJha2giLCJ1c2VyX2F0dG9ybmV5X2lkIjoxNzYsInVzZXJfZXhlY3V0b3JfaWQiOm51bGwsInVzZXJfc2VjcmV0YXJ5X2lkIjpudWxsLCJpYXQiOjE2NTUzMDExNjgsImV4cCI6MTY1NzIwMTE2OH0.5HwO1oZV1Z2L4rirzhakAPxc6YqarebUwSHLaNpnp2w
-{'data': {'createFakeDepositionCase': {'id': 1009, 'start_time': '2022-06-15T07:00:00.000Z'}}}
-$400.0
-$400.0
-Dear Daniel Vlad Tabakh, The AutomationCR has accepted an appearance at the deposition ofJEKA_AUTO_DEP in JEKA_AUTOMATION_TEST_DEPOSITION on Wednesday, June 15,2022, at 12:00 AM (PST). You are all set for this deposition, but you canalways make an alternative selection by visiting your Trialbase account: >>Deposition Setting<< <https://demo.trialbase.com> Thank you, Trialbase <https://demo.trialbase.com> demo.trialbase.com

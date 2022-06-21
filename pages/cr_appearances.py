@@ -145,8 +145,9 @@ class CrAppearance:
 	def delete_att_from_database(self):
 		time.sleep(2)
 		message = "Attorney and company successfully deleted"
-		url = "https://apidemo.trialbase.com/graphql"
-		# url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
+		url = self.app.graphql_url()
+
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
@@ -167,3 +168,11 @@ class CrAppearance:
 		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
 		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
 		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
+
+	def cancel_cr_depo(self):
+		wd = self.app.wd
+		time.sleep(2)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='crHomeBtnCancel']"))).click()
+		time.sleep(2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='cancellationConfirmBtn']").click()
+		time.sleep(1)

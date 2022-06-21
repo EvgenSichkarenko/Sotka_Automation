@@ -29,6 +29,17 @@ class RegistrAttorney:
 			self.add_bar_number(bar_number)
 
 #Registration page
+	def registr_op_unreg(self,bar_number):
+		wd = self.app.wd
+		wd.find_element(By.NAME, "registrationSignInLink").click()
+		text_attribute = wd.find_element(By.NAME, "barNumber").get_attribute("placeholder")
+
+		if text_attribute == "Bar Number":
+			self.add_bar_number(bar_number)
+		else:
+			wd.find_element(By.NAME, "stepTwoAttorneyBtn").click()
+			self.add_bar_number(bar_number)
+
 	def add_bar_number(self, bar_number):
 		wd = self.app.wd
 		wd.find_element(By.CSS_SELECTOR, "input[name='barNumber']").clear()
@@ -58,6 +69,12 @@ class RegistrAttorney:
 		value = wd.find_element(By.CSS_SELECTOR, "input[name='sbn']").get_property("value")
 		if value == bar_number:
 			wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
+
+	def next_step(self):
+		wd = self.app.wd
+		time.sleep(1)
+		wd.find_element(By.NAME, "stepThreeAttorneyContinue").click()
+		time.sleep(1)
 
 	def assert_secreatry(self):
 		wd =self.app.wd
@@ -187,8 +204,9 @@ class RegistrAttorney:
 
 		time.sleep(2)
 		message = "Attorney and company successfully deleted"
-		url = "https://apidemo.trialbase.com/graphql"
-		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
+		url = self.app.graphql_url()
+
 		headers = {
 			"qatoken":"JEKA_QA_TEST_TOKEN"
 		}
@@ -216,3 +234,38 @@ class RegistrAttorney:
 		time.sleep(2)
 		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='createTrialbase']"))).click()
 		time.sleep(1)
+
+	def delete_op_from_database(self):
+		time.sleep(2)
+		message = "Attorney and company successfully deleted"
+
+		url = self.app.graphql_url()
+
+		headers = {
+			"qatoken": "JEKA_QA_TEST_TOKEN"
+		}
+
+		data_query = '''mutation{deleteAttorneyAccount(sbn:"000003",withCompany:true){   status   message } 		}	
+				'''
+
+		data = {"query": data_query}
+		response = requests.post(url, headers=headers, data=data)
+
+		response_status = response.json()["data"]["deleteAttorneyAccount"]["status"]
+		response_message = response.json()["data"]["deleteAttorneyAccount"]["message"]
+
+		assert response.status_code == 200, f"Incorrect status code. Status code id '{response.status_code}'"
+		assert response_status == True, f"Incorrect status. Status response is '{response_status}'"
+		assert response_message == message, f"Incorrect status. Status response is '{response_message}'"
+
+	def add_op_unregister(self,op_sbn, email_voting):
+		wd =self.app.wd
+		time.sleep(1)
+		input_sbn_op = WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='searchAutocomplete'] input")))
+		input_sbn_op.click()
+		input_sbn_op.send_keys(op_sbn)
+		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{email_voting}']"))).click()
+		time.sleep(2)
+		wd.find_element(By.CSS_SELECTOR, "button[name='checkOppCounselInfoInvite']").click()
+		time.sleep(1)
+		wd.find_element(By.NAME, "caseLocationContinueBtn").click()

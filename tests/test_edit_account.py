@@ -52,7 +52,7 @@ def test_edit_price(app, edit_price):
 	app.session.logout()
 
 #Test case 4.5
-@pytest.mark.skip(reason="Test don't work, block front-end")
+#@pytest.mark.skip(reason="Test don't work, block front-end")
 @allure.description("Test case 4.5, Change schedual cr")
 def test_schedual_cr(app):
 	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")

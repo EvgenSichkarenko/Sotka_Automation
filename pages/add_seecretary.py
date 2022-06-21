@@ -79,11 +79,17 @@ class Secretary:
 		else:
 			return False
 
+	def edit_depo_from_secretary(self):
+		wd = self.app.wd
+		time.sleep(1)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='attorneyHomeBtnEdit']"))).click()
+		time.sleep(1)
+
 	def delete_secretary_from_database(self,secr_new_email):
 
 		message_delete = "Secretary was successfully deleted"
-		url = "https://apidemo.trialbase.com/graphql"
-		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
+		url = self.app.graphql_url()
 
 		qu = """mutation{signIn(email:"qaautomationatt@yahoo.com", password:"ZXcv@123580" ){
 		  access_token

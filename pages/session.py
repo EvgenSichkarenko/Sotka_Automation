@@ -37,7 +37,6 @@ class Session:
 		time.sleep(1)
 		wd.execute_script("arguments[0].click()", log)
 
-
 	def text_name_attribute_attroney(self):
 		wd = self.app.wd
 		time.sleep(2)

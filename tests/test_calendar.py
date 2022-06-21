@@ -113,12 +113,31 @@ def test_deleting_an_event(app,deposition, att, op, emails):
 	app.calendar_att.calendar_day()
 	assert app.calendar_att.check_el_present(day=app.calendar_att.day,
 	 	locator="div[data-name='CircleApproved']")
-	app.deposition.cansel_deposition()
+	app.deposition.cancel_deposition()
 	app.calendar_att.calendar_day()
 	assert app.calendar_att.check_el_present(day=app.calendar_att.day,
 		locator="div[data-name='CircleApproved']") == False
 	app.session.logout()
 	app.deposition.delete_deposition_from_database(app.deposition.id_case)
+
+#Test case 3.6
+@allure.description("Test case 3.6, Deleting an event (multiple events)")
+@pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
+def test_del_an_event_multiple(app, deposition):
+	app.deposition.create_fake_deposition_waiting(status="false")
+	app.deposition.create_fake_deposition_voting(status="false")
+	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
+	app.calendar_att.calendar_day()
+	assert app.calendar_att.check_el_present(day=app.calendar_att.day,locator="div[data-name='CirclePending']")
+	assert app.calendar_att.check_el_present(day=app.calendar_att.day,locator="div[data-name='CircleApproved']")
+	app.deposition.cancel_deposition()
+	assert app.calendar_att.check_el_present(day=app.calendar_att.day,
+		locator="div[data-name='CirclePending']") == False
+	assert app.calendar_att.check_el_present(day=app.calendar_att.day,locator="div[data-name='CircleApproved']")
+	app.session.logout()
+	app.deposition.delete_deposition_from_database(app.deposition.id_case)
+	app.deposition.delete_deposition_from_database(app.deposition.id_fake_depo)
+
 
 #Test case #3.7, 2.12
 """test deposition case manually create and change day in deposition"""

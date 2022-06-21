@@ -634,7 +634,7 @@ class DepositionCase:
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='finishConfirmBtn']"))).click()
 		print(day_new)
 
-	def cansel_deposition(self):
+	def cancel_deposition(self):
 		wd = self.app.wd
 		time.sleep(2)
 
@@ -744,9 +744,8 @@ class DepositionCase:
 	def	delete_deposition_from_database(self, id_depo):
 		wd = self.app.wd
 		message = "Deposition case successfully deleted with all relations and files"
-		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		url = "https://apidemo.trialbase.com/graphql"
 
+		url = self.app.graphql_url()
 		headers = {
 			"qatoken": "JEKA_QA_TEST_TOKEN"
 		}
@@ -766,8 +765,8 @@ class DepositionCase:
 
 	def create_fake_deposition_waiting(self, status):
 		wd = self.app.wd
-		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		url = "https://apidemo.trialbase.com/graphql"
+
+		url = self.app.graphql_url()
 
 		#date
 		date = datetime.now()
@@ -782,7 +781,6 @@ class DepositionCase:
 		data = {"query": qu}
 		response = requests.post(url, data=data)
 		access_token = response.json()["data"]["signIn"]["access_token"]
-		print(access_token)
 		# Create deposition
 		auth_header = 'Bearer ' + access_token
 		headers = {
@@ -804,9 +802,7 @@ class DepositionCase:
 	def create_fake_deposition_voting(self, status):
 		wd = self.app.wd
 
-
-		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
-		url = "https://apidemo.trialbase.com/graphql"
+		url = self.app.graphql_url()
 
 		#date
 		date = datetime.now()

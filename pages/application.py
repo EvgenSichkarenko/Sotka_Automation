@@ -69,6 +69,7 @@ class Application:
 
 		#PREPROD
 		wd.get("https://demo.trialbase.com/login")
+
 		#STAGE
 		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
 
@@ -79,6 +80,15 @@ class Application:
 
 		#wd.refresh()
 		#wd.get("http://sotka.io")
+
+	def graphql_url(self):
+
+		#stage
+		# url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		#preprod
+		url = "https://apidemo.trialbase.com/graphql"
+		return url
+
 
 	def destroy(self):
 		self.wd.quit()
