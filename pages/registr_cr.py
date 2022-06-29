@@ -165,6 +165,11 @@ class RegistrCR:
 		wd.get(link)
 		time.sleep(2)
 
+	def save_btn(self):
+		wd = self.app.wd
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='editTimeSaveBtn']"))).click()
+
+
 	def check_price_dashboard(self, minimum_transcript_charge, page_cost ,expert_page_cost,travel, estimated, cancellation_fee,
 	turn_around_page,copy):
 		wd = self.app.wd

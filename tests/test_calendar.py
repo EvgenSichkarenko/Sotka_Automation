@@ -14,7 +14,7 @@ import time
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(i) for i in cr_voting])
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(i) for i in deposition])
 @allure.description("Test case 3.1, check deposition cases current day and shows all deposition")
-def test_calendar_att(app, att, cr_voting, deposition, op):
+def test_3_1calendar_att(app, att, cr_voting, deposition, op):
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)
@@ -48,7 +48,7 @@ def test_calendar_att(app, att, cr_voting, deposition, op):
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(i) for i in cr_voting])
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(i) for i in deposition])
 @allure.description("Test case 3.2")
-def test_calendar_second_event(app, att, deposition, op,cr_voting):
+def test_3_2calendar_second_event(app, att, deposition, op,cr_voting):
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.deposition.name_deposition(deposition.name)
@@ -78,7 +78,7 @@ def test_calendar_second_event(app, att, deposition, op,cr_voting):
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("emails", email)
-def test_calandar_two_dots(app,deposition, att, op, emails):
+def test_3_3_calandar_two_dots(app,deposition, att, op, emails):
 	app.deposition.create_fake_deposition_voting(status="false")
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.deposition.name_deposition(deposition.name)
@@ -107,7 +107,7 @@ def test_calandar_two_dots(app,deposition, att, op, emails):
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("emails", email)
-def test_deleting_an_event(app,deposition, att, op, emails):
+def test_3_5_deleting_an_event(app,deposition, att, op, emails):
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.calendar_att.calendar_day()
@@ -123,7 +123,7 @@ def test_deleting_an_event(app,deposition, att, op, emails):
 #Test case 3.6
 @allure.description("Test case 3.6, Deleting an event (multiple events)")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
-def test_del_an_event_multiple(app, deposition):
+def test_3_6_del_an_event_multiple(app, deposition):
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.deposition.create_fake_deposition_voting(status="false")
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
@@ -146,7 +146,7 @@ def test_del_an_event_multiple(app, deposition):
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])
 @pytest.mark.parametrize("att", attorneys, ids=[repr(x) for x in attorneys])
-def test_deposition_create_manually_edit(app, deposition, cr_voting, op, att):
+def test_3_7deposition_create_manually_edit(app, deposition, cr_voting, op, att):
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.calendar_att.calendar_day()
@@ -160,7 +160,7 @@ def test_deposition_create_manually_edit(app, deposition, cr_voting, op, att):
 #Test case #3.8
 @pytest.mark.parametrize("att", attorneys)
 @allure.description("Test case 3.8")
-def test_check_deposition_dashboard_cr(app, att):
+def test_3_8_check_deposition_dashboard_cr(app, att):
 	app.session.login(login="qaautomationcr@yahoo.com", password="ZXcv@123580")
 	app.deposition.create_fake_deposition_waiting(status="false")
 	app.deposition.confirm_appearance(att.email)
@@ -171,7 +171,7 @@ def test_check_deposition_dashboard_cr(app, att):
 
 #Test case #3.9
 @allure.description("Test case 3.9")
-def test_check_deposition_dashboard_att(app):
+def test_3_9check_deposition_dashboard_att(app):
 	app.session.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	app.deposition.create_fake_deposition_waiting(status="false")
 	time.sleep(2)

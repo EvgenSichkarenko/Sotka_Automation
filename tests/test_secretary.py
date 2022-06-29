@@ -10,7 +10,7 @@ import time
 #Test case 1.5
 @allure.description("Test case 1.5, Login secretaru with valid data")
 @pytest.mark.login
-def test_login_secretary(app):
+def test_1_5_login_secretary(app):
 	app.login.login(invalid_login="a123", invalid_password="123",
 		valid_login="qaautomationsecr@yahoo.com", valid_password="ZXcv@123580" )
 	assert "Rita QA " == app.session.text_name_attribute_secretary()
@@ -24,7 +24,7 @@ def test_login_secretary(app):
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(i) for i in cr_voting])
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(i) for i in deposition])
 @pytest.mark.parametrize("op", op, ids=[repr(i) for i in op])
-def test_create_depo_secr(app, emails, att, cr_voting, deposition, op):
+def test_2_21_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	app.session.login(login="qaautomationsecr@yahoo.com", password="ZXcv@123580")
 	app.deposition.name_deposition(deposition.name)
 	app.deposition.deponent_deposition(deposition.deponent)

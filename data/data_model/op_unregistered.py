@@ -2,8 +2,8 @@ from model.op_unregistered import OPUnregistered
 
 #PREPROD
 op_unreg = [OPUnregistered(
-	name="Jeka test unregister op",
+	name="Jeka unregister",
 	email="qaautomationopunreg@yahoo.com",
-	phone="",
+	phone="3806620466",
 	sbn="000003"
 )]

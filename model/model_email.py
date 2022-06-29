@@ -4,7 +4,7 @@ class Email:
 	email_cr_agreed_for_deal, email_all_op_vote, email_cr_decline, cr_new_appearance_fake, cr_decline_apear_fake,
 	cr_accept_apear_fake, email_invite_new_secr, email_att_confirm_psw, email_op_transcript_add, email_att_transcript_add,
 	email_op_unregist_transcript, email_secr_op_confirm_depo, email_opunregistr_vote, email_secretary_cr_accept,
-	email_invite_att_to_company):
+	email_invite_att_to_company, email_owner_cancel_depo, email_cr_cancel_depo):
 		self.email_reg_att = email_reg_att
 		self.email_reg_cr = email_reg_cr
 		self.email_create_depo_manually_op = email_create_depo_manually_op
@@ -29,3 +29,5 @@ class Email:
 		self.email_opunregistr_vote = email_opunregistr_vote
 		self.email_secretary_cr_accept = email_secretary_cr_accept
 		self.email_invite_att_to_company = email_invite_att_to_company
+		self.email_owner_cancel_depo = email_owner_cancel_depo
+		self.email_cr_cancel_depo = email_cr_cancel_depo

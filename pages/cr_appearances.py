@@ -46,6 +46,7 @@ class CrAppearance:
 		wd = self.app.wd
 		time.sleep(2)
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").send_keys(Keys.RETURN)
+		time.sleep(1)
 
 	def check_data_dashboard(self, att_name, att_email, att_phone, op_name, op_email, op_phone):
 		wd = self.app.wd
@@ -99,8 +100,6 @@ class CrAppearance:
 		travel_ap = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorPriceTravelValue']").text
 		copy_ap = wd.find_element(By.CSS_SELECTOR, "div[data-name='forExecutorPriceCopyValue']").text
 		copy = copy.replace(" ","")
-		print(self.cut_str_to_int(minTrChange))
-		print(self.cut_str_to_int(minimum_transcript_charge))
 		assert self.cut_str_to_int(minTrChange) == self.cut_str_to_int(minimum_transcript_charge)
 		assert self.cut_str_to_int(pageCost) == self.cut_str_to_int(page_cost)
 		assert self.cut_str_to_int(expertPageCost) == self.cut_str_to_int(expert_page_cost)

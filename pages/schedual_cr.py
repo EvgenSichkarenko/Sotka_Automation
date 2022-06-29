@@ -153,8 +153,8 @@ class Schedual:
 			assert wednesday == "Wednesday7:30 AM - 7:00 PM"
 			assert thursday == "Thursday7:30 AM - 7:00 PM"
 			assert friday == "Friday7:30 AM - 7:00 PM"
-			assert saturday == "Saturday7:30 AM - 7:00 PM"
-			assert sunday == "Sunday7:30 AM - 7:00 PM"
+			# assert saturday == "Saturday7:30 AM - 7:00 PM"
+			# assert sunday == "Sunday7:30 AM - 7:00 PM"
 			return True
 
 	def return_data(self):
@@ -190,19 +190,19 @@ class Schedual:
 		ActionChains(wd).move_to_element(slider5.find_element(By.CSS_SELECTOR, "span[data-index='1']")
 		).click_and_hold().move_by_offset(-10, 0).release().perform()
 		#Saturday
-		slider6 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']")
-		ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='0']")
-		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='1']")
-		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		wd.find_element(By.NAME, "SATURDAYenabled").click()
-		#Sunday
-		slider7 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']")
-		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='0']")
-		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='1']")
-		).click_and_hold().move_by_offset(-10, 0).release().perform()
-		wd.find_element(By.NAME, "SUNDAYenabled").click()
+		# slider6 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper5']")
+		# ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='0']")
+		# ).click_and_hold().move_by_offset(-10, 0).release().perform()
+		# ActionChains(wd).move_to_element(slider6.find_element(By.CSS_SELECTOR, "span[data-index='1']")
+		# ).click_and_hold().move_by_offset(-10, 0).release().perform()
+		# wd.find_element(By.NAME, "SATURDAYenabled").click()
+		# #Sunday
+		# slider7 = wd.find_element(By.CSS_SELECTOR, "div[data-name='editTimeSliderWrapper6']")
+		# ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='0']")
+		# ).click_and_hold().move_by_offset(-10, 0).release().perform()
+		# ActionChains(wd).move_to_element(slider7.find_element(By.CSS_SELECTOR, "span[data-index='1']")
+		# ).click_and_hold().move_by_offset(-10, 0).release().perform()
+		# wd.find_element(By.NAME, "SUNDAYenabled").click()
 
 	def disable_day(self):
 		wd = self.app.wd

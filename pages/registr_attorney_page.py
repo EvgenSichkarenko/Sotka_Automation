@@ -86,6 +86,28 @@ class RegistrAttorney:
 		wd = self.app.wd
 		wd.find_element(By.NAME, "addSecretaryContinueBtn").click()
 
+	def add_secretary_skip(self, name_secretary, email_secretary):
+		wd = self.app.wd
+		time.sleep(2)
+		WebDriverWait(wd, 15).until(EC.visibility_of_element_located((By.NAME, "full_name"))).send_keys(name_secretary)
+		wd.find_element(By.NAME, "email").send_keys(email_secretary)
+		wd.find_element(By.NAME, "addSecretarySkipBtn").click()
+
+	def check_input_secr(self):
+		wd = self.app.wd
+		time.sleep(1)
+		full_name = wd.find_element(By.CSS_SELECTOR, "input[name='full_name']").get_attribute("value")
+		email = wd.find_element(By.CSS_SELECTOR, "input[name='email']").get_attribute("value")
+		wd.find_element(By.NAME, "addSecretaryContinueBtn").click()
+		if (full_name == "" and email == ""):
+			return True
+		else:
+			return False
+
+	def return_back(self):
+		wd = self.app.wd
+		wd.find_element(By.XPATH, "//div[text()='Back']").click()
+
 	def add_secretary(self, name_secretary, email_secretary):
 		wd = self.app.wd
 		time.sleep(2)
@@ -194,7 +216,6 @@ class RegistrAttorney:
 		self.text, encoding, mime = self.get_message_info(message)
 
 		new_email = re.sub(r"\r\n", "", self.text)
-		print(new_email)
 		if (new_email.count(email_reg_att) == 1):
 			return True
 		else:

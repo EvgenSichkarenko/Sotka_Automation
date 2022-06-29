@@ -72,7 +72,7 @@ class Application:
 
 		#STAGE
 		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
-
+		#url = "https://apidemo.trialbase.com"
 		# time.sleep(5)
 		# WebDriverWait(wd, 10).until(
 		# 	lambda wd: wd.execute_script('return document.readyState') == 'complete')
@@ -84,7 +84,7 @@ class Application:
 	def graphql_url(self):
 
 		#stage
-		# url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
 		#preprod
 		url = "https://apidemo.trialbase.com/graphql"
 		return url

@@ -29,12 +29,11 @@ def test_registr_attorney(app,regisrt_data, email):
 	assert app.regAttorney.check_confirmation_letter(email.email_reg_att, log="testqa000000@yahoo.com", password="ksbbaatxxwotyabq")
 	app.regAttorney.delete_att_from_database()
 
-#Test case 1.2
+#Test case 1.2, 1.19
 @allure.description("Test case 1.2, Registration new cour reporter")
 @pytest.mark.parametrize("cr_data", cr_data, ids=[repr(i) for i in cr_data])
 @pytest.mark.parametrize("emails", email)
-@pytest.mark.parametrize("prices", edit_price)
-def test_reg_cr(app, cr_data, emails, prices):
+def test_reg_cr(app, cr_data, emails):
 	app.cr.cr_registration_form(cr_data.bar_number)
 	assert cr_data.bar_number == app.cr.license_num_input_attribute()
 	app.cr.cr_data_form(cr_data.email, cr_data.phone_number, cr_data.full_name, cr_data.issuance,
@@ -43,6 +42,18 @@ def test_reg_cr(app, cr_data, emails, prices):
 	app.cr.set_password(cr_data.valid_password)
 	assert app.cr.check_send_mail()
 	assert app.cr.check_confirmation_letter(emails.email_reg_cr)
+	app.cr.get_link_from_email()
+	app.session.login(login=cr_data.email, password=cr_data.valid_password)
+	app.cr.save_btn()
+	assert app.edit_price.appearance_fee() ==  "$400"
+	assert app.edit_price.page_cost() == "$6"
+	assert app.edit_price.expert_page_cost() == "$6.5"
+	assert app.edit_price.travel() == "$1"
+	assert app.edit_price.estimated_hour() == "40"
+	assert app.edit_price.cancellation_fees() == "$200"
+	assert app.edit_price.turn_around_time() == "10 days"
+	assert app.edit_price.copy() == "50 %"
+	app.session.logout()
 	app.cr.delete_att_from_database()
 
 #Test case 1.3
@@ -50,15 +61,15 @@ def test_reg_cr(app, cr_data, emails, prices):
 @pytest.mark.skip(reason="edit time zone")
 @pytest.mark.login
 def test_login_attorney(app):
-	print(time.strftime('%Y-%m-%d %H:%M:%S'))  # before timezone change
-	os.system('tzutil /s "Central America Standard Time"')
-	time.sleep(5)
+	# print(time.strftime('%Y-%m-%d %H:%M:%S'))  # before timezone change
+	# os.system('tzutil /s "Central America Standard Time"')
+	# time.sleep(5)
 	# app.login.change_time_zone()
 	# time.sleep(5)
 	app.login.login(invalid_login="a123", invalid_password="123",
 		valid_login="qaautomationatt@yahoo.com", valid_password="ZXcv@123580")
 	assert "Daniel Vlad Tabakh " == app.session.text_name_attribute_attroney()
-	print(datetime.now())
+	#print(datetime.now())
 	app.login.logout()
 
 
@@ -69,7 +80,6 @@ def test_login_cr(app):
 		valid_login="qaautomationcr@yahoo.com", valid_password="ZXcv@123580")
 	assert app.session.text_name_attribute_cr() == "AutomationCR "
 	app.login.logout()
-
 
 
 #Test case 1.6
@@ -104,7 +114,7 @@ def test_unregistered_user_signup(app, deposition, cr_voting, op, att, op_unreg,
 	app.deposition.get_letter_from_email(login="qaautomationopunreg@yahoo.com", password="gvwdvmcqjriiwupp")
 	app.deposition.get_link_from_email()
 	app.session.login(login="qaautomationopunreg@yahoo.com", password="1234Qwer")
-	app.session.text_name_attribute_attroney() == " Jeka test unregister op"
+	assert app.session.text_name_attribute_attroney() == "Jeka Unregister "
 	app.session.logout()
 	app.regAttorney.delete_op_from_database()
 	app.deposition.delete_deposition_from_database(id_depo=app.deposition.number_of_deposition)
@@ -198,3 +208,20 @@ def test_add_secretary(app, secretary, emails):
 	app.forgot_password.login(login="qaautomationatt@yahoo.com", password="ZXcv@123580")
 	assert app.secretary.check_secr_on_dashboard()
 	app.secretary.delete_secretary_from_database(secretary.secr_email)
+
+#Test case 1.21
+@allure.description("1.21 'Skip' bug")
+@pytest.mark.parametrize("email", email)
+@pytest.mark.parametrize("secretary", regisrt_secr, ids=[repr(x) for x in regisrt_secr])
+@pytest.mark.parametrize("regisrt_data", regisrt_data, ids=[repr(i) for i in regisrt_data])
+def test_1_21(app,regisrt_data, email, secretary):
+	app.regAttorney.registration_page(regisrt_data.bar_number)
+	app.regAttorney.fill_form(regisrt_data.email, regisrt_data.bar_number, regisrt_data.phone_number, regisrt_data.address_two)
+	app.regAttorney.assert_secreatry()
+	app.regAttorney.add_secretary_skip(secretary.secr_new_name, secretary.secr_email)
+	app.regAttorney.return_back()
+	assert app.regAttorney.check_input_secr()
+	app.regAttorney.password_input_enter(regisrt_data.valid_password,regisrt_data.invalid_password,regisrt_data.password_match)
+	assert app.regAttorney.check_send_mail()
+	assert app.regAttorney.check_confirmation_letter(email.email_reg_att, log="testqa000000@yahoo.com", password="ksbbaatxxwotyabq")
+	app.regAttorney.delete_att_from_database()

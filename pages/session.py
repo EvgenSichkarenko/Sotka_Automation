@@ -24,6 +24,7 @@ class Session:
 		password_input.send_keys(password)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
 			By.CSS_SELECTOR, "button[name='registrationSignInBtn']"))).send_keys(Keys.RETURN)
+		time.sleep(2)
 
 	def logout(self):
 		wd = self.app.wd

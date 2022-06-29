@@ -18,6 +18,7 @@ class DepositionCase:
 	def __init__(self, app):
 		self.app = app
 
+
 	#global number_of_deposition
 	def login_without_open_link(self, login, password):
 		wd = self.app.wd
@@ -46,6 +47,7 @@ class DepositionCase:
 		input.send_keys(Keys.ENTER)
 		time.sleep(1)
 
+	#Change link
 	def get_id_deposition_case(self):
 		wd = self.app.wd
 		url = wd.current_url
@@ -54,6 +56,54 @@ class DepositionCase:
 		id_case = url.replace(default, "")
 		number = int(id_case)
 		return number
+
+	# Change link
+	def add_new_link(self):
+		wd = self.app.wd
+		time.sleep(2)
+		WebDriverWait(wd,  15).until(EC.element_to_be_clickable((By.NAME, "attorneyHomeNewDepBtn"))).click()
+		#default = "http://stoke-test.s3-website.us-east-2.amazonaws.com/progressCase/"
+		default = "https://demo.trialbase.com/progressCase/"
+		time.sleep(3)
+		new_link =  default + "570"
+		wd.get(f"{new_link}")
+		time.sleep(2)
+
+	def check_name(self):
+		wd = self.app.wd
+		time.sleep(1)
+		text = wd.find_element(By.XPATH, "//div[text()='You are not allowed to see this case']").text
+		return text
+
+	def change_price(self):
+		wd = self.app.wd
+
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[data-name='priceButtonEdit']"))).click()
+		price = "1"
+		appearanceFee = wd.find_element(By.NAME, "appearanceFee")
+		pageCost = wd.find_element(By.NAME, "pageCost")
+		expertPageCost = wd.find_element(By.NAME, "expertPageCost")
+		travels = wd.find_element(By.NAME, "travel")
+		estimate = wd.find_element(By.NAME, "estimated")
+		turnAroundTime = wd.find_element(By.NAME, "turnAroundTime")
+		copy = wd.find_element(By.NAME, "copy")
+
+		self.clear_attribute(appearanceFee,price)
+		self.clear_attribute(pageCost, price)
+		self.clear_attribute(expertPageCost, price)
+		self.clear_attribute(travels, price)
+		self.clear_attribute(turnAroundTime, price)
+		self.clear_attribute(copy, price)
+		time.sleep(1)
+		wd.find_element(By.NAME, "editPriceSave").click()
+		time.sleep(1)
+
+	def clear_attribute(self, element, data):
+		wd = self.app.wd
+		element.click()
+		element.send_keys(Keys.CONTROL + "A")
+		element.send_keys(Keys.BACK_SPACE)
+		element.send_keys(data)
 
 	def deponent_deposition(self, deponent):
 		wd = self.app.wd
@@ -331,19 +381,6 @@ class DepositionCase:
 
 		time.sleep(2)
 
-
-		# try:
-		# 	#block = wd.find_element(By.CSS_SELECTOR, "div[data-name='statusContainer']")
-		# 	time.sleep(2)
-		# 	WebDriverWait(wd, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
-		# 	wd.find_element(By.CSS_SELECTOR, "p[data-name='StatusProcessCaseName0']")
-		# 	time.sleep(2)
-		# except NoSuchElementException:
-		# 	block = wd.find_element(By.CSS_SELECTOR, "*[data-name='statusProcessMain']")
-		# 	time.sleep(1)
-		# 	block.find_element(By.CSS_SELECTOR, "button[name='loadMoreBtn']").send_keys(Keys.RETURN)
-		# 	WebDriverWait(block, 15).until(EC.element_to_be_clickable((By.XPATH, f"//p[text()='{depo_name}']"))).click()
-
 	def confirm(self):
 		wd = self.app.wd
 
@@ -402,6 +439,29 @@ class DepositionCase:
 		time.sleep(2)
 		wd.find_element(By.NAME, "closeBtnModal").click()
 		time.sleep(2)
+
+	def download_unreg_transcript(self):
+		wd = self.app.wd
+		time.sleep(1)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name='payNoRegisterBuyBtn']"))).click()
+		time.sleep(1)
+		wd.find_element(By.CSS_SELECTOR, "div[data-name='payNoRegisterCard']").click()
+		time.sleep(5)
+		wd.find_element(By.CSS_SELECTOR, "div[data-name='payNoRegisterCard'] input").send_keys(
+			"4141414142424242")
+		time.sleep(5)
+		# wd.find_element(By.CSS_SELECTOR, "div[data-name='payNoRegisterCard'] input").send_keys(
+		# 	"4242 4242")
+		# time.sleep(5)
+		# wd.find_element(By.CSS_SELECTOR, "div[data-name='payNoRegisterCard'] input").send_keys(
+		# 	"2112 0325")
+		# time.sleep(1)
+		# wd.find_element(By.CSS_SELECTOR, "div[data-name='payNoRegisterCard'] input").send_keys(
+		# 	"123 12345")
+		time.sleep(2)
+		WebDriverWait(wd, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[name=''payNoRegisterBtn]"))).click()
+		time.sleep(1)
+		wd.find_element(By.CSS_SELECTOR, "div[data-name='ModalDeleteBtn']").click()
 
 	def download_depo_document(self):
 		wd = self.app.wd
@@ -485,14 +545,23 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
+
 	def get_link_from_email(self):
 		wd = self.app.wd
 		time.sleep(3)
 		link = re.search("(?P<url>https?://[^\s]+)", self.text).group("url")
-		link = link[0:-1]
+		self.link = link[0:-1]
 		time.sleep(1)
-		wd.get(link)
+		wd.get(self.link)
 		time.sleep(2)
+
+	#For test case 2.40
+	#global mas = []
+	# def open_link_again(self):
+	# 	wd = self.app.wd
+	# 	time.sleep(1)
+	# 	mas.append(self.link)
+
 
 	def select_date_op_voting(self):
 		wd = self.app.wd
@@ -792,7 +861,6 @@ class DepositionCase:
 		# data1 = 'mutation{createFakeDepositionCase(status:"WAITING_FOR_NEGOTIATION", withUnregisterOp:false)}'
 		data2 = {"query": data1}
 		response = requests.post(url, headers=headers, data=data2)
-		print(response.json())
 		self.id_case = response.json()["data"]["createFakeDepositionCase"]["id"]
 		self.start_time = response.json()["data"]["createFakeDepositionCase"]["start_time"]
 		assert response.status_code == 200
