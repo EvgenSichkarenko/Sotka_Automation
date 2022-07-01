@@ -3,10 +3,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import TimeoutException
 from datetime import datetime, timedelta
 import time
-import os
 import imaplib
 import email
 import sys
@@ -545,7 +543,6 @@ class DepositionCase:
 		except NoSuchElementException:
 			return False
 
-
 	def get_link_from_email(self):
 		wd = self.app.wd
 		time.sleep(3)
@@ -555,13 +552,13 @@ class DepositionCase:
 		wd.get(self.link)
 		time.sleep(2)
 
-	#For test case 2.40
-	#global mas = []
-	# def open_link_again(self):
-	# 	wd = self.app.wd
-	# 	time.sleep(1)
-	# 	mas.append(self.link)
 
+	#For test case 2.40
+	def open_link_again(self):
+		wd = self.app.wd
+		time.sleep(1)
+		mas = []
+		mas.append(self.link)
 
 	def select_date_op_voting(self):
 		wd = self.app.wd
@@ -722,7 +719,7 @@ class DepositionCase:
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsConfirm']").click()
 		time.sleep(2)
 
-	def decline_appearence_cr(self, att_email,owner_att, cp, depo_name):
+	def decline_appearence_cr(self, att_email):
 		wd = self.app.wd
 		time.sleep(2)
 		WebDriverWait(wd, 15).until(EC.element_to_be_clickable((
@@ -732,31 +729,10 @@ class DepositionCase:
 		list.find_element(By.XPATH, f"//p[text()='{att_email}']").click()
 
 		#Decline button
-		time.sleep(3)
+		time.sleep(2)
 		wd.find_element(By.CSS_SELECTOR, "button[name='appearanceDetailsDecline']").click()
 		time.sleep(4)
-		# server = "imap.mail.yahoo.com"
-		# port = 993
-		# login = "attorney0@yahoo.com"
-		# password = "iqdollxuiqxwxozf"
-		#
-		# mail = imaplib.IMAP4_SSL(server, port)
-		# mail.login(login, password)
-		# mail.select()
-		# type, data = mail.search(None, "(FROM 'Trialbase')")
-		# data = data[0].split()
-		# latest_id = data[-1]
-		# result, data = mail.fetch(latest_id, "(RFC822)")
-		#
-		# raw_email = data[0][1]
-		# message = email.message_from_bytes(raw_email)
-		# text, encoding, mime = self.get_message_info(message)
-		#
-		# new_email = re.sub(r"\r\n", "", text)
-		# print(new_email)
-		# str_email = f"Dear {owner_att}, {cp} declined an appearance at the deposition of deponent in{depo_name}"
-		# print(str_email)
-		# assert new_email.count(str_email) == 1
+
 	def get_letter_from_email(self, login, password):
 		wd = self.app.wd
 		time.sleep(4)

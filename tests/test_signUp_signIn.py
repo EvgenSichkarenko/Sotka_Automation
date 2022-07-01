@@ -58,7 +58,7 @@ def test_reg_cr(app, cr_data, emails):
 
 #Test case 1.3
 @allure.description("Login attorney with invalid and valid data")
-@pytest.mark.skip(reason="edit time zone")
+#@pytest.mark.skip(reason="edit time zone")
 @pytest.mark.login
 def test_login_attorney(app):
 	# print(time.strftime('%Y-%m-%d %H:%M:%S'))  # before timezone change
@@ -80,7 +80,6 @@ def test_login_cr(app):
 		valid_login="qaautomationcr@yahoo.com", valid_password="ZXcv@123580")
 	assert app.session.text_name_attribute_cr() == "AutomationCR "
 	app.login.logout()
-
 
 #Test case 1.6
 @allure.description("Test case 1.6, Unregistered op sign up")
@@ -179,7 +178,6 @@ def test_reg_att_with_secr(app, regisrt_data, email, secretary):
 	assert app.regAttorney.check_send_mail()
 	app.deposition.get_letter_from_email(login="qaautomationsecrdel@yahoo.com", password="xudxrtihgkpxetfh")
 	app.deposition.compare_from_to_email(from_m="Trialbase <info@trialbase.com>", to_m="qaautomationsecrdel@yahoo.com")
-	print(email.email_invite_new_secr)
 	assert app.deposition.compare_email_and_date(email.email_invite_new_secr)
 	app.deposition.get_link_from_email()
 	app.secretary.set_password(password="1234Qwer")

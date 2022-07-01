@@ -61,8 +61,6 @@ class Application:
 	def open_login(self):
 		wd = self.wd
 		wd.delete_all_cookies()
-		#wd.get('chrome://settings/')
-		#wd.execute_script('chrome.settingsPrivate.setDefaultZoom(0.90)')
 
 		#PROD
 		#wd.get("https://trialbase.com/login")
@@ -72,19 +70,12 @@ class Application:
 
 		#STAGE
 		#wd.get("http://stoke-test.s3-website.us-east-2.amazonaws.com/")
-		#url = "https://apidemo.trialbase.com"
-		# time.sleep(5)
-		# WebDriverWait(wd, 10).until(
-		# 	lambda wd: wd.execute_script('return document.readyState') == 'complete')
-		#wd.execute_script("document.body.style.zoom='75%'")
-
-		#wd.refresh()
-		#wd.get("http://sotka.io")
 
 	def graphql_url(self):
 
 		#stage
 		#url = "http://ec2-3-120-152-160.eu-central-1.compute.amazonaws.com:8080/graphql"
+
 		#preprod
 		url = "https://apidemo.trialbase.com/graphql"
 		return url
@@ -92,3 +83,4 @@ class Application:
 
 	def destroy(self):
 		self.wd.quit()
+		#self.deposition.delete_deposition_from_database(self.deposition.id_case)

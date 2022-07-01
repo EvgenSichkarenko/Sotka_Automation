@@ -142,6 +142,7 @@ def test_3_6_del_an_event_multiple(app, deposition):
 #Test case #3.7, 2.12
 """test deposition case manually create and change day in deposition"""
 @allure.description("Test case 3.7, 2.12, Edit deposition with change date")
+#@pytest.mark.skip("need fix")
 @pytest.mark.parametrize("deposition", deposition, ids=[repr(x) for x in deposition])
 @pytest.mark.parametrize("cr_voting", cr_voting, ids=[repr(x) for x in cr_voting])
 @pytest.mark.parametrize("op", op, ids=[repr(x) for x in op])

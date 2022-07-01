@@ -30,7 +30,8 @@ def test_2_21_create_depo_secr(app, emails, att, cr_voting, deposition, op):
 	app.deposition.deponent_deposition(deposition.deponent)
 	app.deposition.location_deposition()
 	app.deposition.attorneys(deposition.sbn_op,op.email)
-	app.deposition.date_and_time_voting()
+	app.deposition.begin_date_voting()
+	#app.deposition.date_and_time_voting()
 	app.session.logout()
 	#test email voting as op
 	app.deposition.get_letter_from_email(login = "qaautomationop@yahoo.com", password = "jphbtksnxhediwws")
