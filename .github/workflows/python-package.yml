@@ -31,4 +31,4 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest tests/test_signUp_signIn.py/test_login_attorney
+        pytest -m login
